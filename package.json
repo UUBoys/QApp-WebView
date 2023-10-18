@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -58,6 +60,15 @@
     "zustand": "^4.3.1"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.5.0",
+    "@storybook/addon-interactions": "^7.5.0",
+    "@storybook/addon-links": "^7.5.0",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/addon-styling-webpack": "^0.0.5",
+    "@storybook/blocks": "^7.5.0",
+    "@storybook/nextjs": "^7.5.0",
+    "@storybook/react": "^7.5.0",
+    "@storybook/testing-library": "^0.2.2",
     "@types/cookie": "^0.5.1",
     "@types/cookies": "^0.7.7",
     "@types/lodash": "^4.14.191",
@@ -65,6 +76,7 @@
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "autoprefixer": "^10.4.13",
     "babel-eslint": "^10.1.0",
+    "css-loader": "^6.8.1",
     "eslint": "^8.0.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "13.0.3",
@@ -78,11 +90,15 @@
     "eslint-plugin-security": "^1.5.0",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "eslint-plugin-sonarjs": "^0.16.0",
+    "eslint-plugin-storybook": "^0.6.15",
     "eslint-plugin-tailwindcss": "^3.7.0",
     "postcss": "^8.4.21",
+    "postcss-loader": "^7.3.3",
     "prettier": "^3.0.3",
     "prettier-eslint": "^15.0.1",
     "prettier-plugin-tailwindcss": "^0.2.1",
+    "storybook": "^7.5.0",
+    "style-loader": "^3.3.3",
     "tailwindcss": "^3.2.7",
     "typescript": "^4.9.4"
   }
