@@ -56,7 +56,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
     >
       {isLoading ? (
-        <div className="h-2 w-5 animate-spin rounded-full border-2 border-white" />
+        <div className="h-2 w-3 animate-spin rounded-full border-2 border-white" />
       ) : (
         <span>{children}</span>
       )}

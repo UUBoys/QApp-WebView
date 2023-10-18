@@ -1,13 +1,51 @@
 import Button from "@/modules/common/components/Button";
+import Card from "@/modules/common/components/Card";
+import Input from "@/modules/common/components/Input";
+import NavBar from "@/modules/common/components/NavBar";
 import React from "react";
 
 const index = () => {
+  const [search, setSearch] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
   return (
-    <div className="bg-gray-900 w-full h-full flex justify-center">
-      <div className="max-w-[1280px] bg-gray-800 w-full min-h-screen items-center flex flex-col p-6 gap-12">
+    <div className="bg-gray-900 w-full flex justify-center pb-32">
+      <NavBar />
+      <div className="max-w-[1280px] bg-gray-800 w-full min-h-screen items-center flex flex-col p-6 gap-12 pt-32">
         <Buttons />
-        <InputNormal />
-        <InputError />
+        <Input
+          label="Email"
+          placeholder="Email"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Input
+          label="Password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+        />
+        <Input
+          label="Email"
+          placeholder="Email"
+          value={"dwdad"}
+          onChange={(e) => console.log(e.target.value)}
+          error="Not a valid email address."
+        />
+        <Input
+          label="Email"
+          placeholder="Email"
+          value={"dwdad"}
+          onChange={(e) => console.log(e.target.value)}
+          isDisabled
+        />
+        <Card
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla"
+          imageSrc="https://www.meatspace.cz/site/assets/files/6611/ku_club_bar-meatspace-_sk.jpg"
+          price={100}
+          title="Card title"
+        />
       </div>
     </div>
   );
