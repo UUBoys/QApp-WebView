@@ -1,14 +1,9 @@
 import { z } from "zod";
 
-import { singleVideoSchema } from "./video";
-
 export const userSchema = z.object({
-  uuid: z.string(),
+  id: z.string(),
   email: z.string().email(),
   name: z.string(),
-  videos: z.array(singleVideoSchema).optional(),
-  liked_videos: z.array(singleVideoSchema).optional(),
-  videoView: z.array(singleVideoSchema).optional(),
 });
 
 export const userSessionSchema = z

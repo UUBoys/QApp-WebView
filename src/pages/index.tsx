@@ -4,7 +4,7 @@ import { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
-    <div className="mt-16 flex h-[90vh] w-full flex-row flex-wrap space-x-3 space-y-3 bg-white">
+    <div className=" flex h-[90vh] w-full flex-row flex-wrap space-x-3 space-y-3 bg-white">
       homepage
     </div>
   );

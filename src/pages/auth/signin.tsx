@@ -9,8 +9,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { useSetUserSessionContext } from "@/modules/contexts/userContext";
-
 type LoginValues = {
   email: string;
   password: string;
@@ -21,18 +19,6 @@ export const SignIn = () => {
   const { mutateAsync, data, isLoading } = {};
   const [defaultError, setDefaultError] = useState("");
   const router = useRouter();
-
-  const setSessionUser = useSetUserSessionContext();
-  useEffect(() => {
-    setSessionUser({});
-  }, [setSessionUser]);
-
-  useEffect(() => {
-    if (data?.user && data?.jwt) {
-      setSessionUser(data);
-      router.push("/");
-    }
-  }, [data]);
 
   const handleCredentialsLogin = async ({ email, password }: LoginValues) => {
     const res = await mutateAsync({ email, password });
@@ -100,7 +86,7 @@ export const SignIn = () => {
             href="/auth/signup"
             className="mt-3 block text-center text-sm font-light text-gray-600 dark:text-white"
           >
-           Registrovat se
+            Registrovat se
           </Link>
         </div>
       </div>

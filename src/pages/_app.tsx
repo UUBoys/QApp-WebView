@@ -1,12 +1,13 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import { AppProps } from "next/app";
-import dynamic from "next/dynamic";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "@/modules/common/styles/globals.css";
+import NavBar from "@/modules/common/components/NavBar";
+import { SessionProvider } from "next-auth/react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,18 +17,10 @@ const queryClient = new QueryClient({
   },
 });
 
-const DynamicUserSessionContextProvider = dynamic(
-  () =>
-    import("@/modules/contexts/userContext").then(
-      (mod) => mod.UserSessionContextProvider
-    ),
-  { ssr: false }
-);
-
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <DynamicUserSessionContextProvider>
+    <SessionProvider session={pageProps.session}>
+      <QueryClientProvider client={queryClient}>
         <ToastContainer
           position="top-center"
           autoClose={1000}
@@ -40,9 +33,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           pauseOnHover
           theme="light"
         />
-          <Component {...pageProps} />
-      </DynamicUserSessionContextProvider>
-    </QueryClientProvider>
+        <NavBar />
+        <Component {...pageProps} />
+      </QueryClientProvider>
+    </SessionProvider>
   );
 };
 

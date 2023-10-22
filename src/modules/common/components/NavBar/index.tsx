@@ -1,14 +1,19 @@
 import Link from "next/link";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useUserSessionContext } from "@/modules/contexts/userContext";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+
+const navbarAllowedRoutes = ["/", "/events"];
 
 const NavBar = () => {
-  const user = useUserSessionContext();
+  const { data: session } = useSession();
   const [search, setSearch] = React.useState("");
-
+  const { pathname } = useRouter();
+  console.log(pathname);
+  if (!navbarAllowedRoutes.includes(pathname)) return null;
   return (
     <nav className="fixed z-10 h-[4.5rem] w-full bg-slate-950 flex items-center">
       <div className="flex w-full flex-wrap items-center justify-between p-4 px-12">
@@ -29,8 +34,8 @@ const NavBar = () => {
         <div className="cursor-pointer hidden gap-6 items-center md:flex">
           <Link href="/">Home</Link>
           <Link href="/events">Events</Link>
-          <Link href={user?.user ? "/profile" : "/auth/signin"}>
-            {user?.user ? (
+          <Link href={session?.user ? "/profile" : "/auth/signin"}>
+            {session?.user ? (
               <HeadphonesIcon className="text-gray-200" fontSize="large" />
             ) : (
               <AccountCircleIcon className="text-gray-200" fontSize="large" />
@@ -38,7 +43,7 @@ const NavBar = () => {
           </Link>
         </div>
         <div className=" md:hidden">
-          <Link href={user?.user ? "/profile" : "/auth/signin"}>
+          <Link href={session?.user ? "/profile" : "/auth/signin"}>
             <MenuIcon className="text-primary-500" fontSize="large" />
           </Link>
         </div>
