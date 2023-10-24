@@ -10,7 +10,7 @@ export const signUpSchema = z
     email: z.string().min(1, { message: "Toto pole je povinné" }).email({
       message: "Není validní emailová adresa",
     }),
-    name: z
+    username: z
       .string()
       .min(3, { message: "Minimální délka křestního jména jsou 3 znaky" })
       .max(32, { message: "Maximální délka je 32 znaků" }),

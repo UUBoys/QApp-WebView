@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 // Button.stories.ts|tsx
 
 import type { Meta, StoryObj } from "@storybook/react";

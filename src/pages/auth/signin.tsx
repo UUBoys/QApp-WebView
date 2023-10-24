@@ -4,8 +4,10 @@
 /* eslint-disable tailwindcss/classnames-order */
 /* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable import/no-extraneous-dependencies */
+import GoogleIcon from "@mui/icons-material/Google";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -16,25 +18,35 @@ type LoginValues = {
 
 export const SignIn = () => {
   const { register, handleSubmit } = useForm<LoginValues>();
-  const { mutateAsync, data, isLoading } = {};
-  const [defaultError, setDefaultError] = useState("");
+  const [defaultError] = useState("");
   const router = useRouter();
-
-  const handleCredentialsLogin = async ({ email, password }: LoginValues) => {
-    const res = await mutateAsync({ email, password });
-    if (res.error) {
-      if (res.error === "Unauthorized") {
-        setDefaultError("Špatné heslo nebo email");
-        return;
-      }
-      setDefaultError(res.error);
+  const { data: session } = useSession();
+  const handleStudentCredentialsLogin = async ({
+    email,
+    password,
+  }: LoginValues) => {
+    const res = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+    if (res?.error) {
+      console.error(res.error);
+    } else if (res?.url) {
+      const url = new URL(res?.url);
+      const redirectUrl = url.searchParams.get("callbackUrl");
+      router.push(redirectUrl || res.url);
     }
   };
+
+  useEffect(() => {
+    if (session?.accessToken) router.push("/");
+  }, [router, session?.accessToken]);
 
   return (
     <div className="flex h-screen w-full items-center bg-gray-100">
       <div className="mx-auto flex h-[500px] w-11/12  flex-col bg-white rounded-md  p-10 shadow-2xl sm:w-[400px]">
-        <div className="border-[10px] relative border-gray-200 rounded-full mx-auto h-[200px] justify-center w-[200px] flex bg-white items-center top-[-130px]">
+        <div className="border-[10px] relative border-gray-200 rounded-full mx-auto h-[170px] justify-center w-[170px] flex bg-white items-center top-[-130px]">
           <div className="  text-center text-6xl font-bold text-primary-500">
             Q
           </div>
@@ -44,7 +56,10 @@ export const SignIn = () => {
           {defaultError !== "" && (
             <p className="mt-2 text-xl italic text-red-500">{defaultError}</p>
           )}
-          <form action="" onSubmit={handleSubmit(handleCredentialsLogin)}>
+          <form
+            action=""
+            onSubmit={handleSubmit(handleStudentCredentialsLogin)}
+          >
             <div className="mb-6">
               <label
                 htmlFor="email"
@@ -74,12 +89,21 @@ export const SignIn = () => {
                   placeholder="Heslo"
                 />
               </label>
+            </div>{" "}
+            <div className="mb-6">
+              <button
+                type="submit"
+                className="w-full rounded-lg hover:bg-secondary-900 px-5 py-2.5 text-center text-sm font-medium text-white transition-all bg-primary-500 focus:outline-none focus:ring-4  "
+              >
+                Přihlásit se
+              </button>
             </div>
             <button
-              type="submit"
-              className="w-full rounded-lg hover:bg-secondary-900 px-5 py-2.5 text-center text-sm font-medium text-white transition-all bg-primary-500 focus:outline-none focus:ring-4  "
+              type="button"
+              onClick={() => signIn("google")}
+              className="w-full rounded-lg hover:bg-secondary-900 px-5 py-2.5 text-center text-sm font-medium text-white transition-all bg-[#de5246] focus:outline-none focus:ring-4  "
             >
-              Přihlásit se
+              <GoogleIcon /> Přihlásit se přes Google
             </button>
           </form>
           <Link

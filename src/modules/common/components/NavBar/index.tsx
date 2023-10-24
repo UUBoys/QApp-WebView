@@ -1,29 +1,27 @@
-import Link from "next/link";
-import React from "react";
-import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
-import { useSession } from "next-auth/react";
+import MenuIcon from "@mui/icons-material/Menu";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import React from "react";
 
 const navbarAllowedRoutes = ["/", "/events"];
 
 const NavBar = () => {
   const { data: session } = useSession();
-  const [search, setSearch] = React.useState("");
   const { pathname } = useRouter();
-  console.log(pathname);
   if (!navbarAllowedRoutes.includes(pathname)) return null;
   return (
-    <nav className="fixed z-10 h-[4.5rem] w-full bg-slate-950 flex items-center">
+    <nav className="fixed z-10 flex h-[4.5rem] w-full items-center bg-slate-950">
       <div className="flex w-full flex-wrap items-center justify-between p-4 px-12">
-        <div className="flex gap-3 items-center">
-          <div className="w-10 h-10 text-xl text-primary-500 border-gray-400 border-2 rounded-full flex items-center justify-center">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-400 text-xl text-primary-500">
             120
           </div>
           <div className="text-2xl">Credits</div>
         </div>
-        <Link href="/" className="items-center flex">
+        <Link href="/" className="flex items-center">
           <span className="w self-center text-2xl font-semibold text-primary-600 ">
             Q
           </span>
@@ -31,7 +29,7 @@ const NavBar = () => {
             Up!
           </span>
         </Link>
-        <div className="cursor-pointer hidden gap-6 items-center md:flex">
+        <div className="hidden cursor-pointer items-center gap-6 md:flex">
           <Link href="/">Home</Link>
           <Link href="/events">Events</Link>
           <Link href={session?.user ? "/profile" : "/auth/signin"}>

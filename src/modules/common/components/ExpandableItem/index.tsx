@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Transition } from "@headlessui/react";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Button from "@/modules/common/components/Button";
 import clsx from "clsx";
+import React from "react";
+
+import Button from "@/modules/common/components/Button";
 
 type ExpandableItemProps = {
   title: string;
@@ -26,7 +29,7 @@ const ExpandableItem: React.FC<ExpandableItemProps> = ({
   isOpen,
 }) => {
   return (
-    <div className="relative bg-gray-100 transition-all hover:bg-gray-200 rounded-xl mt-2 overflow-hidden">
+    <div className="relative mt-2 overflow-hidden rounded-xl bg-gray-100 transition-all hover:bg-gray-200">
       {/* Background image that's visible only when expanded */}
       <Transition
         show={isOpen}
@@ -37,13 +40,13 @@ const ExpandableItem: React.FC<ExpandableItemProps> = ({
         <img
           src={imageSrc}
           alt="Event Background"
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          className="absolute left-0 top-0 z-0 h-full w-full object-cover"
         />
-        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 z-10"></div>
+        <div className="absolute left-0 top-0 z-10 h-full w-full bg-black bg-opacity-60" />
       </Transition>
 
       <div
-        className="relative z-20 flex flex-col h-1/2 sm:flex-row justify-between items-center p-2 cursor-pointer"
+        className="relative z-20 flex h-1/2 cursor-pointer flex-col items-center justify-between p-2 sm:flex-row"
         onClick={onToggle}
       >
         <div className="flex items-center">
@@ -53,7 +56,7 @@ const ExpandableItem: React.FC<ExpandableItemProps> = ({
           <span
             className={clsx(
               isOpen && "bg-primary-400 text-white",
-              "ml-4 bg-gray-300 text-black px-2 py-1 rounded text-sm"
+              "ml-4 rounded bg-gray-300 px-2 py-1 text-sm text-black"
             )}
           >
             {price}
@@ -64,11 +67,11 @@ const ExpandableItem: React.FC<ExpandableItemProps> = ({
           <img
             src={imageSrc}
             alt="Event"
-            className="w-28 h-16 select-none rounded shadow-md mr-2"
+            className="mr-2 h-16 w-28 select-none rounded shadow-md"
           />
         )}
         <span
-          className={`transform transition-transform duration-300 ${
+          className={`transition-transform duration-300${
             isOpen ? "rotate-180" : ""
           }`}
         >
@@ -82,12 +85,12 @@ const ExpandableItem: React.FC<ExpandableItemProps> = ({
         enterFrom="opacity-0"
         enterTo="opacity-100"
       >
-        <div className="p-2 relative z-20">
+        <div className="relative z-20 p-2">
           <p className="mb-1 text-gray-50">{date}</p>
           <p className="mb-1 text-gray-50">{address}</p>
           <p className="text-gray-50">{content}</p>
         </div>
-        <div className="w-full flex justify-end px-3 p-2 relative z-10">
+        <div className="relative z-10 flex w-full justify-end p-2 px-3">
           <Button className="w-36 rounded-xl">Zakoupit</Button>
         </div>
       </Transition>

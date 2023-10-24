@@ -1,4 +1,6 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState } from "react";
+
 import ExpandableItem from "@/modules/common/components/ExpandableItem";
 
 type Event = {
@@ -26,10 +28,10 @@ const EventsList: React.FC<EventsListProps> = ({ events }) => {
   };
 
   return (
-    <div className="max-w-full transition-all md:max-w-lg p-4 border bg-white mx-auto mt-10">
+    <div className="mx-auto mt-10 max-w-full border bg-white p-4 transition-all md:max-w-lg">
       {events.map((event, index) => (
         <ExpandableItem
-          key={index}
+          key={`klic${index}`}
           {...event}
           isOpen={openedIndex === index}
           onToggle={() => handleItemClick(index)}

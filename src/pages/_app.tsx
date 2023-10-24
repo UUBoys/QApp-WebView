@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import { AppProps } from "next/app";
