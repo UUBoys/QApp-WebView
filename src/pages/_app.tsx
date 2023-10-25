@@ -29,7 +29,7 @@ const MyApp = ({
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
         <I18nextProvider i18n={i18n}>
-          <Toaster />
+          <Toaster expand visibleToasts={6} position={"bottom-left"} richColors/>
           <NavBar />
           <Component {...pageProps} />
         </I18nextProvider>

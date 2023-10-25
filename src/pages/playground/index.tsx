@@ -5,10 +5,27 @@ import Button from "@/modules/common/components/Button";
 import Card from "@/modules/common/components/Card";
 import Input from "@/modules/common/components/Input";
 import NavBar from "@/modules/common/components/NavBar";
+import Menu, { MenuItemProps } from "@/modules/common/components/Menu";
+
 
 const index = () => {
   const [search, setSearch] = React.useState("");
   const [password, setPassword] = React.useState("");
+
+  const menuItems: MenuItemProps[] = [
+    {
+      label: "Profile",
+      onClick: (e) => console.log(e)
+    },
+    {
+      label: "Settings",
+      onClick: () => console.log("ahoj")
+    },
+    {
+      label:"Logout",
+      href:"/playground"
+    }
+  ]
 
   return (
     <div className="flex w-full justify-center bg-gray-900 pb-32">
@@ -48,6 +65,7 @@ const index = () => {
           price={100}
           title="Card title"
         />
+        <Menu items={menuItems}><p>test</p></Menu>
       </div>
     </div>
   );
