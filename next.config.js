@@ -9,7 +9,7 @@ const nextConfig = {
       },
       {
         source: "/api/:path*",
-        destination: "https://qappatlas.azurewebsites.net/", // other /api/* paths get rewritten
+        destination: process.env.API_URL, // other /api/* paths get rewritten
       },
     ];
   },
