@@ -9,7 +9,7 @@ const nextConfig = {
       },
       {
         source: "/api/:path*",
-        destination: "https://qappauth.azurewebsites.net/:path*", // other /api/* paths get rewritten
+        destination: "https://qappatlas.azurewebsites.net/", // other /api/* paths get rewritten
       },
     ];
   },

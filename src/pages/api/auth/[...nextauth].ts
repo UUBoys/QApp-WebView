@@ -54,8 +54,6 @@ export const authOptions: NextAuthOptions = {
           variables,
         });
 
-        console.log(response, variables);
-
         if (response.errors) {
           throw new Error(response.errors[0].message);
         }

@@ -1,45 +1,52 @@
-import { Fragment, useEffect, useState } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CheckIcon from '@mui/icons-material/Check';
-import { useTranslation } from 'react-i18next';
+/* eslint-disable react/no-array-index-key */
+import { Listbox, Transition } from "@headlessui/react";
+import CheckIcon from "@mui/icons-material/Check";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Fragment, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export type SelectItemProps = {
-  label: string
-  value?: any
-  render?: (e: SelectItemProps) => React.ReactNode
-  className?: string
-}
+  label: string;
+  value?: any;
+  render?: (e: SelectItemProps) => React.ReactNode;
+  className?: string;
+};
 
 type SelectProps = {
-  items: SelectItemProps[]
-  defaultSelected?: SelectItemProps | undefined
-  onSelectedChange?: (item: SelectItemProps) => void
-  className?:string
-}
+  items: SelectItemProps[];
+  defaultSelected?: SelectItemProps | undefined;
+  onSelectedChange?: (item: SelectItemProps) => void;
+  className?: string;
+};
 
-
-export default function Select({items, defaultSelected, onSelectedChange, className}: SelectProps) {
-  const {t} = useTranslation()
-  const [selected, setSelected] = useState(defaultSelected || undefined)
+const Select: React.FC<SelectProps> = ({
+  items,
+  defaultSelected,
+  onSelectedChange,
+  className,
+}) => {
+  const { t } = useTranslation();
+  const [selected, setSelected] = useState(defaultSelected || undefined);
 
   useEffect(() => {
-    if(onSelectedChange && selected){
-      onSelectedChange(selected)
+    if (onSelectedChange && selected) {
+      onSelectedChange(selected);
     }
-  }, [selected])
+  }, [selected]);
 
   return (
-    <div className={className ? className :""}>
+    <div className={className || ""}>
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
           <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-[#FFAD32] focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
             {selected ? (
-              <span className="block truncate text-black">{selected && selected.label}</span>
-            ): (
-              <span className="block truncate text-gray-400">{t("components.select.placeholder")}</span>
+              <span className="block truncate text-black">
+                {selected && selected.label}
+              </span>
+            ) : (
+              <span className="block truncate text-gray-400">
+                {t("components.select.placeholder")}
+              </span>
             )}
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ExpandMoreIcon
@@ -57,26 +64,31 @@ export default function Select({items, defaultSelected, onSelectedChange, classN
             <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {items.map((item, index) => (
                 <Listbox.Option
-                  key={index}
+                  key={`${index}key`}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? 'bg-[rgba(255,173,50,0.1)] text-[#FFAD32]' : 'text-gray-900'
+                      active
+                        ? "bg-[rgba(255,173,50,0.1)] text-[#FFAD32]"
+                        : "text-gray-900"
                     }`
                   }
                   value={item}
                 >
-                  {({ selected }) => (
+                  {({ selected: selectedItem }) => (
                     <>
                       <span
                         className={`block truncate ${
-                          selected ? 'font-medium' : 'font-normal'
+                          selectedItem ? "font-medium" : "font-normal"
                         }`}
                       >
                         {item.label}
                       </span>
-                      {selected ? (
+                      {selectedItem ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                          <CheckIcon sx={{fontSize:"18px", color:"#FFAD32"}} aria-hidden="true" />
+                          <CheckIcon
+                            sx={{ fontSize: "18px", color: "#FFAD32" }}
+                            aria-hidden="true"
+                          />
                         </span>
                       ) : null}
                     </>
@@ -88,5 +100,7 @@ export default function Select({items, defaultSelected, onSelectedChange, classN
         </div>
       </Listbox>
     </div>
-  )
-}
+  );
+};
+
+export default Select;

@@ -47,6 +47,7 @@ const SignUp: React.FC = () => {
     const res = await mutateRegisterAsync({
       variables,
     });
+
     setDefaultError("");
     if (!res.data?.register?.success) {
       setDefaultError(res.errors?.[0].message ?? "");

@@ -24,7 +24,7 @@ const queryClient = new QueryClient({
 });
 
 const client = new ApolloClient({
-  uri: process.env.API_URL ?? "",
+  uri: "/api/",
   cache: new InMemoryCache(),
 });
 
