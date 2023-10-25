@@ -66,7 +66,7 @@ export const SignIn = () => {
                   type="email"
                   id="email"
                   className="block w-full rounded-lg border !border-primary-100 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-lg placeholder:text-gray-400 focus:border-2  focus:ring-primary-500 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                  placeholder={t("emailPlaceholder")}
+                  placeholder={t("pages.auth.form.email.placeholder")}
                   required
                 />
               </label>
@@ -82,7 +82,7 @@ export const SignIn = () => {
                   id="password"
                   className="block w-full rounded-lg border !border-primary-100 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-lg placeholder:text-gray-400 focus:border-primary-500 focus:ring-primary-500  dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                   required
-                  placeholder={t("passwordPlaceholder")}
+                  placeholder={t("pages.auth.form.password.placeholder")}
                 />
               </label>
             </div>{" "}
@@ -91,7 +91,7 @@ export const SignIn = () => {
                 type="submit"
                 className="w-full rounded-lg bg-primary-500 px-5 py-2.5 text-center text-sm font-medium text-white transition-all hover:bg-secondary-900 focus:outline-none focus:ring-4  "
               >
-                {t("signin")}
+                {t("pages.auth.login.button")}
               </button>
             </div>
             <button
@@ -99,14 +99,14 @@ export const SignIn = () => {
               onClick={() => signIn("google")}
               className="w-full rounded-lg bg-[#de5246] px-5 py-2.5 text-center text-sm font-medium text-white transition-all hover:bg-secondary-900 focus:outline-none focus:ring-4  "
             >
-              <GoogleIcon /> {t("signinWithGoogle")}
+              <GoogleIcon /> {t("pages.auth.form.signInWith.google")}
             </button>
           </form>
           <Link
             href="/auth/signup"
             className="mt-3 block text-center text-sm font-light text-gray-600 dark:text-white"
           >
-            {t("signup")}
+            {t("pages.auth.login.register")}
           </Link>
         </div>
       </div>

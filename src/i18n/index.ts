@@ -12,7 +12,7 @@ const detectionOptions = {
 };
 
 i18n.use(initReactI18next).init({
-  lng: "en",
+  lng: "cs",
   debug: false,
   fallbackLng: "cs",
   supportedLngs: availableLanguages,

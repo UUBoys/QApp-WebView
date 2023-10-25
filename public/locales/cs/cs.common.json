@@ -16,6 +16,36 @@
       "header": "Akce na dosah ruky",
       "description": "Nepropásněte žádné akce ve vašem okolí s naší aplikací QApp",
       "button": "Začněte teď"
+    },
+    "auth": {
+      "form": {
+        "name": {
+          "label": "Jméno",
+          "placeholder": "Zadejte jméno"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Zadejte email"
+        },
+        "signInWith": {
+          "google": "Přihlásit se přes Google"
+        },
+        "password": {
+          "label": "Heslo",
+          "placeholder": "********",
+          "passwordRepeat": "Zadejte heslo znovu"
+        }
+      },
+      "login": {
+        "header": "Přihlášení",
+        "button": "Přihlásit se",
+        "register": "Nemáte účet? Zaregistrujte se zde"
+      },
+      "register": {
+        "header": "Registrace",
+        "button": "Registrovat se",
+        "login": "Máte účet? Přihlašte se zde"
+      }
     }
   }
 }

@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 
 import { RegisterMutation } from "@/modules/mutations/UserMutations";
 import { IRegister, signUpSchema } from "@/modules/utils/schemas/auth";
+import { useTranslation } from "react-i18next";
 
 const SignUp: React.FC = () => {
   const {
@@ -18,6 +19,7 @@ const SignUp: React.FC = () => {
   } = useForm<IRegister>({
     resolver: zodResolver(signUpSchema),
   });
+  const {t} = useTranslation()
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -80,7 +82,7 @@ const SignUp: React.FC = () => {
                   type="name"
                   id="name"
                   className="block w-full rounded-lg border !border-primary-100 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-lg placeholder:text-gray-400 focus:border-2  focus:ring-primary-500 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                  placeholder="uživatelské jméno"
+                  placeholder={t("pages.auth.form.name.placeholder")}
                   required
                 />
               </label>
@@ -100,7 +102,7 @@ const SignUp: React.FC = () => {
                   type="email"
                   id="email"
                   className="block w-full rounded-lg border !border-primary-100 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-lg placeholder:text-gray-400 focus:border-2  focus:ring-primary-500 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                  placeholder="E-mail"
+                  placeholder={t("pages.auth.form.email.placeholder")}
                   required
                 />
               </label>
@@ -121,7 +123,7 @@ const SignUp: React.FC = () => {
                   id="password"
                   className="block w-full rounded-lg border !border-primary-100 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-lg placeholder:text-gray-400 focus:border-primary-500 focus:ring-primary-500  dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                   required
-                  placeholder="Heslo"
+                  placeholder={t("pages.auth.form.password.placeholder")}
                 />
               </label>
             </div>
@@ -141,7 +143,7 @@ const SignUp: React.FC = () => {
                   id="passwordCheck"
                   className="block w-full rounded-lg border !border-primary-100 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-lg placeholder:text-gray-400 focus:border-primary-500 focus:ring-primary-500  dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                   required
-                  placeholder="Znovu heslo"
+                  placeholder={t("pages.auth.form.password.passwordRepeat")}
                 />
               </label>
             </div>
@@ -149,14 +151,14 @@ const SignUp: React.FC = () => {
               type="submit"
               className="w-full rounded-lg bg-primary-500 px-5 py-2.5 text-center text-sm font-medium text-white transition-all hover:bg-secondary-900 focus:outline-none focus:ring-4  "
             >
-              Registrovat se
+              {t("pages.auth.register.button")}
             </button>
           </form>
           <Link
             href="/auth/signin"
             className="mt-3 block text-center text-sm font-light text-gray-600 dark:text-white"
           >
-            Přihlášení
+            {t("pages.auth.register.login")}
           </Link>
         </div>
       </div>
