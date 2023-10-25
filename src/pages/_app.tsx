@@ -11,6 +11,8 @@ import NavBar from "@/modules/common/components/NavBar";
 import { SessionProvider } from "next-auth/react";
 
 import { I18nextProvider } from "react-i18next";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
 import i18n from "../i18n";
 
 const queryClient = new QueryClient({
@@ -21,19 +23,31 @@ const queryClient = new QueryClient({
   },
 });
 
+const client = new ApolloClient({
+  uri: process.env.API_URL ?? "",
+  cache: new InMemoryCache(),
+});
+
 const MyApp = ({
   Component,
   pageProps,
 }: AppProps & { preferredLanguage: string }) => {
   return (
     <SessionProvider session={pageProps.session}>
-      <QueryClientProvider client={queryClient}>
-        <I18nextProvider i18n={i18n}>
-          <Toaster expand visibleToasts={6} position={"bottom-left"} richColors/>
-          <NavBar />
-          <Component {...pageProps} />
-        </I18nextProvider>
-      </QueryClientProvider>
+      <ApolloProvider client={client}>
+        <QueryClientProvider client={queryClient}>
+          <I18nextProvider i18n={i18n}>
+            <Toaster
+              expand
+              visibleToasts={6}
+              position="bottom-left"
+              richColors
+            />
+            <NavBar />
+            <Component {...pageProps} />
+          </I18nextProvider>
+        </QueryClientProvider>
+      </ApolloProvider>
     </SessionProvider>
   );
 };
