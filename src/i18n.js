@@ -1,8 +1,13 @@
 import i18n from "i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
 const availableLanguages = ["cs", "en"];
+
+const detectionOptions = {
+  order: ["localStorage", "navigator"],
+  caches: ["localStorage"],
+  checkWhitelist: true,
+};
 
 const resources = {
   en: {
@@ -25,28 +30,19 @@ const resources = {
   },
 };
 
-const initializeI18n = (initialLanguage = "cs") => {
-  i18n
-    .use(LanguageDetector)
-    .use(initReactI18next)
-    .init({
-      resources,
-      lng: initialLanguage,
-      fallbackLng: "en",
-      detection: {
-        order: ["localStorage"],
-        checkWhitelist: true,
-      },
-      debug: false,
-      whitelist: availableLanguages,
-      supportedLngs: availableLanguages,
-      interpolation: {
-        escapeValue: false, // needed for react, it escapes by default
-      },
-      react: {
-        useSuspense: false,
-      },
-    });
-};
+i18n.use(initReactI18next).init({
+  resources,
+  fallbackLng: "cs",
+  detection: detectionOptions,
+  debug: false,
+  whitelist: availableLanguages,
+  supportedLngs: availableLanguages,
+  interpolation: {
+    escapeValue: false, // needed for react, it escapes by default
+  },
+  react: {
+    useSuspense: false,
+  },
+});
 
-export { i18n, initializeI18n };
+export default i18n;
