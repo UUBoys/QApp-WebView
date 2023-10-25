@@ -1,15 +1,16 @@
 /* eslint-disable import/no-unresolved */
+import { useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-/* eslint-disable jsx-a11y/label-has-associated-control */
-
-import { RegisterMutation } from "@/modules/mutations/UserMutations";
-import { IRegister, signUpSchema } from "@/modules/utils/schemas/auth";
 import { useTranslation } from "react-i18next";
+
+import { Mutation, MutationRegisterArgs } from "@/generated/graphql";
+import { REGISTER_MUTATION } from "@/modules/GRAPHQL/mutations/RegisterMutation";
+import { IRegister, signUpSchema } from "@/modules/utils/schemas/auth";
 
 const SignUp: React.FC = () => {
   const {
@@ -19,11 +20,10 @@ const SignUp: React.FC = () => {
   } = useForm<IRegister>({
     resolver: zodResolver(signUpSchema),
   });
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const router = useRouter();
   const { data: session } = useSession();
-
-  const { mutateAsync: registerAsync } = RegisterMutation();
+  const [mutateRegisterAsync] = useMutation<Mutation>(REGISTER_MUTATION);
 
   const [defaultError, setDefaultError] = useState<string>("");
 
@@ -33,15 +33,23 @@ const SignUp: React.FC = () => {
     password,
     passwordCheck,
   }: IRegister) => {
-    const res = await registerAsync({
-      username,
+    if (password !== passwordCheck) {
+      setDefaultError("Passwords do not match");
+      return;
+    }
+
+    const variables: MutationRegisterArgs = {
       email,
       password,
-      passwordCheck,
+      username,
+    };
+
+    const res = await mutateRegisterAsync({
+      variables,
     });
     setDefaultError("");
-    if (res.error) {
-      setDefaultError(res.error);
+    if (!res.data?.register?.success) {
+      setDefaultError(res.errors?.[0].message ?? "");
     } else {
       await signIn("credentials", { email, password, redirect: false });
       router.push("/");

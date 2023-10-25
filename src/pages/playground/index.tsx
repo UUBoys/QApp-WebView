@@ -4,10 +4,10 @@ import React from "react";
 import Button from "@/modules/common/components/Button";
 import Card from "@/modules/common/components/Card";
 import Input from "@/modules/common/components/Input";
+import Menu, { MenuItemProps } from "@/modules/common/components/Menu";
 import NavBar from "@/modules/common/components/NavBar";
 import Menu, { MenuItemProps } from "@/modules/common/components/Menu";
 import Select, { SelectItemProps } from "@/modules/common/components/Select";
-
 
 const index = () => {
   const [search, setSearch] = React.useState("");
@@ -16,17 +16,17 @@ const index = () => {
   const menuItems: MenuItemProps[] = [
     {
       label: "Profile",
-      onClick: (e) => console.log(e)
+      onClick: (e) => console.log(e),
     },
     {
       label: "Settings",
-      onClick: () => console.log("ahoj")
+      onClick: () => console.log("ahoj"),
     },
     {
-      label:"Logout",
-      href:"/playground"
-    }
-  ]
+      label: "Logout",
+      href: "/playground",
+    },
+  ];
 
 
 const SelectItems:SelectItemProps[] = [

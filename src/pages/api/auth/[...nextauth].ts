@@ -1,9 +1,13 @@
 /* eslint-disable no-param-reassign */
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 import jwt from "jsonwebtoken";
 import NextAuth, { User, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
+import { Mutation, MutationLoginArgs } from "../../../generated/graphql";
+
+import { LOGIN_MUTATION } from "@/modules/GRAPHQL/mutations/LoginMutation";
 import { signInSchema } from "@/modules/utils/schemas/auth";
 
 export const AUTH_ROUTES = {
@@ -37,30 +41,34 @@ export const authOptions: NextAuthOptions = {
       },
       authorize: async (credentials) => {
         const creds = await signInSchema.parseAsync(credentials);
-
-        const res = await fetch("https://qappauth.azurewebsites.net/login", {
-          method: "POST",
-          body: JSON.stringify(creds),
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
+        const client = new ApolloClient({
+          uri: process.env.API_URL ?? "",
+          cache: new InMemoryCache(),
+        });
+        const variables: MutationLoginArgs = {
+          email: creds.email,
+          password: creds.password,
+        };
+        const response = await client.mutate<Mutation>({
+          mutation: LOGIN_MUTATION,
+          variables,
         });
 
-        const data = await res.json();
-        if (data.error) {
-          throw new Error(data.error);
+        console.log(response, variables);
+
+        if (response.errors) {
+          throw new Error(response.errors[0].message);
         }
 
-        if (!data.token) throw new Error("No token");
+        if (!response.data?.login?.token) throw new Error("No token");
 
-        const decodedToken = jwt.decode(data.token);
+        const decodedToken = jwt.decode(response.data?.login?.token);
 
         if (!decodedToken) {
           throw new Error("Invalid user");
         }
 
-        const userObject = { token: data.token };
+        const userObject = { token: response.data?.login?.token };
 
         return userObject as User;
       },
