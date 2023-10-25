@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 type LoginValues = {
   email: string;
@@ -18,6 +19,7 @@ type LoginValues = {
 
 export const SignIn = () => {
   const { register, handleSubmit } = useForm<LoginValues>();
+  const { t } = useTranslation();
   const [defaultError] = useState("");
   const router = useRouter();
   const { data: session } = useSession();
@@ -70,7 +72,7 @@ export const SignIn = () => {
                   type="email"
                   id="email"
                   className="block w-full rounded-lg border !border-primary-100 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-lg placeholder:text-gray-400 focus:border-2  focus:ring-primary-500 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                  placeholder="E-mail"
+                  placeholder={t("emailPlaceholder")}
                   required
                 />
               </label>
@@ -86,7 +88,7 @@ export const SignIn = () => {
                   id="password"
                   className="block w-full rounded-lg border !border-primary-100 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-lg placeholder:text-gray-400 focus:border-primary-500 focus:ring-primary-500  dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                   required
-                  placeholder="Heslo"
+                  placeholder={t("passwordPlaceholder")}
                 />
               </label>
             </div>{" "}
@@ -95,7 +97,7 @@ export const SignIn = () => {
                 type="submit"
                 className="w-full rounded-lg hover:bg-secondary-900 px-5 py-2.5 text-center text-sm font-medium text-white transition-all bg-primary-500 focus:outline-none focus:ring-4  "
               >
-                Přihlásit se
+                {t("signin")}
               </button>
             </div>
             <button
@@ -103,14 +105,14 @@ export const SignIn = () => {
               onClick={() => signIn("google")}
               className="w-full rounded-lg hover:bg-secondary-900 px-5 py-2.5 text-center text-sm font-medium text-white transition-all bg-[#de5246] focus:outline-none focus:ring-4  "
             >
-              <GoogleIcon /> Přihlásit se přes Google
+              <GoogleIcon /> {t("signinWithGoogle")}
             </button>
           </form>
           <Link
             href="/auth/signup"
             className="mt-3 block text-center text-sm font-light text-gray-600 dark:text-white"
           >
-            Registrovat se
+            {t("signup")}
           </Link>
         </div>
       </div>
