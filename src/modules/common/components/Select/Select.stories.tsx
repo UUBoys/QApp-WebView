@@ -1,9 +1,8 @@
-// Button.stories.ts|tsx
-
 import type { Meta, StoryObj } from "@storybook/react";
 
 import Select, {SelectItemProps} from "@/modules/common/components/Select"
 import { useState } from "react";
+import i18n from "@/i18n"
 
 const meta: Meta<typeof Select> = {
   component: Select,
@@ -24,7 +23,7 @@ const items:SelectItemProps[] = [
 export default meta;
 type Story = StoryObj<typeof Select>;
 
-export const Default = () => {
+export const Default: Story = () => {
   const [selected, setSelected] = useState<SelectItemProps | undefined>(undefined)
   
   const handleSelectedChange = (e: SelectItemProps) => setSelected(e)
@@ -32,7 +31,8 @@ export const Default = () => {
   return (
     <div>
       <p className={"text-black"}>selected item {selected && selected.label}</p>
-      <Select items={items} defaultSelected={selected} onSelectedChange={handleSelectedChange} />
+      <Select items={items} defaultSelected={selected} onSelectedChange={handleSelectedChange} className={"w-[300px]"} />
     </div>
   )
 }
+Default.args = {};
