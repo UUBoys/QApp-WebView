@@ -1,0 +1,21 @@
+{
+  "navbar": {
+    "registerClub": "Register club",
+    "menuItems": {
+      "home": "Home",
+      "events": "Events",
+      "profile": {
+        "profile": "Profile",
+        "settings": "Settings",
+        "logout": "Logout"
+      }
+    }
+  },
+  "pages": {
+    "homepage": {
+      "header": "Events at your fingertips",
+      "description": "Don't miss any events in your area with our QApp",
+      "button": "Start now"
+    }
+  }
+}
