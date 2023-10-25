@@ -47,5 +47,10 @@
         "login": "Máte účet? Přihlašte se zde"
       }
     }
+  },
+  "components": {
+    "select": {
+      "placeholder": "Vyberte možnost"
+    }
   }
 }

@@ -47,5 +47,10 @@
         "login": "Already have an account? Login here"
       }
     }
+  },
+  "components": {
+    "select": {
+      "placeholder": "Select an option"
+    }
   }
 }

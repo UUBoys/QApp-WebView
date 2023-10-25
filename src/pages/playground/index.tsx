@@ -6,6 +6,7 @@ import Card from "@/modules/common/components/Card";
 import Input from "@/modules/common/components/Input";
 import NavBar from "@/modules/common/components/NavBar";
 import Menu, { MenuItemProps } from "@/modules/common/components/Menu";
+import Select, { SelectItemProps } from "@/modules/common/components/Select";
 
 
 const index = () => {
@@ -26,6 +27,18 @@ const index = () => {
       href:"/playground"
     }
   ]
+
+
+const SelectItems:SelectItemProps[] = [
+  {
+    label:"profile",
+    value:"profile - test"
+  },
+  {
+    label:"test",
+    value:"profile - test"
+  }
+]
 
   return (
     <div className="flex w-full justify-center bg-gray-900 pb-32">
@@ -66,6 +79,7 @@ const index = () => {
           title="Card title"
         />
         <Menu items={menuItems}><p>test</p></Menu>
+        <Select items={SelectItems} className={"w-[200px]"}/>
       </div>
     </div>
   );
