@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { useTranslation, withTranslation } from "react-i18next";
 
 type LoginValues = {
   email: string;
@@ -120,4 +120,4 @@ export const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default withTranslation()(SignIn);

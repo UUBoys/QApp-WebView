@@ -3,7 +3,7 @@
 /* eslint-disable import/no-unresolved */
 import { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from "sonner";
 import "react-toastify/dist/ReactToastify.css";
 
 import "@/modules/common/styles/globals.css";
@@ -47,18 +47,7 @@ const MyApp = ({
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
         <I18nextProvider i18n={i18n}>
-          <ToastContainer
-            position="top-center"
-            autoClose={1000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
+          <Toaster />
           <NavBar />
           <Component {...pageProps} />
         </I18nextProvider>
