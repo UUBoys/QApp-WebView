@@ -1,16 +1,10 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
-/* eslint-disable tailwindcss/classnames-order */
-/* eslint-disable tailwindcss/no-custom-classname */
-/* eslint-disable import/no-extraneous-dependencies */
 import GoogleIcon from "@mui/icons-material/Google";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation, withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 type LoginValues = {
   email: string;
@@ -47,8 +41,8 @@ export const SignIn = () => {
 
   return (
     <div className="flex h-screen w-full items-center bg-gray-100">
-      <div className="mx-auto flex h-[500px] w-11/12  flex-col bg-white rounded-md  p-10 shadow-2xl sm:w-[400px]">
-        <div className="border-[10px] relative border-gray-200 rounded-full mx-auto h-[170px] justify-center w-[170px] flex bg-white items-center top-[-130px]">
+      <div className="mx-auto flex h-[500px] w-11/12  flex-col rounded-md bg-white  p-10 shadow-2xl sm:w-[400px]">
+        <div className="relative top-[-130px] mx-auto flex h-[170px] w-[170px] items-center justify-center rounded-full border-[10px] border-gray-200 bg-white">
           <div className="  text-center text-6xl font-bold text-primary-500">
             Q
           </div>
@@ -95,7 +89,7 @@ export const SignIn = () => {
             <div className="mb-6">
               <button
                 type="submit"
-                className="w-full rounded-lg hover:bg-secondary-900 px-5 py-2.5 text-center text-sm font-medium text-white transition-all bg-primary-500 focus:outline-none focus:ring-4  "
+                className="w-full rounded-lg bg-primary-500 px-5 py-2.5 text-center text-sm font-medium text-white transition-all hover:bg-secondary-900 focus:outline-none focus:ring-4  "
               >
                 {t("signin")}
               </button>
@@ -103,7 +97,7 @@ export const SignIn = () => {
             <button
               type="button"
               onClick={() => signIn("google")}
-              className="w-full rounded-lg hover:bg-secondary-900 px-5 py-2.5 text-center text-sm font-medium text-white transition-all bg-[#de5246] focus:outline-none focus:ring-4  "
+              className="w-full rounded-lg bg-[#de5246] px-5 py-2.5 text-center text-sm font-medium text-white transition-all hover:bg-secondary-900 focus:outline-none focus:ring-4  "
             >
               <GoogleIcon /> {t("signinWithGoogle")}
             </button>
@@ -120,4 +114,4 @@ export const SignIn = () => {
   );
 };
 
-export default withTranslation()(SignIn);
+export default SignIn;

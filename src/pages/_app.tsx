@@ -11,21 +11,7 @@ import NavBar from "@/modules/common/components/NavBar";
 import { SessionProvider } from "next-auth/react";
 
 import { I18nextProvider } from "react-i18next";
-import { initializeI18n, i18n } from "../i18n";
-import { useEffect } from "react";
-
-export const getServerSideProps = async (context: {
-  req: { headers: { [x: string]: any } };
-}) => {
-  const acceptLanguage = context.req.headers["accept-language"];
-  const preferredLanguage = acceptLanguage?.split(",")[0] || "cs";
-
-  return {
-    props: {
-      preferredLanguage,
-    },
-  };
-};
+import { i18n } from "../i18n";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,11 +24,7 @@ const queryClient = new QueryClient({
 const MyApp = ({
   Component,
   pageProps,
-  preferredLanguage,
 }: AppProps & { preferredLanguage: string }) => {
-  useEffect(() => {
-    initializeI18n(preferredLanguage);
-  }, [preferredLanguage]);
   return (
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
