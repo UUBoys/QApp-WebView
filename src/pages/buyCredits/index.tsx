@@ -10,6 +10,7 @@ import CreditPackage, {
   CreditPackageProps,
 } from "@/modules/common/components/CreditPackage";
 import Loader from "@/modules/common/components/Loader";
+import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
 import { TOPUPCREDITSMUTATION } from "@/modules/GRAPHQL/mutations/TopupCreditsMutation";
 
 const creditPackages: CreditPackageProps[] = [
@@ -50,13 +51,19 @@ const creditPackages: CreditPackageProps[] = [
 const BuyCredits: NextPage = () => {
   const [mutateTopUpCreditsMutation, { loading, error, data }] =
     useMutation<Mutation>(TOPUPCREDITSMUTATION);
-
+  const { credits, setCredits } = useUserAdditionalDataStore((set) => ({
+    setCredits: set.setCredits,
+    credits: set.credits,
+  }));
   const onBuy = async (volume?: number) => {
     const variables: MutationTopupCreditsArgs = {
       amount: volume,
     };
 
-    await mutateTopUpCreditsMutation({ variables });
+    console.log(variables);
+    const result = await mutateTopUpCreditsMutation({ variables });
+    if (!result.data?.topupCredits?.success) return;
+    setCredits(result.data?.topupCredits?.newBalance as number);
   };
   return (
     <div className="min-h-[100vh] w-full bg-gray-100 pt-52">
@@ -70,8 +77,10 @@ const BuyCredits: NextPage = () => {
       <div className="mx-auto w-[90%] border-b border-gray-600 p-20 sm:w-3/5">
         <div className="flex w-full items-end justify-center gap-5 text-center">
           <p className="flex items-end sm:mb-[-10px]">
-            <div className="text-5xl text-primary-500 sm:text-9xl">220.</div>
-            <div className="mb-[5px] text-4xl sm:text-8xl">00</div>
+            <div className="text-5xl text-primary-500 sm:text-9xl">
+              {credits}
+            </div>
+            <div className="mb-[5px] text-4xl sm:text-8xl">.00</div>
           </p>
           <div className="text-3xl sm:text-6xl"> Kreditů</div>
         </div>

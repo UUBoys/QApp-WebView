@@ -1,4 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
+import { useQuery } from "@apollo/client";
 import { Disclosure, Menu as HeadlessMenu } from "@headlessui/react";
 import {
   XMarkIcon,
@@ -12,15 +13,34 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 
+import { useUserAdditionalDataStore } from "../../stores/user-aditional-data-store";
 import Menu from "../Menu";
+
+import { Query } from "@/generated/graphql";
+import { GET_CREDIT } from "@/modules/GRAPHQL/queries/GetCreditQuery";
 
 const navbarAllowedRoutes = ["/", "/events", "/buyCredits", "/clubs"];
 
 const NavBar = () => {
   const { pathname } = useRouter();
   const { data: session } = useSession();
+  const { credits, setCredits } = useUserAdditionalDataStore((set) => ({
+    setCredits: set.setCredits,
+    credits: set.credits,
+  }));
+
+  const { data, refetch } = useQuery<Query>(GET_CREDIT);
+
+  useEffect(() => {
+    if (data) setCredits(data?.getCredit?.balance as number);
+  }, [data, setCredits]);
+
+  useEffect(() => {
+    if (session?.user) refetch();
+  }, [refetch, session?.user]);
+
   if (!navbarAllowedRoutes.includes(pathname)) return null;
 
   const navigation = [
@@ -45,7 +65,7 @@ const NavBar = () => {
   return (
     <Disclosure
       as="nav"
-      className="fixed inset-0 mx-auto mt-10 max-h-24 w-11/12 rounded-[20px]  bg-white p-4 shadow-xl"
+      className="fixed inset-0 z-[1000] mx-auto mt-10 max-h-24 w-11/12 rounded-[20px]  bg-white p-4 shadow-xl"
     >
       {({ open }) => (
         <>
@@ -126,7 +146,7 @@ const NavBar = () => {
                         aria-hidden="true"
                       />
                     </Link>
-                    122
+                    {credits}
                   </div>
                   {session?.user && (
                     <Menu

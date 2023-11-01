@@ -1,9 +1,10 @@
-import { Fragment, useEffect, useState } from "react";
+/* eslint-disable no-shadow */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-underscore-dangle */
 import { Combobox, Transition } from "@headlessui/react";
-
 import CheckIcon from "@mui/icons-material/Check";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Fragment, useEffect, useState } from "react";
 
 type AutocompleteProps = {
   options: AutocompleteItemProps[];
@@ -17,14 +18,13 @@ export type AutocompleteItemProps = {
   label: string;
   value: any;
 };
-
-export default function Autocomplete({
+const Autocomplete = ({
   options,
   defaultSelected,
   defaultInputValue,
   onChange,
   className = "",
-}: AutocompleteProps) {
+}: AutocompleteProps) => {
   const [selected, setSelected] = useState<AutocompleteItemProps | undefined>(
     defaultSelected || undefined
   );
@@ -77,7 +77,7 @@ export default function Autocomplete({
           >
             <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
               {filteredItems.length === 0 && query !== "" ? (
-                <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+                <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                   Nothing found.
                 </div>
               ) : (
@@ -125,4 +125,6 @@ export default function Autocomplete({
       </Combobox>
     </div>
   );
-}
+};
+
+export default Autocomplete;
