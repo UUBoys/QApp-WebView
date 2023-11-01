@@ -74,3 +74,20 @@ a {
     color-scheme: dark;
   }
 }
+
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-alway {
+  scroll-snap-align: start;
+}
+
+.overflow-x-auto {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+  width: 0px; /* For Chrome, Safari, and Opera */
+}

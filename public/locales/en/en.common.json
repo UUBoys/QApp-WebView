@@ -49,6 +49,10 @@
     }
   },
   "components": {
+    "eventPost": {
+      "tickets": "Tickets",
+      "moreEvents": "have {x} new events"
+    },
     "select": {
       "placeholder": "Select an option"
     }

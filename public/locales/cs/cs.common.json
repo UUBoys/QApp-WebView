@@ -49,6 +49,10 @@
     }
   },
   "components": {
+    "eventPost": {
+      "tickets": "Vystupenky",
+      "moreEvents": "má {x} nových akcí"
+    },
     "select": {
       "placeholder": "Vyberte možnost"
     }
