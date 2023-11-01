@@ -85,3 +85,14 @@ a {
 .overflow-x-auto::-webkit-scrollbar {
   width: 0px; /* For Chrome, Safari, and Opera */
 }
+
+input:focus {
+  outline: 0;
+}
+
+.no-outline:focus,
+.no-outline:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}

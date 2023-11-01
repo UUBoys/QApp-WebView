@@ -167,9 +167,7 @@ export default function SearchModal({
               value={query}
               onChange={handleQueryChange}
               placeholder={t("components.searchModal.placeholder")}
-              className={
-                "text-[30px] bg-transparent border-none w-full outline-none text-gray-600 focus:border-none"
-              }
+              className="text-[35px] bg-transparent border-none w-full outline-none text-gray-600 focus:border-none no-outline"
             />
           </div>
           <div className={"my-[20px]"}>
@@ -234,6 +232,7 @@ export default function SearchModal({
                         alt={"search-result-thumbail"}
                         width={40}
                         height={40}
+                        className={"rounded-lg"}
                       />
                     ) : (
                       <div className={"w-[40px] h-[40px] bg-transparent"} />
@@ -292,6 +291,7 @@ export default function SearchModal({
                         alt={"search-result-thumbail"}
                         width={40}
                         height={40}
+                        className={"rounded-lg"}
                       />
                     ) : (
                       <div className={"w-[40px] h-[40px] bg-transparent"} />
