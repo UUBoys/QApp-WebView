@@ -13,7 +13,7 @@ import i18n from "../i18n";
 
 import NavBar from "@/modules/common/components/NavBar";
 import "@/modules/common/styles/globals.css";
-import client from "@/modules/lib/apolloClient"; // Import the client
+import client from "@/modules/lib/apolloClient";
 
 moment.locale(i18n.language === "en" ? "en-gb" : "cs");
 
@@ -31,12 +31,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <ApolloProvider client={client}>
         <QueryClientProvider client={queryClient}>
           <I18nextProvider i18n={i18n}>
-            <Toaster
-              expand
-              visibleToasts={6}
-              position="bottom-left"
-              richColors
-            />
+            <Toaster visibleToasts={6} position="bottom-left" richColors />
             <NavBar />
             <Component {...pageProps} />
           </I18nextProvider>

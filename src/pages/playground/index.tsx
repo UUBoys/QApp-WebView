@@ -7,6 +7,7 @@ import Input from "@/modules/common/components/Input";
 import Menu, { MenuItemProps } from "@/modules/common/components/Menu";
 import NavBar from "@/modules/common/components/NavBar";
 import Select, { SelectItemProps } from "@/modules/common/components/Select";
+import { toast } from "sonner";
 
 const index = () => {
   const [search, setSearch] = React.useState("");
@@ -40,9 +41,17 @@ const index = () => {
 
   return (
     <div className="flex w-full justify-center bg-gray-900 pb-32">
-      <NavBar />
       <div className="flex min-h-screen w-full max-w-[1280px] flex-col items-center gap-12 bg-gray-800 p-6 pt-32">
-        <Buttons />
+        {/* <Buttons /> */}
+        <Button onClick={() => toast.success("Success alert!")}>
+          Alert - success
+        </Button>
+        <Button onClick={() => toast.error("Success alert!")}>
+          Alert - error
+        </Button>
+        <Button onClick={() => toast.loading("Success alert!")}>
+          Alert - loading
+        </Button>
         <Input
           label="Email"
           placeholder="Email"
