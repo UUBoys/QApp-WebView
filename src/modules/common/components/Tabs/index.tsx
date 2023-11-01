@@ -48,8 +48,8 @@ export default function Tabs({
           className={clsx(
             "flex flex-col justify-center items-center bg-white p-3 transition-all cursor-pointer rounded-[12px] h-full",
             tab.className,
-            selected && selected.label === tab.label
-              ? "bg-[rgba(255,173,50,0.3)]  text-primary"
+            selected && selected.value === tab.value
+              ? "bg-[rgba(255,173,50,0.31)]  text-primary"
               : "text-black"
           )}
           key={index}
