@@ -1,11 +1,10 @@
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import AirplayOutlinedIcon from "@mui/icons-material/AirplayOutlined";
+import DoorBackOutlinedIcon from "@mui/icons-material/DoorBackOutlined";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import Tabs, { TabItemProps } from "@/modules/common/components/Tabs";
-
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import DoorBackOutlinedIcon from "@mui/icons-material/DoorBackOutlined";
-import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
-import AirplayOutlinedIcon from "@mui/icons-material/AirplayOutlined";
 
 const meta: Meta<typeof Tabs> = {
   component: Tabs,
@@ -87,6 +86,6 @@ export const Icons: Story = {
 };
 export const Text: Story = {
   args: {
-    tabs: tabs,
+    tabs,
   },
 };

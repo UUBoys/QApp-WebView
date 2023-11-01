@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import clsx from "clsx";
+import { useEffect, useState } from "react";
 
 type TabProps = {
   tabs: TabItemProps[];
@@ -15,12 +18,12 @@ export type TabItemProps = {
   icon?: React.ReactNode;
 };
 
-export default function Tabs({
+const Tabs = ({
   tabs,
   defaultSelected,
   onChange,
   className = "",
-}: TabProps) {
+}: TabProps) => {
   const [selected, setSelected] = useState<TabItemProps | undefined>(
     defaultSelected || undefined
   );
@@ -39,14 +42,14 @@ export default function Tabs({
   return (
     <div
       className={clsx(
-        "w-fit flex items-center justify-center bg-white shadow-2xl p-3 rounded-[14px] gap-[10px]",
+        "flex w-fit items-center justify-center gap-[10px] rounded-[14px] bg-white p-3 shadow-2xl",
         className
       )}
     >
       {tabs.map((tab, index) => (
         <div
           className={clsx(
-            "flex flex-col justify-center items-center bg-white p-3 transition-all cursor-pointer rounded-[12px] h-full",
+            "flex h-full cursor-pointer flex-col items-center justify-center rounded-[12px] bg-white p-3 transition-all",
             tab.className,
             selected && selected.value === tab.value
               ? "bg-[rgba(255,173,50,0.31)]  text-primary"
@@ -57,10 +60,12 @@ export default function Tabs({
         >
           {tab.icon}
           {tab.label && (
-            <p className={clsx("font-medium  text-[12px]")}>{tab.label}</p>
+            <p className={clsx("text-[12px]  font-medium")}>{tab.label}</p>
           )}
         </div>
       ))}
     </div>
   );
-}
+};
+
+export default Tabs;

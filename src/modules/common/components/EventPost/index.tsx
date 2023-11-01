@@ -1,13 +1,12 @@
-import React, { useState, useRef } from "react";
+import KeyboardArrowLeftRoundedIcon from "@mui/icons-material/KeyboardArrowLeftRounded";
+import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import clsx from "clsx";
 import moment from "moment";
 import Image from "next/image";
+import React, { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "@/modules/common/components/Button";
-
-import KeyboardArrowLeftRoundedIcon from "@mui/icons-material/KeyboardArrowLeftRounded";
-import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
-import { useTranslation } from "react-i18next";
 
 type EventPostProps = {
   event: EventPostEventProps | EventPostEventProps[];
@@ -30,7 +29,7 @@ export type EventPostEventProps = {
   created: string;
 };
 
-export default function EventPost({ event, className, club }: EventPostProps) {
+const EventPost = ({ event, className, club }: EventPostProps) => {
   const { t } = useTranslation();
 
   const [slide, setSlide] = useState<number>(0);
@@ -59,11 +58,11 @@ export default function EventPost({ event, className, club }: EventPostProps) {
   if (!Array.isArray(event)) {
     return (
       <div
-        className={clsx("bg-white shadow-2xl rounded-lg relative", className)}
+        className={clsx("relative rounded-lg bg-white shadow-2xl", className)}
       >
         {/* HEADER */}
-        <div className="bg-white rounded-md p-4">
-          <div className="flex justify-between w-full">
+        <div className="rounded-md bg-white p-4">
+          <div className="flex w-full justify-between">
             <div className="flex items-center gap-[10px]">
               <Image
                 src={
@@ -75,7 +74,7 @@ export default function EventPost({ event, className, club }: EventPostProps) {
                 height={40}
                 className="rounded-full border border-primary"
               />
-              <p className="text-black font-medium cursor-pointer">
+              <p className="cursor-pointer font-medium text-black">
                 {club.name}
               </p>
             </div>
@@ -84,7 +83,7 @@ export default function EventPost({ event, className, club }: EventPostProps) {
             </div>
           </div>
         </div>
-        <div className="w-full h-[300px] relative">
+        <div className="relative h-[300px] w-full">
           <Image
             src={
               event?.thumbnail ||
@@ -93,26 +92,22 @@ export default function EventPost({ event, className, club }: EventPostProps) {
             alt={event.title}
             layout="fill"
             objectFit="cover"
-            className="absolute top-0 left-0"
+            className="absolute left-0 top-0"
           />
         </div>
-        <div
-          className={
-            "flex flex-col justify-center py-5 px-4 gap-[15px] pb-[25px]"
-          }
-        >
-          <p className={"text-[16px] font-medium text-black cursor-pointer"}>
+        <div className="flex flex-col justify-center gap-[15px] px-4 py-5 pb-[25px]">
+          <p className="cursor-pointer text-[16px] font-medium text-black">
             {event.title}
           </p>
-          <div className={"flex justify-between "}>
-            <div className={"flex flex-col"}>
-              <p className={"text-gray-300 text-[14px]"}>
+          <div className="flex justify-between ">
+            <div className="flex flex-col">
+              <p className="text-[14px] text-gray-300">
                 {moment(event.date).format("MMMM Do YYYY, h:mm a")}
               </p>
-              <p className={"text-gray-300 text-[14px]"}>{club.address}</p>
+              <p className="text-[14px] text-gray-300">{club.address}</p>
             </div>
-            <div className={"flex items-center"}>
-              <Button className={"rounded-full px-4"}>
+            <div className="flex items-center">
+              <Button className="rounded-full px-4">
                 {t("components.eventPost.tickets")}
               </Button>
             </div>
@@ -120,112 +115,105 @@ export default function EventPost({ event, className, club }: EventPostProps) {
         </div>
       </div>
     );
-  } else {
-    return (
-      <div
-        className={clsx("bg-white shadow-2xl rounded-lg relative", className)}
-      >
-        {/* HEADER */}
-        <div className="bg-white rounded-md p-4">
-          <div className="flex justify-between w-full">
-            <div className="flex items-center gap-[10px]">
-              <Image
-                src={
-                  club.avatar ||
-                  "https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
-                }
-                alt="user-image"
-                width={40}
-                height={40}
-                className="rounded-full border border-primary"
-              />
-              <div className={"flex flex-col justify-center"}>
-                <p className="text-black font-medium cursor-pointer">
-                  {club.name}
-                </p>
-                <p className={"text-gray-300 text-[12px]"}>
-                  {t("components.eventPost.moreEvents").replace(
-                    "{x}",
-                    event.length.toString()
-                  )}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center text-gray-300">
-              <p>{moment(event[0].created).fromNow()}</p>
+  }
+  return (
+    <div className={clsx("relative rounded-lg bg-white shadow-2xl", className)}>
+      {/* HEADER */}
+      <div className="rounded-md bg-white p-4">
+        <div className="flex w-full justify-between">
+          <div className="flex items-center gap-[10px]">
+            <Image
+              src={
+                club.avatar ||
+                "https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
+              }
+              alt="user-image"
+              width={40}
+              height={40}
+              className="rounded-full border border-primary"
+            />
+            <div className="flex flex-col justify-center">
+              <p className="cursor-pointer font-medium text-black">
+                {club.name}
+              </p>
+              <p className="text-[12px] text-gray-300">
+                {t("components.eventPost.moreEvents").replace(
+                  "{x}",
+                  event.length.toString()
+                )}
+              </p>
             </div>
           </div>
+          <div className="flex items-center text-gray-300">
+            <p>{moment(event[0].created).fromNow()}</p>
+          </div>
         </div>
+      </div>
 
-        {/* WIDGET LIST */}
-        <div className="w-full h-[380px] relative px-[25px]">
-          {slide !== 0 && (
-            <button
-              onClick={() => handleScroll("left")}
-              className="absolute top-1/2 left-[-20px] transform -translate-y-1/2 z-10 rounded-full flex items-center justify-center bg-white shadow-2xl text-primary w-[40px] h-[40px]"
-            >
-              <KeyboardArrowLeftRoundedIcon sx={{ fontSize: "35px" }} />
-            </button>
-          )}
-
-          <div
-            ref={scrollContainerRef}
-            className="overflow-hidden overflow-x-auto flex gap-[40px] w-full snap-x snap-mandatory"
+      {/* WIDGET LIST */}
+      <div className="relative h-[380px] w-full px-[25px]">
+        {slide !== 0 && (
+          <button
+            onClick={() => handleScroll("left")}
+            className="absolute left-[-20px] top-1/2 z-10 flex h-[40px] w-[40px] -translate-y-1/2 items-center justify-center rounded-full bg-white text-primary shadow-2xl"
           >
-            {event.map((_event) => (
-              <div
-                key={_event.uuid}
-                className="min-w-[320px] border border-gray-300 relative h-full flex flex-col snap-alway rounded-lg"
-              >
-                <div className="relative flex-shrink-0 h-[200px] w-full">
-                  <Image
-                    src={
-                      _event.thumbnail ||
-                      "https://www.editionhotels.com/wp-content/uploads/2019/07/EDITION_TimesSquare_ParadiseClub_Blue_3.jpg"
-                    }
-                    alt="multiple-events-thumbnail"
-                    layout="fill"
-                    objectFit="cover"
-                    className="absolute top-0 left-0 rounded-t-lg"
-                  />
-                </div>
+            <KeyboardArrowLeftRoundedIcon sx={{ fontSize: "35px" }} />
+          </button>
+        )}
 
-                <div className="flex-grow p-3 py-[20px]">
-                  <p className="text-black text-[16px]">{_event.title}</p>
-                  <div className={"flex flex-col py-[10px]"}>
-                    <p className={"text-gray-300 text-[14px]"}>
-                      {moment(_event.date).format("MMMM Do YYYY, h:mm a")}
-                    </p>
-                    <p className={"text-gray-300 text-[14px]"}>
-                      {_event.address}
-                    </p>
-                    <div className={"mt-[15px]"}>
-                      <Button className={"rounded-full px-4"}>
-                        {t("components.eventPost.tickets")}
-                      </Button>
-                    </div>
+        <div
+          ref={scrollContainerRef}
+          className="flex w-full snap-x snap-mandatory gap-[40px] overflow-hidden overflow-x-auto"
+        >
+          {event.map((_event) => (
+            <div
+              key={_event.uuid}
+              className="snap-alway relative flex h-full min-w-[320px] flex-col rounded-lg border border-gray-300"
+            >
+              <div className="relative h-[200px] w-full shrink-0">
+                <Image
+                  src={
+                    _event.thumbnail ||
+                    "https://www.editionhotels.com/wp-content/uploads/2019/07/EDITION_TimesSquare_ParadiseClub_Blue_3.jpg"
+                  }
+                  alt="multiple-events-thumbnail"
+                  layout="fill"
+                  objectFit="cover"
+                  className="absolute left-0 top-0 rounded-t-lg"
+                />
+              </div>
+
+              <div className="grow p-3 py-[20px]">
+                <p className="text-[16px] text-black">{_event.title}</p>
+                <div className="flex flex-col py-[10px]">
+                  <p className="text-[14px] text-gray-300">
+                    {moment(_event.date).format("MMMM Do YYYY, h:mm a")}
+                  </p>
+                  <p className="text-[14px] text-gray-300">{_event.address}</p>
+                  <div className="mt-[15px]">
+                    <Button className="rounded-full px-4">
+                      {t("components.eventPost.tickets")}
+                    </Button>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-
-          {slide !== event.length - 1 && (
-            <button
-              onClick={() => handleScroll("right")}
-              className="absolute top-1/2 right-[-20px] transform -translate-y-1/2 z-10 rounded-full flex items-center justify-center bg-white shadow-2xl text-primary w-[40px] h-[40px]"
-            >
-              <KeyboardArrowRightRoundedIcon sx={{ fontSize: "35px" }} />
-            </button>
-          )}
+            </div>
+          ))}
         </div>
 
-        <div
-          className={
-            "flex flex-col justify-center py-5 px-4 gap-[15px] pb-[25px]"
-          }
-        ></div>
+        {slide !== event.length - 1 && (
+          <button
+            onClick={() => handleScroll("right")}
+            className="absolute right-[-20px] top-1/2 z-10 flex h-[40px] w-[40px] -translate-y-1/2 items-center justify-center rounded-full bg-white text-primary shadow-2xl"
+          >
+            <KeyboardArrowRightRoundedIcon sx={{ fontSize: "35px" }} />
+          </button>
+        )}
       </div>
-    );
-  }
-}
+
+      <div className="flex flex-col justify-center gap-[15px] px-4 py-5 pb-[25px]" />
+    </div>
+  );
+};
+
+export default EventPost;

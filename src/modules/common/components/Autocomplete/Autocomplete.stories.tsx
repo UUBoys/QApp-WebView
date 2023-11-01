@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import Autocomplete, { AutocompleteItemProps } from "@/modules/common/components/Autocomplete";
+import Autocomplete, {
+  AutocompleteItemProps,
+} from "@/modules/common/components/Autocomplete";
 
 const meta: Meta<typeof Autocomplete> = {
   component: Autocomplete,
@@ -12,21 +14,21 @@ type Story = StoryObj<typeof Autocomplete>;
 
 const items: AutocompleteItemProps[] = [
   {
-    label:"Test",
-    value: []
+    label: "Test",
+    value: [],
   },
   {
-    label:"Admin",
-    value:[]
+    label: "Admin",
+    value: [],
   },
   {
-    label:"testovani",
-    value:{}
-  }
-]
+    label: "testovani",
+    value: {},
+  },
+];
 
 export const Default: Story = {
   args: {
-    options: items
+    options: items,
   },
 };

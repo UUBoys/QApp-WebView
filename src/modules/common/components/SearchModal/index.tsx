@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable consistent-return */
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
+import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRounded";
 import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDebounce } from "usehooks-ts";
 
 import Tabs, { TabItemProps } from "@/modules/common/components/Tabs";
-
-import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRounded";
-import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 type SearchModalProps = {
   onClose?: () => void;
@@ -80,12 +86,11 @@ const mockSearch: SearchResult[] = [
   },
 ];
 
-export default function SearchModal({
+const SearchModal = ({
   defaultOpen,
   defaultValue,
   onClose,
-  className,
-}: SearchModalProps) {
+}: SearchModalProps) => {
   const { t } = useTranslation();
 
   const searchTabs: TabItemProps[] = [
@@ -144,15 +149,9 @@ export default function SearchModal({
 
   if (open)
     return (
-      <div
-        className={
-          "w-full h-screen fixed bg-[#F0F0F0] top-0 left-0 overflow-y-auto"
-        }
-      >
-        <div className={"absolute top-[30px] right-[30px]"}>
-          <button
-            className={"p-3 flex justify-center items-center text-gray-500"}
-          >
+      <div className="fixed left-0 top-0 h-screen w-full overflow-y-auto bg-[#F0F0F0]">
+        <div className="absolute right-[30px] top-[30px]">
+          <button className="flex items-center justify-center p-3 text-gray-500">
             <CloseRoundedIcon
               sx={{ fontSize: "30px" }}
               onClick={() => handleClose()}
@@ -160,18 +159,18 @@ export default function SearchModal({
           </button>
         </div>
 
-        <div className={"w-full mt-[150px]"}>
-          <div className={"px-[80px]"}>
+        <div className="mt-[150px] w-full">
+          <div className="px-[80px]">
             <input
-              type={"text"}
+              type="text"
               value={query}
               onChange={handleQueryChange}
               placeholder={t("components.searchModal.placeholder")}
-              className="text-[35px] bg-transparent border-none w-full outline-none text-gray-600 focus:border-none no-outline"
+              className="no-outline w-full border-none bg-transparent text-[35px] text-gray-600 outline-none focus:border-none"
             />
           </div>
-          <div className={"my-[20px]"}>
-            <div className={"px-[80px]"}>
+          <div className="my-[20px]">
+            <div className="px-[80px]">
               <Tabs
                 tabs={searchTabs}
                 defaultSelected={queryType}
@@ -181,22 +180,18 @@ export default function SearchModal({
           </div>
         </div>
         <div
-          className={`w-full mt-[150px] ${
+          className={`mt-[150px] w-full ${
             queryType.value === "all" || queryType.value === "events"
               ? "block"
               : "hidden"
           } `}
         >
-          <div
-            className={
-              "w-full flex justify-between items-center p-3 px-[80px] bg-gray-200"
-            }
-          >
-            <p className={"text-gray-400 text-[20px] font-medium"}>
+          <div className="flex w-full items-center justify-between bg-gray-200 p-3 px-[80px]">
+            <p className="text-[20px] font-medium text-gray-400">
               {t("components.searchModal.events")}
             </p>
             <div
-              className={"text-gray-400 cursor-pointer"}
+              className="cursor-pointer text-gray-400"
               onClick={() => handleShowOptionsChange("events")}
             >
               {showOptions.events ? (
@@ -206,13 +201,9 @@ export default function SearchModal({
               )}
             </div>
           </div>
-          <div
-            className={
-              "w-full px-[80px] mt-[50px] max-h-[400px] overflow-y-auto"
-            }
-          >
+          <div className="mt-[50px] max-h-[400px] w-full overflow-y-auto px-[80px]">
             {result.filter((e) => e.type === "event").length === 0 && (
-              <div className={"text-[25px] text-center text-gray-300"}>
+              <div className="text-center text-[25px] text-gray-300">
                 {t("components.searchModal.notFound")}
               </div>
             )}
@@ -221,45 +212,39 @@ export default function SearchModal({
                 .filter((e) => e.type === "event")
                 .map((item, index) => (
                   <div
-                    className={
-                      "w-full flex items-center gap-[20px] hover:text-primary cursor-pointer text-gray-500 border-b border-b-gray-200 py-[20px]"
-                    }
+                    className="flex w-full cursor-pointer items-center gap-[20px] border-b border-b-gray-200 py-[20px] text-gray-500 hover:text-primary"
                     key={`events-search-${index}`}
                   >
                     {item.thumbnail ? (
                       <Image
                         src={item.thumbnail || ""}
-                        alt={"search-result-thumbail"}
+                        alt="search-result-thumbail"
                         width={40}
                         height={40}
-                        className={"rounded-lg"}
+                        className="rounded-lg"
                       />
                     ) : (
-                      <div className={"w-[40px] h-[40px] bg-transparent"} />
+                      <div className="h-[40px] w-[40px] bg-transparent" />
                     )}
-                    <p className={""}>{item.label}</p>
+                    <p className="">{item.label}</p>
                   </div>
                 ))}
           </div>
         </div>
 
         <div
-          className={`w-full mt-[150px] ${
+          className={`mt-[150px] w-full ${
             queryType.value === "all" || queryType.value === "clubs"
               ? "block"
               : "hidden"
           } `}
         >
-          <div
-            className={
-              "w-full flex justify-between items-center p-3 px-[80px] bg-gray-200"
-            }
-          >
-            <p className={"text-gray-400 text-[20px] font-medium"}>
+          <div className="flex w-full items-center justify-between bg-gray-200 p-3 px-[80px]">
+            <p className="text-[20px] font-medium text-gray-400">
               {t("components.searchModal.clubs")}
             </p>
             <div
-              className={"text-gray-400 cursor-pointer"}
+              className="cursor-pointer text-gray-400"
               onClick={() => handleShowOptionsChange("clubs")}
             >
               {showOptions.clubs ? (
@@ -269,9 +254,9 @@ export default function SearchModal({
               )}
             </div>
           </div>
-          <div className={"w-full px-[80px] mt-[50px] max-h-[400px]"}>
+          <div className="mt-[50px] max-h-[400px] w-full px-[80px]">
             {result.filter((e) => e.type === "club").length === 0 && (
-              <div className={"text-[25px] text-center text-gray-300"}>
+              <div className="text-center text-[25px] text-gray-300">
                 {t("components.searchModal.notFound")}
               </div>
             )}
@@ -280,27 +265,27 @@ export default function SearchModal({
                 .filter((e) => e.type === "club")
                 .map((item, index) => (
                   <div
-                    className={
-                      "w-full flex items-center gap-[20px] hover:text-primary cursor-pointer text-gray-500 border-b border-b-gray-200 py-[20px]"
-                    }
+                    className="flex w-full cursor-pointer items-center gap-[20px] border-b border-b-gray-200 py-[20px] text-gray-500 hover:text-primary"
                     key={`events-search-${index}`}
                   >
                     {item.thumbnail ? (
                       <Image
                         src={item.thumbnail || ""}
-                        alt={"search-result-thumbail"}
+                        alt="search-result-thumbail"
                         width={40}
                         height={40}
-                        className={"rounded-lg"}
+                        className="rounded-lg"
                       />
                     ) : (
-                      <div className={"w-[40px] h-[40px] bg-transparent"} />
+                      <div className="h-[40px] w-[40px] bg-transparent" />
                     )}
-                    <p className={""}>{item.label}</p>
+                    <p className="">{item.label}</p>
                   </div>
                 ))}
           </div>
         </div>
       </div>
     );
-}
+};
+
+export default SearchModal;
