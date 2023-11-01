@@ -49,6 +49,14 @@
     }
   },
   "components": {
+    "searchModal": {
+      "placeholder": "Hledat",
+      "noResults": "Žádné výsledky",
+      "all": "Vše",
+      "events": "Akce",
+      "clubs": "Kluby",
+      "notFound": "Nenašli jsme žádné výsledky"
+    },
     "eventPost": {
       "tickets": "Vystupenky",
       "moreEvents": "má {x} nových akcí"

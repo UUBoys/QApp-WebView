@@ -49,6 +49,14 @@
     }
   },
   "components": {
+    "searchModal": {
+      "placeholder": "Search",
+      "noResults": "No results found",
+      "all": "All",
+      "events": "Events",
+      "clubs": "Clubs",
+      "notFound": "No results found"
+    },
     "eventPost": {
       "tickets": "Tickets",
       "moreEvents": "have {x} new events"

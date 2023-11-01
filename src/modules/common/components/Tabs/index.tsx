@@ -4,7 +4,7 @@ import clsx from "clsx";
 type TabProps = {
   tabs: TabItemProps[];
   defaultSelected?: TabItemProps;
-  onChange?: (e: TabItemProps | undefined) => void;
+  onChange?: (e: TabItemProps) => void;
   className?: string;
 };
 
@@ -26,7 +26,7 @@ export default function Tabs({
   );
 
   useEffect(() => {
-    if (onChange) onChange(selected);
+    if (selected && onChange) onChange(selected);
   }, [selected]);
 
   const handelTabChange = (e: TabItemProps) => {
@@ -48,7 +48,7 @@ export default function Tabs({
           className={clsx(
             "flex flex-col justify-center items-center bg-white p-3 transition-all cursor-pointer rounded-[12px] h-full",
             tab.className,
-            selected === tab
+            selected && selected.label === tab.label
               ? "bg-[rgba(255,173,50,0.3)]  text-primary"
               : "text-black"
           )}
