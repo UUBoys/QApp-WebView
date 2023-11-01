@@ -44,6 +44,7 @@
     "i18next": "^23.6.0",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "next": "^13.1.2",
     "next-auth": "^4.24.3",
     "nookies": "^2.5.2",
