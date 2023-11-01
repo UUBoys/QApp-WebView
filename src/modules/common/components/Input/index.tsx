@@ -3,7 +3,7 @@ import React from "react";
 interface InputProps {
   label?: string;
   placeholder?: string;
-  type?: "text" | "email" | "password";
+  type?: "text" | "email" | "password" | "number";
   value?: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
@@ -52,7 +52,7 @@ export const Input: React.FC<InputProps> = ({
           {label}
         </label>
       )}
-      <div className="mt-2">
+      <div>
         <input
           type={type}
           name={label}

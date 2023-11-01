@@ -1,10 +1,15 @@
 import GoogleIcon from "@mui/icons-material/Google";
+import Lottie from "lottie-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+
+import qUpLoaderAnimation from "../../../public/animations/qup-loader-animation.json";
+
+import Loader from "@/modules/common/components/Loader";
 
 type LoginValues = {
   email: string;
@@ -13,14 +18,16 @@ type LoginValues = {
 
 export const SignIn = () => {
   const { register, handleSubmit } = useForm<LoginValues>();
+  const [isLogingIn, setIsLogingIn] = useState(false);
   const { t } = useTranslation();
-  const [defaultError] = useState("");
+  const [defaultError, setDefaultError] = useState("");
   const router = useRouter();
   const { data: session } = useSession();
   const handleStudentCredentialsLogin = async ({
     email,
     password,
   }: LoginValues) => {
+    setIsLogingIn(true);
     const res = await signIn("credentials", {
       email,
       password,
@@ -28,11 +35,16 @@ export const SignIn = () => {
     });
     if (res?.error) {
       console.error(res.error);
+      setDefaultError(res.error);
+      setIsLogingIn(false);
     } else if (res?.url) {
       const url = new URL(res?.url);
       const redirectUrl = url.searchParams.get("callbackUrl");
       router.push(redirectUrl || res.url);
+      return;
     }
+
+    setIsLogingIn(false);
   };
 
   useEffect(() => {
@@ -41,6 +53,19 @@ export const SignIn = () => {
 
   return (
     <div className="flex h-screen w-full items-center bg-gray-100">
+      {isLogingIn && (
+        <Loader>
+          {" "}
+          <Lottie
+            animationData={qUpLoaderAnimation}
+            loop
+            className="w-1/4 invert "
+          />{" "}
+          <div className="mt-[-70px] bg-gradient-to-b from-[#ff8b56] to-[#fe592b] !bg-clip-text text-[20px] font-bold text-transparent md:text-[60px]">
+            Načítání...
+          </div>
+        </Loader>
+      )}
       <div className="mx-auto flex h-[500px] w-11/12  flex-col rounded-md bg-white  p-10 shadow-2xl sm:w-[400px]">
         <div className="relative top-[-130px] mx-auto flex h-[170px] w-[170px] items-center justify-center rounded-full border-[10px] border-gray-200 bg-white">
           <div className="  text-center text-6xl font-bold text-primary-500">

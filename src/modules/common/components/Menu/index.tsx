@@ -31,48 +31,46 @@ const Menu: React.FC<MenuProps> = ({ items, children, className }) => {
   };
 
   return (
-    <div className="relative">
-      <HeadlessMenu as="div" className="relative inline-block text-left">
-        <div>
-          <HeadlessMenu.Button className={className || ""}>
-            {children}
-          </HeadlessMenu.Button>
-        </div>
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
-          <HeadlessMenu.Items className="mx-center absolute mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="p-1 ">
-              {items.map((item, index) => {
-                if (item.render) {
-                  return item.render(item);
-                }
-                return (
-                  <HeadlessMenu.Item key={index}>
-                    {({ active }) => (
-                      <button
-                        onClick={() => handleClick(item)}
-                        className={`${
-                          active ? "bg-[#FFAD32] text-white" : "text-gray-900"
-                        } group flex w-full items-center rounded-md p-2 text-sm`}
-                      >
-                        {item.label}
-                      </button>
-                    )}
-                  </HeadlessMenu.Item>
-                );
-              })}
-            </div>
-          </HeadlessMenu.Items>
-        </Transition>
-      </HeadlessMenu>
-    </div>
+    <HeadlessMenu as="div" className="relative ml-3">
+      <div>
+        <HeadlessMenu.Button className={className || ""}>
+          {children}
+        </HeadlessMenu.Button>
+      </div>
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <HeadlessMenu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg   focus:outline-none">
+          <div className="p-1 ">
+            {items.map((item, index) => {
+              if (item.render) {
+                return item.render(item);
+              }
+              return (
+                <HeadlessMenu.Item key={index}>
+                  {({ active }) => (
+                    <button
+                      onClick={() => handleClick(item)}
+                      className={`${
+                        active ? "bg-[#FFAD32] text-white" : "text-gray-900"
+                      } group flex w-full items-center rounded-md p-2 text-sm`}
+                    >
+                      {item.label}
+                    </button>
+                  )}
+                </HeadlessMenu.Item>
+              );
+            })}
+          </div>
+        </HeadlessMenu.Items>
+      </Transition>
+    </HeadlessMenu>
   );
 };
 
