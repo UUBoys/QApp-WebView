@@ -1,11 +1,12 @@
-// Button.stories.ts|tsx
-
 import type { Meta, StoryObj } from "@storybook/react";
+
 import Lottie from "lottie-react";
 
-import qUpLoaderAnimation from "../../../../../public/animations/qup-loader-animation.json";
-
 import Loader from "@/modules/common/components/Loader";
+
+import qUpLoaderAnimation from "../../../../../public/animations/qup-loader-animation.json";
+import qUpLoaderFailedAnimation from "../../../../../public/animations/qup-loader-fail-animation.json";
+import qUpLoaderSuccessAnimation from "../../../../../public/animations/qup-loader-success-animation.json";
 
 const meta: Meta<typeof Loader> = {
   component: Loader,
@@ -27,6 +28,32 @@ export const Default: Story = {
         <div className="mt-[-70px] bg-gradient-to-b from-[#ff8b56] to-[#fe592b] !bg-clip-text text-[20px] font-bold text-transparent md:text-[60px]">
           Načítání...
         </div>
+      </>
+    ),
+  },
+};
+
+export const Failed: Story = {
+  args: {
+    children: (
+      <Lottie
+        animationData={qUpLoaderFailedAnimation}
+        loop={false}
+        className="w-1/4 "
+      />
+    ),
+  },
+};
+
+export const Success: Story = {
+  args: {
+    children: (
+      <>
+        <Lottie
+          animationData={qUpLoaderSuccessAnimation}
+          loop={false}
+          className="w-1/4 "
+        />{" "}
       </>
     ),
   },
