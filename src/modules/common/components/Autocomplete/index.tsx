@@ -29,7 +29,6 @@ export default function Autocomplete({
     defaultSelected || undefined
   );
   const [query, setQuery] = useState<string>(defaultInputValue || "");
-  console.log("query", query);
   const [filteredItems, setFilteredItems] =
     useState<AutocompleteItemProps[]>(options);
 
