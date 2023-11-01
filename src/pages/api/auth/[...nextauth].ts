@@ -52,6 +52,9 @@ export const authOptions: NextAuthOptions = {
         const response = await client.mutate<Mutation>({
           mutation: LOGIN_MUTATION,
           variables,
+          context: {
+            trackStatus: false,
+          },
         });
 
         if (response.errors) {

@@ -9,7 +9,6 @@ import { Mutation, MutationTopupCreditsArgs } from "@/generated/graphql";
 import CreditPackage, {
   CreditPackageProps,
 } from "@/modules/common/components/CreditPackage";
-import Loader from "@/modules/common/components/Loader";
 import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
 import { TOPUPCREDITSMUTATION } from "@/modules/GRAPHQL/mutations/TopupCreditsMutation";
 
@@ -49,8 +48,12 @@ const creditPackages: CreditPackageProps[] = [
 ];
 
 const BuyCredits: NextPage = () => {
-  const [mutateTopUpCreditsMutation, { loading, error, data }] =
-    useMutation<Mutation>(TOPUPCREDITSMUTATION);
+  const [mutateTopUpCreditsMutation] = useMutation<Mutation>(
+    TOPUPCREDITSMUTATION,
+    {
+      context: { trackStatus: true },
+    }
+  );
   const { credits, setCredits } = useUserAdditionalDataStore((set) => ({
     setCredits: set.setCredits,
     credits: set.credits,
@@ -59,21 +62,12 @@ const BuyCredits: NextPage = () => {
     const variables: MutationTopupCreditsArgs = {
       amount: volume,
     };
-
-    console.log(variables);
     const result = await mutateTopUpCreditsMutation({ variables });
     if (!result.data?.topupCredits?.success) return;
     setCredits(result.data?.topupCredits?.newBalance as number);
   };
   return (
     <div className="min-h-[100vh] w-full bg-gray-100 pt-52">
-      <Loader
-        isCustom={false}
-        isSuccess={data !== undefined}
-        isError={error !== undefined}
-        isLoading={loading}
-      />
-
       <div className="mx-auto w-[90%] border-b border-gray-600 p-20 sm:w-3/5">
         <div className="flex w-full items-end justify-center gap-5 text-center">
           <p className="flex items-end sm:mb-[-10px]">

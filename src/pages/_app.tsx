@@ -11,9 +11,9 @@ import { Toaster } from "sonner";
 
 import i18n from "../i18n";
 
-import NavBar from "@/modules/common/components/NavBar";
+import Layout from "@/modules/common/Layout/Layout";
 import "@/modules/common/styles/globals.css";
-import client from "@/modules/lib/apolloClient"; // Import the client
+import client from "@/modules/lib/apolloClient";
 
 moment.locale(i18n.language === "en" ? "en-gb" : "cs");
 
@@ -37,8 +37,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
               position="bottom-left"
               richColors
             />
-            <NavBar />
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </I18nextProvider>
         </QueryClientProvider>
       </ApolloProvider>
