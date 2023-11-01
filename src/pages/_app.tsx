@@ -1,23 +1,19 @@
-/* eslint-disable import/order */
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
-import { AppProps } from "next/app";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { Toaster } from "sonner";
-import "react-toastify/dist/ReactToastify.css";
-
+import { ApolloProvider } from "@apollo/client";
+import moment from "moment";
 import "moment/locale/cs";
 import "moment/locale/en-gb";
-import moment from "moment";
-
-import "@/modules/common/styles/globals.css";
-import NavBar from "@/modules/common/components/NavBar";
+import { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
-
 import { I18nextProvider } from "react-i18next";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { QueryClient, QueryClientProvider } from "react-query";
+import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "sonner";
 
 import i18n from "../i18n";
+
+import NavBar from "@/modules/common/components/NavBar";
+import "@/modules/common/styles/globals.css";
+import client from "@/modules/lib/apolloClient"; // Import the client
 
 moment.locale(i18n.language === "en" ? "en-gb" : "cs");
 
@@ -29,15 +25,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const client = new ApolloClient({
-  uri: "/api/",
-  cache: new InMemoryCache(),
-});
-
-const MyApp = ({
-  Component,
-  pageProps,
-}: AppProps & { preferredLanguage: string }) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <SessionProvider session={pageProps.session}>
       <ApolloProvider client={client}>
