@@ -49,7 +49,7 @@ const Button: React.FC<ButtonProps> = ({
   const loadingClasses = isLoading ? "cursor-wait" : "";
 
   const buttonClasses = `${
-    customBackground ? customBackground : colorClass
+    customBackground || colorClass
   } ${sizeClass} ${disabledClasses} ${loadingClasses} ${className}`;
 
   return (

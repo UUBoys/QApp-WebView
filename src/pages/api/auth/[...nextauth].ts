@@ -5,8 +5,13 @@ import NextAuth, { User, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
-import { Mutation, MutationLoginArgs } from "../../../generated/graphql";
+import {
+  Mutation,
+  MutationGoogleOAuthArgs,
+  MutationLoginArgs,
+} from "../../../generated/graphql";
 
+import { GOOGLE_AUTH_MUTATION } from "@/modules/GRAPHQL/mutations/GoogleAuthMutation";
 import { LOGIN_MUTATION } from "@/modules/GRAPHQL/mutations/LoginMutation";
 import { signInSchema } from "@/modules/utils/schemas/auth";
 
@@ -76,6 +81,43 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    async signIn({ account, user }) {
+      if (!account) return false;
+      if (account.provider === "google") {
+        const client = new ApolloClient({
+          uri: process.env.API_URL ?? "",
+          cache: new InMemoryCache(),
+        });
+        // Adapt this to whatever your mutation needs are for registering a Google user.
+        const variables: MutationGoogleOAuthArgs = {
+          idToken: account.id_token,
+        };
+        const response = await client.mutate<Mutation>({
+          mutation: GOOGLE_AUTH_MUTATION,
+          variables,
+          context: {
+            trackStatus: false,
+          },
+        });
+
+        if (response.errors) {
+          throw new Error(response.errors[0].message);
+        }
+
+        if (!response.data?.googleOAuth?.token) throw new Error("No token");
+
+        const decodedToken = jwt.decode(response.data.googleOAuth.token);
+
+        if (!decodedToken) {
+          throw new Error("Invalid user");
+        }
+        user.token = response.data?.googleOAuth.token;
+
+        return true;
+      }
+      return true;
+    },
+
     async redirect({ baseUrl, url }) {
       // Allows relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`;

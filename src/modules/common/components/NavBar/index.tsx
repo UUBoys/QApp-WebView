@@ -17,12 +17,19 @@ import React, { useEffect, useState } from "react";
 import { useUserAdditionalDataStore } from "../../stores/user-aditional-data-store";
 import Menu from "../Menu";
 
-const navbarAllowedRoutes = ["/", "/events", "/buyCredits", "/clubs", "/feed"];
+const navbarAllowedRoutes = [
+  "/",
+  "/events",
+  "/buyCredits",
+  "/clubs",
+  "/profile",
+  "/feed",
+];
 
 let previousKreditCount = 0;
 
 const NavBar = () => {
-  const { pathname } = useRouter();
+  const { pathname, push } = useRouter();
   const { data: session } = useSession();
   const [showUpArrow, setShowUpArrow] = useState(false);
   const [showDownArrow, setShowDownArrow] = useState(false);
@@ -162,7 +169,7 @@ const NavBar = () => {
                       items={[
                         {
                           label: "Účet",
-                          onClick: (e) => console.log(e),
+                          onClick: () => push("/profile"),
                         },
                         {
                           label: "Nastavení",
