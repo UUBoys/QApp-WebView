@@ -42,7 +42,7 @@ const CreditPackage: React.FC<CreditPackageProps> = ({
   return (
     <div className="flex flex-col rounded-lg bg-white shadow-xl max-w-[300px]">
       <div
-        className={`${variant_styles[variant].background} w-[80%] py-[10px] mx-auto flex flex-col items-center justify-center gap-[5px] rounded-2xl relative mt-[-20px] shadow-2xl`}
+        className={`${variant_styles[variant].background} w-[80%] py-[10px] mx-auto flex flex-col items-center justify-center gap-[5px] rounded-2xl relative mt-[-20px] shadow-2xl text-white`}
       >
         <p className={"text-[20px] uppercase font-bold"}>{variant}</p>
         <p className={"text-[18px] font-medium"}>{price}</p>
