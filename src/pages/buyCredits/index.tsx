@@ -28,7 +28,7 @@ const creditPackages: CreditPackageProps[] = [
     imageSrc: "/packages-images/500-coins.png",
     name: "Balíček 2",
     price: "500 Kč",
-    volume: 500,
+    volume: 700,
     variant: "premium",
   },
   {
@@ -37,7 +37,7 @@ const creditPackages: CreditPackageProps[] = [
     imageSrc: "/packages-images/1000-coins.png",
     name: "Balíček 3",
     price: "1000 Kč",
-    volume: 1000,
+    volume: 1500,
     variant: "vip",
   },
 ];
