@@ -15,6 +15,7 @@ import { useDebounce } from "usehooks-ts";
 import Tabs, { TabItemProps } from "@/modules/common/components/Tabs";
 
 type SearchModalProps = {
+  open: boolean;
   onClose?: () => void;
   defaultOpen?: boolean;
   defaultValue?: string;
@@ -89,6 +90,7 @@ const SearchModal = ({
   defaultOpen,
   defaultValue,
   onClose,
+  open,
 }: SearchModalProps) => {
   const { t } = useTranslation();
 
@@ -110,7 +112,7 @@ const SearchModal = ({
     },
   ];
 
-  const [open, setOpen] = useState<boolean>(defaultOpen || false);
+  const [isOpen, setIsOpen] = useState<boolean>(defaultOpen || open);
   const [result, setResult] = useState<SearchResult[]>(mockSearch);
 
   const [query, setQuery] = useState<string>(defaultValue || "");
@@ -127,7 +129,7 @@ const SearchModal = ({
 
   const handleClose = () => {
     if (onClose) onClose();
-    setOpen(false);
+    setIsOpen(false);
   };
 
   const handleShowOptionsChange = (e: "clubs" | "events") => {
@@ -146,9 +148,13 @@ const SearchModal = ({
     }
   }, [queryDebounce]);
 
-  if (open)
+  useEffect(() => {
+    setIsOpen(open);
+  }, [open]);
+
+  if (isOpen)
     return (
-      <div className="fixed left-0 top-0 h-screen w-full overflow-y-auto bg-[#F0F0F0]">
+      <div className="fixed left-0 top-0 h-screen w-full z-20 overflow-y-auto bg-[#F0F0F0]">
         <div className="absolute right-[30px] top-[30px]">
           <button className="flex items-center justify-center p-3 text-gray-500">
             <CloseRoundedIcon

@@ -1,4 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
+import React, { useEffect, useState } from "react";
 import { Disclosure, Menu as HeadlessMenu } from "@headlessui/react";
 import {
   XMarkIcon,
@@ -8,14 +9,16 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
 } from "@heroicons/react/24/solid";
+
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
 
 import { useUserAdditionalDataStore } from "../../stores/user-aditional-data-store";
-import Menu from "../Menu";
+import Menu from "@/modules/common/components/Menu";
+import SearchModal from "@/modules/common/components/SearchModal";
 
 const navbarAllowedRoutes = [
   "/",
@@ -29,6 +32,8 @@ const navbarAllowedRoutes = [
 let previousKreditCount = 0;
 
 const NavBar = () => {
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+
   const { pathname, push } = useRouter();
   const { data: session } = useSession();
   const [showUpArrow, setShowUpArrow] = useState(false);
@@ -77,10 +82,15 @@ const NavBar = () => {
   return (
     <Disclosure
       as="nav"
-      className="fixed inset-0 z-[1000] mx-auto mt-10 max-h-[70px] w-11/12 rounded-[20px]  bg-white px-4 py-[5px] shadow-xl"
+      className="fixed inset-0 z-[1000] mx-auto mt-10 max-h-[70px] w-[80%] max-w-[1500px] rounded-[20px]  bg-white px-4 py-[5px] shadow-xl"
     >
       {({ open }) => (
         <>
+          <SearchModal
+            open={isSearchOpen}
+            onClose={() => setIsSearchOpen(false)}
+          />
+
           <div className="mx-auto  px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -163,6 +173,14 @@ const NavBar = () => {
                       />
                     </Link>
                     {credits}
+                  </div>
+                  <div
+                    className={"text-black flex items-center justify-center"}
+                  >
+                    <SearchRoundedIcon
+                      className={"h-6 w-6 cursor-pointer"}
+                      onClick={() => setIsSearchOpen(true)}
+                    />
                   </div>
                   {session?.user && (
                     <Menu

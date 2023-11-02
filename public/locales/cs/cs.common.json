@@ -48,7 +48,8 @@
       }
     },
     "feed": {
-      "eventsWithTickets": "Akce na které máte zakoupenou vstupenku"
+      "eventsWithTickets": "Akce na které máte zakoupenou vstupenku",
+      "favoriteClubs": "Oblíbené kluby"
     }
   },
   "components": {

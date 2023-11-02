@@ -32,7 +32,7 @@ const EventsList: React.FC<EventsListProps> = ({ events, className }) => {
   return (
     <div
       className={clsx(
-        "mx-auto mt-10 max-w-full border p-4 transition-all md:max-w-lg flex flex-col gap-[20px]",
+        "mx-auto mt-10 max-w-full  p-4 transition-all md:max-w-lg flex flex-col gap-[20px]",
         className
       )}
     >

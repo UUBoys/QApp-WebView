@@ -48,7 +48,8 @@
       }
     },
     "feed": {
-      "eventsWithTickets": "Events for which you have purchased a ticket"
+      "eventsWithTickets": "Events for which you have purchased a ticket",
+      "favoriteClubs": "Your favorite clubs"
     }
   },
   "components": {

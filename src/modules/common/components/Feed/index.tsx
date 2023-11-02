@@ -132,7 +132,36 @@ const leftMenuMockLinks: NavigationLinkProps[] = [
   },
 ];
 
+const favoriteClubsMockLinks: NavigationLinkProps[] = [
+  {
+    label: "Beche'rs bar",
+    image: "https://picsum.photos/40/40",
+  },
+  {
+    label: "Beche'rs bar",
+    image: "https://picsum.photos/40/40",
+  },
+  {
+    label: "Beche'rs bar",
+    image: "https://picsum.photos/40/40",
+  },
+  {
+    label: "Beche'rs bar",
+    image: "https://picsum.photos/40/40",
+  },
+];
+
 const mockEvetList: Event[] = [
+  {
+    address: "Kolbenova 123/456, Praha 9, 400 08",
+    content:
+      "Bechers bar akce číslo 1! Přijďte si užít skvělou atmosféru a výborné drinky!",
+    title: "Bechers bar",
+    date: "12. 5. 2021",
+    imageSrc:
+      "https://media.istockphoto.com/id/501387734/cs/fotografie/tan%C4%8D%C3%ADc%C3%AD-p%C5%99%C3%A1tel%C3%A9.jpg?s=612x612&w=0&k=20&c=WyInUbbqdQuoj8efMtDrnJbnghE5JyvkGqC09T5gMRY=",
+    price: "150 Kč",
+  },
   {
     address: "Kolbenova 123/456, Praha 9, 400 08",
     content:
@@ -171,13 +200,25 @@ const Feed = () => {
     <div className={"text-gray-300"}>
       <div className={"grid grid-cols-3 w-full pt-[50px]"}>
         <div className={"col-span-1"}>
-          <div className={"flex justify-end mt-[100px] px-[10px]"}>
+          <div className={"flex flex-col items-end mt-[100px] px-[10px]"}>
             <Navigation links={leftMenuMockLinks} className={"w-[200px]"} />
+            <div
+              className={"h-[2px] bg-gray-300 w-[200px] rounded-full my-[20px]"}
+            />
+            {/* <div className={"w-[200px]"}>
+              <p className={"text-center text-gray-700 mb-[20px] font-medium"}>
+                {t("pages.feed.favoriteClubs")}
+              </p>
+            </div> */}
+            <Navigation
+              links={favoriteClubsMockLinks}
+              className={"w-[200px]"}
+            />
           </div>
         </div>
         <div
           className={
-            "col-span-1  py-[50px] max-h-screen overflow-y-auto scroll-hidden"
+            "col-span-1  pt-[50px] max-h-screen overflow-y-auto scroll-hidden"
           }
         >
           <div className={"flex flex-col gap-[50px] pt-[50px]"}>
@@ -187,14 +228,20 @@ const Feed = () => {
           </div>
         </div>
         <div className={"col-span-1 w-full"}>
-          <div className={"flex flex-col items-start mt-[100px]"}>
+          <div className={"flex flex-col items-start mt-[100px] p-3"}>
             <h1 className={"text-center text-[20px] text-gray-700  w-[500px]"}>
               {t("pages.feed.eventsWithTickets")}
             </h1>
-            <EventsList
-              events={mockEvetList}
-              className={"!mt-[20px] !mx-0 !w-[500px]"}
-            />
+            <div
+              className={
+                "max-h-[400px] overflow-y-auto scroll-hidden bg-white py-[20px] mt-[20px] rounded-2xl"
+              }
+            >
+              <EventsList
+                events={mockEvetList}
+                className={"!mt-[10px] !mx-0 !w-[500px] rounded-2xl py-[0px]"}
+              />
+            </div>
           </div>
         </div>
       </div>
