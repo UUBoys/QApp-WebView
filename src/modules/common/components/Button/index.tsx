@@ -8,6 +8,7 @@ interface ButtonProps {
   isLoading?: boolean;
   className?: string;
   children: React.ReactNode;
+  customBackground?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   isLoading,
   className,
   children,
+  customBackground,
 }: ButtonProps) => {
   const sizeClasses = {
     sm: "px-2 py-1 text-xs font-semibold h-6",
@@ -46,7 +48,9 @@ const Button: React.FC<ButtonProps> = ({
 
   const loadingClasses = isLoading ? "cursor-wait" : "";
 
-  const buttonClasses = `${sizeClass} ${colorClass} ${disabledClasses} ${loadingClasses} ${className}`;
+  const buttonClasses = `${
+    customBackground ? customBackground : colorClass
+  } ${sizeClass} ${disabledClasses} ${loadingClasses} ${className}`;
 
   return (
     <button

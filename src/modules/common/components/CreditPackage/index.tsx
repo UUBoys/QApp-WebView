@@ -4,6 +4,8 @@ import { useState } from "react";
 import Button from "../Button";
 import Input from "../Input";
 
+import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded";
+
 export type CreditPackageProps = {
   name: string;
   price: string;
@@ -12,6 +14,7 @@ export type CreditPackageProps = {
   onBuy?: (volume?: number) => void;
   isCustom?: boolean;
   volume?: number;
+  variant?: "standard" | "premium" | "vip";
 };
 
 const CreditPackage: React.FC<CreditPackageProps> = ({
@@ -19,47 +22,49 @@ const CreditPackage: React.FC<CreditPackageProps> = ({
   price,
   description,
   imageSrc,
+  volume,
   onBuy,
   isCustom,
+  variant = "standard",
 }) => {
-  const [inputValue, setInputValue] = useState<number>(0);
-  return (
-    <div className="flex min-h-[60px]  flex-row gap-10 rounded-lg border-2 border-gray-200 p-5 shadow-xl">
-      <Image
-        src={imageSrc}
-        alt="coins"
-        className="rounded-full shadow-lg"
-        width={200}
-        height={200}
-      />
-      <div className="flex flex-col justify-between">
-        <div className="flex flex-col gap-3">
-          <div className="text-4xl font-bold">{name}</div>
-          <p>{description}</p>
-          <h1>{price}</h1>
-        </div>
-        <div className="flex gap-5">
-          {isCustom && (
-            <Input
-              type="number"
-              onChange={(e) => setInputValue(parseFloat(e.target.value))}
-            />
-          )}
+  const variant_styles = {
+    standard: {
+      background: "bg-gray-300",
+    },
+    premium: {
+      background: "bg-secondary",
+    },
+    vip: {
+      background: "bg-primary",
+    },
+  };
 
-          <Button
-            size="lg"
-            className="h-full shadow-lg"
-            onClick={() => {
-              if (!onBuy) return;
-              if (isCustom) {
-                onBuy(inputValue);
-              }
-              onBuy();
-            }}
-          >
-            Koupit
-          </Button>
+  return (
+    <div className="flex flex-col rounded-lg bg-white shadow-xl max-w-[300px]">
+      <div
+        className={`${variant_styles[variant].background} w-[80%] py-[10px] mx-auto flex flex-col items-center justify-center gap-[5px] rounded-2xl relative mt-[-20px] shadow-2xl`}
+      >
+        <p className={"text-[20px] uppercase font-bold"}>{variant}</p>
+        <p className={"text-[18px] font-medium"}>{price}</p>
+      </div>
+      <div className={"w-full py-4 text-center"}>
+        <p className={"text-gray-700 text-[30px]"}>{volume} Kreditu</p>
+      </div>
+
+      <div className={"border-t border-gray-300 w-full"}>
+        <div className={"text-gray-300 px-[20px] text-center py-[30px]"}>
+          <p>{description}</p>
         </div>
+      </div>
+
+      <div className={"flex items-center justify-center mb-[30px]"}>
+        <Button
+          onClick={() => onBuy && onBuy(volume)}
+          className={`rounded-xl w-[150px] h-[40px] uppercase`}
+          customBackground={variant_styles[variant].background}
+        >
+          Koupit
+        </Button>
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ const creditPackages: CreditPackageProps[] = [
     name: "Balíček 1",
     price: "100 Kč",
     volume: 100,
+    variant: "standard",
   },
   {
     description:
@@ -28,6 +29,7 @@ const creditPackages: CreditPackageProps[] = [
     name: "Balíček 2",
     price: "500 Kč",
     volume: 500,
+    variant: "premium",
   },
   {
     description:
@@ -36,14 +38,7 @@ const creditPackages: CreditPackageProps[] = [
     name: "Balíček 3",
     price: "1000 Kč",
     volume: 1000,
-  },
-  {
-    description:
-      "Je to základní balíček, který obsahuje 100 kreditů. Výborný pro začátek.",
-    imageSrc: "/packages-images/custom-coins.png",
-    name: "Balíček 4",
-    price: "??? Kč",
-    isCustom: true,
+    variant: "vip",
   },
 ];
 
@@ -79,7 +74,7 @@ const BuyCredits: NextPage = () => {
           <div className="text-3xl sm:text-6xl"> Kreditů</div>
         </div>
       </div>
-      <div className="mx-auto flex w-[90%] flex-col gap-10 border-b border-gray-600 p-20 sm:w-3/5">
+      <div className="mx-auto flex flex-col w-full gap-10 border-b border-gray-600 p-20 sm:w-3/5 lg:flex-row">
         {creditPackages.map((creditPackage) => {
           return (
             <CreditPackage
