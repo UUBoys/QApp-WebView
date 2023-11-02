@@ -62,7 +62,7 @@ const Button: React.FC<ButtonProps> = ({
       {isLoading ? (
         <div className="h-2 w-3 animate-spin rounded-full border-2 border-white" />
       ) : (
-        <span>{children}</span>
+        <span className={"text-white"}>{children}</span>
       )}
     </button>
   );

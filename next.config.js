@@ -23,6 +23,7 @@ const nextConfig = {
       "s3.amazonaws.com",
       "img.youtube.com",
       "this-person-does-not-exist.com",
+      "picsum.photos"
     ],
   },
   eslint: {

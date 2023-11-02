@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 import Button from "@/modules/common/components/Button";
 
-type EventPostProps = {
+export type EventPostProps = {
   event: EventPostEventProps | EventPostEventProps[];
   club: EventClubProps;
   className?: string;

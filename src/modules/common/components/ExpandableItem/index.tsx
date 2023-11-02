@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Transition } from "@headlessui/react";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import clsx from "clsx";
 import React from "react";
 
 import Button from "@/modules/common/components/Button";
+
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 type ExpandableItemProps = {
   title: string;
@@ -29,8 +31,11 @@ const ExpandableItem: React.FC<ExpandableItemProps> = ({
   isOpen,
 }) => {
   return (
-    <div className="relative mt-2 overflow-hidden rounded-xl bg-gray-100 transition-all hover:bg-gray-200">
+    <div
+      className={`relative mt-2 overflow-hidden rounded-xl bg-white transition-all hover:bg-gray-100 shadow-xl`}
+    >
       {/* Background image that's visible only when expanded */}
+
       <Transition
         show={isOpen}
         enter="transition-opacity duration-300"
@@ -46,36 +51,54 @@ const ExpandableItem: React.FC<ExpandableItemProps> = ({
       </Transition>
 
       <div
-        className="relative z-20 flex h-1/2 cursor-pointer flex-col items-center justify-between p-2 sm:flex-row"
+        className={`relative z-20 flex h-1/2 cursor-pointer flex-col items-center justify-between sm:flex-row ${
+          isOpen && "py-5"
+        }`}
         onClick={onToggle}
       >
-        <div className="flex items-center">
-          <span className={clsx(isOpen && " text-white", "font-medium")}>
-            {title}
-          </span>
-          <span
-            className={clsx(
-              isOpen && "bg-primary-400 text-white",
-              "ml-4 rounded bg-gray-300 px-2 py-1 text-sm text-black"
-            )}
-          >
-            {price}
-          </span>
+        <div className={`flex flex-1 ${isOpen && "pl-2"}`}>
+          {!isOpen && (
+            <img
+              src={imageSrc}
+              alt="Event"
+              className="mr-2 h-16 w-28 select-none  shadow-md"
+            />
+          )}
+          <div className="flex items-center px-2 justify-between flex-1">
+            <div className={"flex flex-col"}>
+              <span
+                className={clsx(
+                  isOpen ? " text-white" : "text-gray-700",
+                  "font-medium"
+                )}
+              >
+                {title}
+              </span>
+              <span className={`${isOpen && "hidden"} text-gray-400`}>
+                {date}
+              </span>
+            </div>
+            <span
+              className={clsx(
+                isOpen && "bg-primary-400 text-white",
+                "ml-4 rounded bg-primary px-2 py-1 text-sm text-white"
+              )}
+            >
+              {price}
+            </span>
+          </div>
         </div>
 
-        {!isOpen && (
-          <img
-            src={imageSrc}
-            alt="Event"
-            className="mr-2 h-16 w-28 select-none rounded shadow-md"
-          />
-        )}
         <span
           className={`transition-transform duration-300${
             isOpen ? "rotate-180" : ""
           }`}
         >
-          <KeyboardArrowUpIcon className={clsx(isOpen && "text-white")} />
+          {isOpen ? (
+            <KeyboardArrowUpIcon className={clsx("mr-4 text-white")} />
+          ) : (
+            <KeyboardArrowDownIcon className={clsx("mr-4 text-black")} />
+          )}
         </span>
       </div>
 
@@ -84,13 +107,14 @@ const ExpandableItem: React.FC<ExpandableItemProps> = ({
         enter="transition-opacity duration-300"
         enterFrom="opacity-0"
         enterTo="opacity-100"
+        className={"px-3 py-2"}
       >
         <div className="relative z-20 p-2">
           <p className="mb-1 text-gray-50">{date}</p>
           <p className="mb-1 text-gray-50">{address}</p>
           <p className="text-gray-50">{content}</p>
         </div>
-        <div className="relative z-10 flex w-full justify-end p-2 px-3">
+        <div className="relative z-10 flex w-full justify-end px-3 my-6">
           <Button className="w-36 rounded-xl">Zakoupit</Button>
         </div>
       </Transition>

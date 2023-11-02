@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 
 import ExpandableItem from "@/modules/common/components/ExpandableItem";
+import clsx from "clsx";
 
-type Event = {
+export type Event = {
   title: string;
   date: string;
   address: string;
@@ -14,9 +15,10 @@ type Event = {
 
 type EventsListProps = {
   events: Event[];
+  className?: string;
 };
 
-const EventsList: React.FC<EventsListProps> = ({ events }) => {
+const EventsList: React.FC<EventsListProps> = ({ events, className }) => {
   const [openedIndex, setOpenedIndex] = useState<number | null>(null);
 
   const handleItemClick = (index: number) => {
@@ -28,7 +30,12 @@ const EventsList: React.FC<EventsListProps> = ({ events }) => {
   };
 
   return (
-    <div className="mx-auto mt-10 max-w-full border bg-white p-4 transition-all md:max-w-lg">
+    <div
+      className={clsx(
+        "mx-auto mt-10 max-w-full border p-4 transition-all md:max-w-lg",
+        className
+      )}
+    >
       {events.map((event, index) => (
         <ExpandableItem
           key={`klic${index}`}

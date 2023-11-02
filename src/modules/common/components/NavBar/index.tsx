@@ -17,7 +17,7 @@ import React, { useEffect, useState } from "react";
 import { useUserAdditionalDataStore } from "../../stores/user-aditional-data-store";
 import Menu from "../Menu";
 
-const navbarAllowedRoutes = ["/", "/events", "/buyCredits", "/clubs"];
+const navbarAllowedRoutes = ["/", "/events", "/buyCredits", "/clubs", "/feed"];
 
 let previousKreditCount = 0;
 
@@ -70,7 +70,7 @@ const NavBar = () => {
   return (
     <Disclosure
       as="nav"
-      className="fixed inset-0 z-[1000] mx-auto mt-10 max-h-24 w-11/12 rounded-[20px]  bg-white p-4 shadow-xl"
+      className="fixed inset-0 z-[1000] mx-auto mt-10 max-h-[70px] w-11/12 rounded-[20px]  bg-white px-4 py-[5px] shadow-xl"
     >
       {({ open }) => (
         <>

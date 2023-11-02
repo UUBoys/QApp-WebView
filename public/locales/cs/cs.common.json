@@ -46,6 +46,9 @@
         "button": "Registrovat se",
         "login": "Máte účet? Přihlašte se zde"
       }
+    },
+    "feed": {
+      "eventsWithTickets": "Akce na které máte zakoupenou vstupenku"
     }
   },
   "components": {

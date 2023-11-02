@@ -46,6 +46,9 @@
         "button": "Register",
         "login": "Already have an account? Login here"
       }
+    },
+    "feed": {
+      "eventsWithTickets": "Events for which you have purchased a ticket"
     }
   },
   "components": {
