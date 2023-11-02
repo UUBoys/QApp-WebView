@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable sonarjs/no-duplicate-string */
-/* eslint-disable consistent-return */
 /* eslint-disable sonarjs/cognitive-complexity */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -286,6 +285,7 @@ const SearchModal = ({
         </div>
       </div>
     );
+  return null;
 };
 
 export default SearchModal;

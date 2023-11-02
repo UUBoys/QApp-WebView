@@ -34,7 +34,6 @@ export const SignIn = () => {
       redirect: false,
     });
     if (res?.error) {
-      console.error(res.error);
       setDefaultError(res.error);
       setIsLogingIn(false);
     } else if (res?.url) {

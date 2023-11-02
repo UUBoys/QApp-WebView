@@ -11,7 +11,7 @@ import { Toaster } from "sonner";
 
 import i18n from "../i18n";
 
-import NavBar from "@/modules/common/components/NavBar";
+import Layout from "@/modules/common/Layout/Layout";
 import "@/modules/common/styles/globals.css";
 import client from "@/modules/lib/apolloClient";
 
@@ -31,9 +31,21 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <ApolloProvider client={client}>
         <QueryClientProvider client={queryClient}>
           <I18nextProvider i18n={i18n}>
+<<<<<<< HEAD
             <Toaster visibleToasts={6} position="bottom-left" richColors />
             <NavBar />
             <Component {...pageProps} />
+=======
+            <Toaster
+              expand
+              visibleToasts={6}
+              position="bottom-left"
+              richColors
+            />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+>>>>>>> development
           </I18nextProvider>
         </QueryClientProvider>
       </ApolloProvider>

@@ -78,7 +78,8 @@ const Loader: React.FC<LoaderProps> = ({
         </div>
       );
     }
-  } else {
+  }
+  if (!children) {
     return null;
   }
 

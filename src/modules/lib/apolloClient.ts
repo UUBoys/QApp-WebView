@@ -1,9 +1,78 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloLink,
+  InMemoryCache,
+  Observable,
+  createHttpLink,
+} from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { getSession } from "next-auth/react";
 
+import { useApolloStatusStore } from "../common/stores/apollo-store";
+
 const httpLink = createHttpLink({
   uri: "/api/",
+});
+
+const statusLink = new ApolloLink((operation, forward) => {
+  if (!forward) return null;
+
+  const shouldTrackStatus = operation.getContext().trackStatus;
+  if (!shouldTrackStatus) return forward(operation);
+
+  useApolloStatusStore.setState({
+    isLoading: true,
+    isError: false,
+    isSuccess: false,
+  });
+
+  return new Observable((observer) => {
+    let handle: any;
+    Promise.resolve(operation)
+      .then((oper) => forward(oper))
+      .then(() => {
+        handle = forward(operation).subscribe({
+          next: (result) => {
+            if (result.errors) {
+              useApolloStatusStore.setState({
+                isLoading: false,
+                isError: true,
+                isSuccess: false,
+              });
+              observer.error(result.errors);
+            } else {
+              useApolloStatusStore.setState({
+                isLoading: false,
+                isError: false,
+                isSuccess: true,
+              });
+              observer.next(result);
+            }
+          },
+          error: (error) => {
+            useApolloStatusStore.setState({
+              isLoading: false,
+              isError: true,
+              isSuccess: false,
+            });
+            observer.error(error);
+          },
+          complete: observer.complete.bind(observer),
+        });
+      })
+      .catch((error) => {
+        useApolloStatusStore.setState({
+          isLoading: false,
+          isError: true,
+          isSuccess: false,
+        });
+        observer.error(error);
+      });
+
+    return () => {
+      if (handle) handle.unsubscribe();
+    };
+  });
 });
 
 const authLink = setContext(async (_, { headers }) => {
@@ -19,8 +88,10 @@ const authLink = setContext(async (_, { headers }) => {
   };
 });
 
+const combinedLink = authLink.concat(statusLink);
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: combinedLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

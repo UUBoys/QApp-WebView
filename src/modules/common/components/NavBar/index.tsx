@@ -1,5 +1,4 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { useQuery } from "@apollo/client";
 import { Disclosure, Menu as HeadlessMenu } from "@headlessui/react";
 import {
   XMarkIcon,
@@ -13,33 +12,39 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useUserAdditionalDataStore } from "../../stores/user-aditional-data-store";
 import Menu from "../Menu";
 
-import { Query } from "@/generated/graphql";
-import { GET_CREDIT } from "@/modules/GRAPHQL/queries/GetCreditQuery";
-
 const navbarAllowedRoutes = ["/", "/events", "/buyCredits", "/clubs"];
+
+let previousKreditCount = 0;
 
 const NavBar = () => {
   const { pathname } = useRouter();
   const { data: session } = useSession();
-  const { credits, setCredits } = useUserAdditionalDataStore((set) => ({
-    setCredits: set.setCredits,
+  const [showUpArrow, setShowUpArrow] = useState(false);
+  const [showDownArrow, setShowDownArrow] = useState(false);
+  const { credits } = useUserAdditionalDataStore((set) => ({
     credits: set.credits,
   }));
 
-  const { data, refetch } = useQuery<Query>(GET_CREDIT);
-
   useEffect(() => {
-    if (data) setCredits(data?.getCredit?.balance as number);
-  }, [data, setCredits]);
-
-  useEffect(() => {
-    if (session?.user) refetch();
-  }, [refetch, session?.user]);
+    if (credits === 0) return;
+    if (previousKreditCount <= credits) {
+      setShowUpArrow(true);
+      setTimeout(() => {
+        setShowUpArrow(false);
+      }, 3000);
+    } else if (previousKreditCount > credits) {
+      setShowDownArrow(true);
+      setTimeout(() => {
+        setShowDownArrow(false);
+      }, 3000);
+    }
+    previousKreditCount = credits;
+  }, [credits]);
 
   if (!navbarAllowedRoutes.includes(pathname)) return null;
 
@@ -124,15 +129,19 @@ const NavBar = () => {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <div className="flex flex-col items-center  text-center font-bold">
-                  <ArrowUpIcon
-                    className="h-6 w-6 animate-bounce text-green-400"
-                    aria-hidden="true"
-                  />
+                  {showUpArrow && (
+                    <ArrowUpIcon
+                      className="h-6 w-6 animate-bounce  text-green-400"
+                      aria-hidden="true"
+                    />
+                  )}
 
-                  <ArrowDownIcon
-                    className="h-6 w-6 animate-bounce text-red-500"
-                    aria-hidden="true"
-                  />
+                  {showDownArrow && (
+                    <ArrowDownIcon
+                      className="h-6 w-6  animate-bounce text-red-500"
+                      aria-hidden="true"
+                    />
+                  )}
                 </div>
                 <div className="flex  gap-5 ">
                   {" "}
