@@ -83,6 +83,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createEstablishment?: Maybe<CreateEstablishmentResult>;
   createEvent?: Maybe<CreateEventResult>;
+  googleOAuth?: Maybe<AuthResult>;
   login?: Maybe<AuthResult>;
   purchaseTicket?: Maybe<PurchaseTicketResult>;
   register?: Maybe<AuthResult>;
@@ -107,6 +108,11 @@ export type MutationCreateEventArgs = {
   name?: InputMaybe<Scalars['String']['input']>;
   price?: InputMaybe<Scalars['Float']['input']>;
   start_date?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationGoogleOAuthArgs = {
+  idToken?: InputMaybe<Scalars['String']['input']>;
 };
 
 

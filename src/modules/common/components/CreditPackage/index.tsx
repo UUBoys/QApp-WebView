@@ -1,10 +1,4 @@
-import Image from "next/image";
-import { useState } from "react";
-
 import Button from "../Button";
-import Input from "../Input";
-
-import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded";
 
 export type CreditPackageProps = {
   name: string;
@@ -18,16 +12,13 @@ export type CreditPackageProps = {
 };
 
 const CreditPackage: React.FC<CreditPackageProps> = ({
-  name,
   price,
   description,
-  imageSrc,
   volume,
   onBuy,
-  isCustom,
   variant = "standard",
 }) => {
-  const variant_styles = {
+  const variantStyles = {
     standard: {
       background: "bg-gray-300",
     },
@@ -40,28 +31,28 @@ const CreditPackage: React.FC<CreditPackageProps> = ({
   };
 
   return (
-    <div className="flex flex-col rounded-lg bg-white shadow-xl max-w-[300px]">
+    <div className="flex max-w-[300px] flex-col rounded-lg bg-white shadow-xl">
       <div
-        className={`${variant_styles[variant].background} w-[80%] py-[10px] mx-auto flex flex-col items-center justify-center gap-[5px] rounded-2xl relative mt-[-20px] shadow-2xl text-white`}
+        className={`${variantStyles[variant].background} relative mx-auto mt-[-20px] flex w-[80%] flex-col items-center justify-center gap-[5px] rounded-2xl py-[10px] text-white shadow-2xl`}
       >
-        <p className={"text-[20px] uppercase font-bold"}>{variant}</p>
-        <p className={"text-[18px] font-medium"}>{price}</p>
+        <p className="text-[20px] font-bold uppercase">{variant}</p>
+        <p className="text-[18px] font-medium">{price}</p>
       </div>
-      <div className={"w-full py-4 text-center"}>
-        <p className={"text-gray-700 text-[30px]"}>{volume} Kreditu</p>
+      <div className="w-full py-4 text-center">
+        <p className="text-[30px] text-gray-700">{volume} Kreditu</p>
       </div>
 
-      <div className={"border-t border-gray-300 w-full"}>
-        <div className={"text-gray-300 px-[20px] text-center py-[30px]"}>
+      <div className="w-full border-t border-gray-300">
+        <div className="px-[20px] py-[30px] text-center text-gray-300">
           <p>{description}</p>
         </div>
       </div>
 
-      <div className={"flex items-center justify-center mb-[30px]"}>
+      <div className="mb-[30px] flex items-center justify-center">
         <Button
           onClick={() => onBuy && onBuy(volume)}
-          className={`rounded-xl w-[150px] h-[40px] uppercase`}
-          customBackground={variant_styles[variant].background}
+          className="h-[40px] w-[150px] rounded-xl uppercase"
+          customBackground={variantStyles[variant].background}
         >
           Koupit
         </Button>
