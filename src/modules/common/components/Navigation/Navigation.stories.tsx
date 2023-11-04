@@ -1,14 +1,13 @@
 // Button.stories.ts|tsx
 
+import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import WindowRoundedIcon from "@mui/icons-material/WindowRounded";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import Navigation, {
   NavigationLinkProps,
 } from "@/modules/common/components/Navigation";
-
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
-import WindowRoundedIcon from "@mui/icons-material/WindowRounded";
-import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
 
 const meta: Meta<typeof Navigation> = {
   component: Navigation,
@@ -47,7 +46,7 @@ const linksTextOnly: NavigationLinkProps[] = [
 
 export const Default: Story = {
   args: {
-    links: links,
+    links,
     className: "max-w-[500px]",
   },
 };

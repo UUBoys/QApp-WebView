@@ -1,8 +1,8 @@
 /* eslint-disable react/no-array-index-key */
+import clsx from "clsx";
 import React, { useState } from "react";
 
 import ExpandableItem from "@/modules/common/components/ExpandableItem";
-import clsx from "clsx";
 
 export type Event = {
   title: string;
@@ -32,7 +32,7 @@ const EventsList: React.FC<EventsListProps> = ({ events, className }) => {
   return (
     <div
       className={clsx(
-        "mx-auto mt-10 max-w-full  p-4 transition-all md:max-w-lg flex flex-col gap-[20px]",
+        "mx-auto mt-10 flex  max-w-full flex-col gap-[20px] p-4 transition-all ",
         className
       )}
     >

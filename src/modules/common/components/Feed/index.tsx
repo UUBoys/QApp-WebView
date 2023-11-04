@@ -1,17 +1,17 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import WindowRoundedIcon from "@mui/icons-material/WindowRounded";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import EventsList, { Event } from "@/modules/common/components/EventList";
 import EventPost, {
   EventPostProps,
 } from "@/modules/common/components/EventPost";
 import Navigation, {
   NavigationLinkProps,
 } from "@/modules/common/components/Navigation";
-import EventsList, { Event } from "@/modules/common/components/EventList";
-
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
-import WindowRoundedIcon from "@mui/icons-material/WindowRounded";
-import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
 
 const mockData: EventPostProps[] = [
   {
@@ -197,49 +197,36 @@ const mockEvetList: Event[] = [
 const Feed = () => {
   const { t } = useTranslation();
   return (
-    <div className={"text-gray-300"}>
-      <div className={"grid grid-cols-3 w-full pt-[50px]"}>
-        <div className={"col-span-1"}>
-          <div className={"flex flex-col items-end mt-[100px] px-[10px]"}>
-            <Navigation links={leftMenuMockLinks} className={"w-[200px]"} />
-            <div
-              className={"h-[2px] bg-gray-300 w-[200px] rounded-full my-[20px]"}
-            />
+    <div className="text-gray-300">
+      <div className="grid w-full grid-cols-3 pt-[50px]">
+        <div className="col-span-1">
+          <div className="mt-[100px] flex flex-col items-end px-[10px]">
+            <Navigation links={leftMenuMockLinks} className="w-[200px]" />
+            <div className="my-[20px] h-[2px] w-[200px] rounded-full bg-gray-300" />
             {/* <div className={"w-[200px]"}>
               <p className={"text-center text-gray-700 mb-[20px] font-medium"}>
                 {t("pages.feed.favoriteClubs")}
               </p>
             </div> */}
-            <Navigation
-              links={favoriteClubsMockLinks}
-              className={"w-[200px]"}
-            />
+            <Navigation links={favoriteClubsMockLinks} className="w-[200px]" />
           </div>
         </div>
-        <div
-          className={
-            "col-span-1  pt-[50px] max-h-screen overflow-y-auto scroll-hidden"
-          }
-        >
-          <div className={"flex flex-col gap-[50px] pt-[50px]"}>
+        <div className="scroll-hidden  col-span-1 max-h-screen overflow-y-auto pt-[50px]">
+          <div className="flex flex-col gap-[50px] pt-[50px]">
             {mockData.map((event) => (
               <EventPost event={event.event} club={event.club} />
             ))}
           </div>
         </div>
-        <div className={"col-span-1 w-full"}>
-          <div className={"flex flex-col items-start mt-[100px] p-3"}>
-            <h1 className={"text-center text-[20px] text-gray-700  w-[500px]"}>
+        <div className="col-span-1 w-full">
+          <div className="mt-[100px] flex flex-col items-start p-3">
+            <h1 className="w-[500px] text-center text-[20px]  text-gray-700">
               {t("pages.feed.eventsWithTickets")}
             </h1>
-            <div
-              className={
-                "max-h-[400px] overflow-y-auto scroll-hidden bg-white py-[20px] mt-[20px] rounded-2xl"
-              }
-            >
+            <div className="scroll-hidden mt-[20px] max-h-[400px] overflow-y-auto rounded-2xl bg-white py-[20px]">
               <EventsList
                 events={mockEvetList}
-                className={"!mt-[10px] !mx-0 !w-[500px] rounded-2xl py-[0px]"}
+                className="!mx-0 !mt-[10px] !w-[500px] rounded-2xl py-[0px]"
               />
             </div>
           </div>

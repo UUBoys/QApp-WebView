@@ -1,7 +1,11 @@
-import React from "react";
-import { useRouter } from "next/router";
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable tailwindcss/no-contradicting-classname */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import clsx from "clsx";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import React from "react";
 
 export type NavigationLinkProps = {
   label: string;
@@ -28,6 +32,7 @@ const Navigation = ({
   const handleLinkClick = (link: NavigationLinkProps) => {
     if (link.href) return push(link.href);
     if (link.onClick) return link.onClick(link);
+    return null;
   };
 
   return (
@@ -37,21 +42,21 @@ const Navigation = ({
           key={index}
           onClick={() => handleLinkClick(link)}
           className={clsx(
-            "flex items-center gap-[8px] w-full text-gray-400 hover:text-primary-400 hover:border-primary-400 cursor-pointer transition-all  border-gray-400 py-[10px] px-[10px]",
+            "flex w-full cursor-pointer items-center gap-[8px] border-gray-400 p-[10px] text-gray-400 transition-all  hover:border-primary-400 hover:text-primary-400",
             link.className,
-            "hover:bg-gray-300 hover:text-gray-700 rounded-xl",
+            "rounded-xl hover:bg-gray-300 hover:text-gray-700",
             seperateLinks && "border-b"
           )}
         >
           {link.icon && !link.image && link.icon}
           {link.image && (
-            <div className={"w-[30px] h-[30px]"}>
+            <div className="h-[30px] w-[30px]">
               <Image
                 src={link.image}
                 width={30}
                 height={30}
                 alt="icon"
-                className={"rounded-full"}
+                className="rounded-full"
               />
             </div>
           )}

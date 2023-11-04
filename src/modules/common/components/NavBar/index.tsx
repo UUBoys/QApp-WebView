@@ -1,5 +1,4 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import React, { useEffect, useState } from "react";
 import { Disclosure, Menu as HeadlessMenu } from "@headlessui/react";
 import {
   XMarkIcon,
@@ -9,14 +8,15 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
 } from "@heroicons/react/24/solid";
-
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
 
 import { useUserAdditionalDataStore } from "../../stores/user-aditional-data-store";
+
 import Menu from "@/modules/common/components/Menu";
 import SearchModal from "@/modules/common/components/SearchModal";
 
@@ -27,9 +27,20 @@ const navbarAllowedRoutes = [
   "/clubs",
   "/profile",
   "/feed",
+  "/club/create",
+  "/club/*",
 ];
 
 let previousKreditCount = 0;
+const regexPatterns = navbarAllowedRoutes.map((route) => {
+  // Escape forward slashes and replace '*' with '.*' for wildcard matches
+  const pattern = route.replace(/\//g, "\\/").replace(/\*/g, ".*");
+  return `^${pattern}$`; // The ^ and $ ensure the pattern matches the whole path
+});
+
+// Combine all regex patterns into one
+const combinedPattern = regexPatterns.join("|");
+const routeRegex = new RegExp(combinedPattern);
 
 const NavBar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
@@ -41,6 +52,10 @@ const NavBar = () => {
   const { credits } = useUserAdditionalDataStore((set) => ({
     credits: set.credits,
   }));
+
+  const isRouteAllowed = (routePathname: string) => {
+    return routeRegex.test(routePathname);
+  };
 
   useEffect(() => {
     if (credits === 0) return;
@@ -58,7 +73,7 @@ const NavBar = () => {
     previousKreditCount = credits;
   }, [credits]);
 
-  if (!navbarAllowedRoutes.includes(pathname)) return null;
+  if (!isRouteAllowed(pathname)) return null;
 
   const navigation = [
     {
@@ -174,11 +189,9 @@ const NavBar = () => {
                     </Link>
                     {credits}
                   </div>
-                  <div
-                    className={"text-black flex items-center justify-center"}
-                  >
+                  <div className="flex items-center justify-center text-black">
                     <SearchRoundedIcon
-                      className={"h-6 w-6 cursor-pointer"}
+                      className="h-6 w-6 cursor-pointer"
                       onClick={() => setIsSearchOpen(true)}
                     />
                   </div>

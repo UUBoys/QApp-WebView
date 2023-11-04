@@ -54,7 +54,7 @@
   },
   "components": {
     "searchModal": {
-      "placeholder": "Hledat",
+      "placeholder": "Hledat...",
       "noResults": "Žádné výsledky",
       "all": "Vše",
       "events": "Akce",

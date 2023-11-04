@@ -146,7 +146,7 @@ const SearchModal = ({
     } else {
       setResult(mockSearch);
     }
-  }, [queryDebounce]);
+  }, [query, queryDebounce]);
 
   useEffect(() => {
     setIsOpen(open);
@@ -154,7 +154,7 @@ const SearchModal = ({
 
   if (isOpen)
     return (
-      <div className="fixed left-0 top-0 h-screen w-full z-20 overflow-y-auto bg-[#F0F0F0]">
+      <div className="fixed left-0 top-0 z-20 h-screen w-full overflow-y-auto bg-[#F0F0F0]">
         <div className="absolute right-[30px] top-[30px]">
           <button className="flex items-center justify-center p-3 text-gray-500">
             <CloseRoundedIcon

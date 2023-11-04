@@ -9,6 +9,7 @@ interface ButtonProps {
   className?: string;
   children: React.ReactNode;
   customBackground?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -20,6 +21,7 @@ const Button: React.FC<ButtonProps> = ({
   className,
   children,
   customBackground,
+  type,
 }: ButtonProps) => {
   const sizeClasses = {
     sm: "px-2 py-1 text-xs font-semibold h-6",
@@ -29,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
 
   const colorClasses = {
     primary:
-      "bg-primary-600 hover:bg-primary-500 focus-visible:outline-primary-600",
+      "bg-primary-400 hover:bg-primary-500 focus-visible:outline-primary-600",
     secondary:
       "bg-secondary-600 hover:bg-secondary-500 focus-visible:outline-secondary-600",
     danger: "bg-red-600 hover:bg-red-500 focus-visible:outline-red-600",
@@ -54,15 +56,15 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      type="button"
+      type={type}
       className={`rounded ${buttonClasses}`}
       onClick={onClick}
       disabled={disabled}
     >
       {isLoading ? (
-        <div className="h-2 w-3 animate-spin rounded-full border-2 border-white" />
+        <div className="h-2 w-3 animate-spin rounded-full border-2 border-white transition-all" />
       ) : (
-        <span className={"text-white"}>{children}</span>
+        <span className="text-white  transition-all">{children}</span>
       )}
     </button>
   );

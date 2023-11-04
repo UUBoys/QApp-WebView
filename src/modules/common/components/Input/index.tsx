@@ -1,15 +1,32 @@
+import clsx from "clsx";
 import React from "react";
 
 interface InputProps {
   label?: string;
   placeholder?: string;
-  type?: "text" | "email" | "password" | "number";
+  type?:
+    | "text"
+    | "email"
+    | "password"
+    | "number"
+    | "textarea"
+    | "date"
+    | "time";
   value?: string | number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   isDisabled?: boolean;
   error?: string;
+  containerClasses?: string;
+  hookFormRegisterReturn?: any;
+  rows?: number;
 }
+
+const getErrorOrDisabledFocusRing = (isDisabled: boolean, error?: string) => {
+  if (error) return "focus:ring-red-500";
+  if (isDisabled) return "focus:ring-gray-600";
+  return "focus:ring-primary-600";
+};
 
 export const Input: React.FC<InputProps> = ({
   label,
@@ -20,6 +37,9 @@ export const Input: React.FC<InputProps> = ({
   className = "",
   isDisabled = false,
   error,
+  containerClasses,
+  hookFormRegisterReturn,
+  rows,
 }) => {
   const baseStyles =
     "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-inset";
@@ -43,7 +63,7 @@ export const Input: React.FC<InputProps> = ({
   ].join(" ");
 
   return (
-    <div className="w-64">
+    <div className={clsx("w-64", containerClasses)}>
       {label && (
         <label
           htmlFor={label}
@@ -53,26 +73,35 @@ export const Input: React.FC<InputProps> = ({
         </label>
       )}
       <div>
-        <input
-          type={type}
-          name={label}
-          id={label}
-          className={inputStyles}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          disabled={isDisabled}
-        />
+        {type === "textarea" ? (
+          <textarea
+            name={label}
+            id={label}
+            className={inputStyles}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            rows={rows}
+            disabled={isDisabled}
+            {...hookFormRegisterReturn}
+          />
+        ) : (
+          <input
+            type={type}
+            name={label}
+            id={label}
+            className={inputStyles}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            disabled={isDisabled}
+            {...hookFormRegisterReturn}
+          />
+        )}
       </div>
       {error && <p className="text-red-500">{error}</p>}
     </div>
   );
-};
-
-const getErrorOrDisabledFocusRing = (isDisabled: boolean, error?: string) => {
-  if (error) return "focus:ring-red-500";
-  if (isDisabled) return "focus:ring-gray-600";
-  return "focus:ring-primary-600";
 };
 
 export default Input;
