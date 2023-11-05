@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
+import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded";
 import { useUserAdditionalDataStore } from "../../stores/user-aditional-data-store";
 
 import Menu from "@/modules/common/components/Menu";
@@ -147,8 +148,8 @@ const NavBar = () => {
                         href={item.href}
                         className={clsx(
                           item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-700 hover:bg-secondary-400 hover:text-white",
+                            ? "bg-primary text-white"
+                            : "text-gray-700 hover:bg-secondary-500 hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-medium transition-all"
                         )}
                         aria-current={item.current ? "page" : undefined}
@@ -177,17 +178,17 @@ const NavBar = () => {
                 </div>
                 <div className="flex  gap-5 ">
                   {" "}
-                  <div className="flex flex-col items-center  text-center font-bold">
+                  <div className="flex gap-[10px] px-[20px] items-center  text-center font-bold text-white bg-primary rounded-full cursor-pointer hover:shadow-xl transition-all">
                     <Link
                       href="/buyCredits"
-                      className="relative flex p-1 text-sm  text-primary-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 "
+                      className="relative p-1 text-sm flex gap-[10px] items-center"
                     >
-                      <MusicalNoteIcon
+                      <LocalAtmRoundedIcon
                         className="h-6 w-6 "
                         aria-hidden="true"
                       />
+                      {credits}
                     </Link>
-                    {credits}
                   </div>
                   <div className="flex items-center justify-center text-black">
                     <SearchRoundedIcon
@@ -212,9 +213,9 @@ const NavBar = () => {
                         },
                       ]}
                     >
-                      <HeadlessMenu.Button className="relative flex rounded-full bg-primary-400 p-1 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-white ">
+                      <HeadlessMenu.Button className="relative flex rounded-full bg-primary-400  text-sm text-white focus:outline-none focus:ring-2 focus:ring-white p-[10px] ">
                         <UserIcon
-                          className="h-8 w-8 rounded-full"
+                          className="h-[20px] w-[20px] rounded-full"
                           aria-hidden="true"
                         />
                       </HeadlessMenu.Button>

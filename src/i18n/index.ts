@@ -4,7 +4,12 @@ import { initReactI18next } from "react-i18next";
 import { cs } from "./resources.cs";
 import { en } from "./resources.en";
 
-const availableLanguages = ["cs", "en"];
+import moment from "moment";
+
+export const availableLanguages: { [key: string]: string } = {
+  cs: "cs",
+  en: "en-US",
+};
 
 const detectionOptions = {
   order: ["localStorage", "navigator"],
@@ -12,13 +17,18 @@ const detectionOptions = {
   checkWhitelist: true,
 };
 
+export const handleChangeLanguage = (lng: "cs" | "en") => {
+  moment.locale(availableLanguages[lng]);
+  i18n.changeLanguage(lng);
+};
+
 i18n.use(initReactI18next).init({
   lng: "cs",
   debug: false,
   fallbackLng: "cs",
-  supportedLngs: availableLanguages,
+  supportedLngs: Object(availableLanguages).keys,
   interpolation: {
-    escapeValue: false, // not needed for react as it escapes by default
+    escapeValue: false,
   },
   detection: detectionOptions,
   resources: {
