@@ -53,6 +53,19 @@
     }
   },
   "components": {
+    "navbar": {
+      "links": {
+        "events": "Akce",
+        "myTickets": "Moje lístky",
+        "credits": "Kredity",
+        "clubs": "Kluby",
+        "userOptions": {
+          "account": "Účet",
+          "settings": "Nastavení",
+          "logout": "Odhlásit se"
+        }
+      }
+    },
     "searchModal": {
       "placeholder": "Hledat...",
       "noResults": "Žádné výsledky",

@@ -8,7 +8,7 @@ import moment from "moment";
 
 export const availableLanguages: { [key: string]: string } = {
   cs: "cs",
-  en: "en-US",
+  en: "en-BG",
 };
 
 const detectionOptions = {
@@ -20,13 +20,16 @@ const detectionOptions = {
 export const handleChangeLanguage = (lng: "cs" | "en") => {
   moment.locale(availableLanguages[lng]);
   i18n.changeLanguage(lng);
+  if (typeof window !== "undefined") {
+    localStorage.setItem("i18nextLng", lng);
+  }
 };
 
 i18n.use(initReactI18next).init({
   lng: "cs",
   debug: false,
   fallbackLng: "cs",
-  supportedLngs: Object(availableLanguages).keys,
+  supportedLngs: Object.keys(availableLanguages),
   interpolation: {
     escapeValue: false,
   },

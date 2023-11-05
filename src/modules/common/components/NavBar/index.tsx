@@ -20,6 +20,8 @@ import { useUserAdditionalDataStore } from "../../stores/user-aditional-data-sto
 
 import Menu from "@/modules/common/components/Menu";
 import SearchModal from "@/modules/common/components/SearchModal";
+import LanguageSelector from "../LanguageSelector";
+import { useTranslation } from "react-i18next";
 
 const navbarAllowedRoutes = [
   "/",
@@ -44,6 +46,7 @@ const combinedPattern = regexPatterns.join("|");
 const routeRegex = new RegExp(combinedPattern);
 
 const NavBar = () => {
+  const { t } = useTranslation();
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
 
   const { pathname, push } = useRouter();
@@ -78,21 +81,25 @@ const NavBar = () => {
 
   const navigation = [
     {
-      name: "Akce",
+      name: t("components.navbar.links.events"),
       href: "/",
       current: pathname === "/" || pathname === "/events",
     },
     {
-      name: "Moje lístky",
+      name: t("components.navbar.links.myTickets"),
       href: "/tickets",
       current: pathname === "/tickets",
     },
     {
-      name: "Kredity",
+      name: t("components.navbar.links.credits"),
       href: "/buyCredits",
       current: pathname === "/buyCredits",
     },
-    { name: "Kluby", href: "/clubs", current: pathname === "/clubs" },
+    {
+      name: t("components.navbar.links.clubs"),
+      href: "/clubs",
+      current: pathname === "/clubs",
+    },
   ];
 
   return (
@@ -168,8 +175,7 @@ const NavBar = () => {
                     />
                   )}
                 </div>
-                <div className="flex  gap-5 ">
-                  {" "}
+                <div className="flex gap-5">
                   <div className="flex gap-[10px] px-[20px] items-center  text-center font-bold text-white bg-primary rounded-full cursor-pointer hover:shadow-xl transition-all">
                     <Link
                       href="/buyCredits"
@@ -188,19 +194,29 @@ const NavBar = () => {
                       onClick={() => setIsSearchOpen(true)}
                     />
                   </div>
+
+                  <div>
+                    <LanguageSelector className={"max-w-[66px]"} />
+                  </div>
                   {session?.user && (
                     <Menu
                       items={[
                         {
-                          label: "Účet",
+                          label: t(
+                            "components.navbar.links.userOptions.account"
+                          ),
                           onClick: () => push("/profile"),
                         },
                         {
-                          label: "Nastavení",
+                          label: t(
+                            "components.navbar.links.userOptions.settings"
+                          ),
                           onClick: (e) => console.log(e),
                         },
                         {
-                          label: "Odhlásit se",
+                          label: t(
+                            "components.navbar.links.userOptions.logout"
+                          ),
                           onClick: () => signOut(),
                         },
                       ]}

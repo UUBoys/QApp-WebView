@@ -53,6 +53,19 @@
     }
   },
   "components": {
+    "navbar": {
+      "links": {
+        "events": "Events",
+        "myTickets": "My tickets",
+        "credits": "Credits",
+        "clubs": "Clubs",
+        "userOptions": {
+          "account": "Account",
+          "settings": "Settings",
+          "logout": "Logout"
+        }
+      }
+    },
     "searchModal": {
       "placeholder": "Search",
       "noResults": "No results found",
