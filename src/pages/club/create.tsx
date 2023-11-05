@@ -1,26 +1,50 @@
+import { useMutation } from "@apollo/client";
 import { ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
+import { Mutation, MutationCreateEstablishmentArgs } from "@/generated/graphql";
 import Button from "@/modules/common/components/Button";
 import Input from "@/modules/common/components/Input";
+import { CREATE_ESTABLISHMENT_MUTATION } from "@/modules/GRAPHQL/mutations/CreateEstablishmentMutation";
 
 type CreateClubInputs = {
   name: string;
   description: string;
   profilePicture: string;
   coverPicture: string;
-  avarageOpenTime: string;
-  avarageCloseTime: string;
-  address: string;
+  city: string;
+  country: string;
+  street: string;
 };
 
 const CreateClub: NextPage = () => {
-  const { register, handleSubmit, reset } = useForm<CreateClubInputs>();
+  const { register, handleSubmit } = useForm<CreateClubInputs>();
+  const { push } = useRouter();
+  const [mutateCreateEstablishment] = useMutation<Mutation>(
+    CREATE_ESTABLISHMENT_MUTATION,
+    {
+      context: { trackStatus: true },
+    }
+  );
 
-  const onSubmit = (data: CreateClubInputs) => {
-    console.log(data);
-    reset();
+  const onSubmit = async (data: CreateClubInputs) => {
+    const variables: MutationCreateEstablishmentArgs = {
+      city: data.city,
+      country: data.country,
+      description: data.description,
+      name: data.name,
+      street: data.street,
+    };
+
+    const res = await mutateCreateEstablishment({
+      variables,
+    });
+
+    if (!res.data || !res.data.createEstablishment?.success) return;
+
+    push(`/club/${res.data.createEstablishment.establishment?.id}`);
   };
 
   return (
@@ -38,7 +62,7 @@ const CreateClub: NextPage = () => {
         </div>
         <div className="w-full pb-20">
           <div className="relative pl-10">
-            <div className="absolute top-[-4rem] flex h-24 min-h-[8rem] w-24 min-w-[8rem] cursor-pointer flex-col items-center justify-center rounded-full bg-gray-300 text-sm font-semibold text-gray-500">
+            <div className="absolute top-[-4rem] flex h-24 min-h-[8rem] w-24 min-w-[8rem] cursor-pointer flex-col items-center justify-center rounded-full border-[4px] border-white bg-gray-300 text-sm font-semibold text-gray-500">
               <ArrowUpTrayIcon className="h-10 w-10 text-gray-500" />
               Nahrát fotku
             </div>
@@ -67,29 +91,31 @@ const CreateClub: NextPage = () => {
               <Input
                 containerClasses="!w-3/5"
                 className="bg-gray-100"
-                placeholder="Adresa klubu"
+                placeholder="Ulice"
                 type="text"
-                hookFormRegisterReturn={{ ...register("address") }}
+                hookFormRegisterReturn={{ ...register("street") }}
               />
             </div>
-            <div className="mx-auto flex w-3/5  flex-col gap-3 text-start ">
-              Běžná otevírací doba
-              <div className="flex w-full flex-row items-center justify-center">
+            <div className="mx-auto flex w-3/5  flex-col  text-start ">
+              <div className="flex w-full flex-row items-center justify-center gap-3">
                 <Input
-                  containerClasses="mr-auto w-2/5"
+                  containerClasses="!w-3/5"
                   className="bg-gray-100"
-                  type="time"
-                  hookFormRegisterReturn={{ ...register("avarageOpenTime") }}
+                  placeholder="Město"
+                  type="text"
+                  hookFormRegisterReturn={{ ...register("city") }}
                 />
-                -
+
                 <Input
-                  containerClasses="ml-auto w-2/5"
+                  containerClasses="!w-3/5"
                   className="bg-gray-100"
-                  type="time"
-                  hookFormRegisterReturn={{ ...register("avarageCloseTime") }}
+                  placeholder="Země"
+                  type="text"
+                  hookFormRegisterReturn={{ ...register("country") }}
                 />
               </div>
             </div>
+
             <div className="mx-auto w-3/5 text-end">
               <Button type="submit" className="ml-auto ">
                 Vytvořit
