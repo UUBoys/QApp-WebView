@@ -2,11 +2,11 @@ import { gql } from "@apollo/client";
 
 export const CREATE_ESTABLISHMENT_MUTATION = gql`
   mutation Mutation(
-    $country: String
-    $city: String
-    $street: String
-    $description: String
-    $name: String
+    $country: String!
+    $city: String!
+    $street: String!
+    $description: String!
+    $name: String!
   ) {
     createEstablishment(
       country: $country

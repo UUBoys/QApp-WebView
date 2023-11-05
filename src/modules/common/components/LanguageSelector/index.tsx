@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import Select, { SelectItemProps } from "@/modules/common/components/Select";
 import i18n, { handleChangeLanguage } from "@/i18n";
+import Select, { SelectItemProps } from "@/modules/common/components/Select";
 
 type LanguageSelectorProps = {
   className?: string;

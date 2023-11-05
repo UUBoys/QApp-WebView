@@ -6,6 +6,11 @@ import CheckIcon from "@mui/icons-material/Check";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Fragment, useEffect, useState } from "react";
 
+export type AutocompleteItemProps = {
+  label: string;
+  value: any;
+};
+
 type AutocompleteProps = {
   options: AutocompleteItemProps[];
   defaultSelected?: AutocompleteItemProps;
@@ -14,10 +19,6 @@ type AutocompleteProps = {
   className?: string;
 };
 
-export type AutocompleteItemProps = {
-  label: string;
-  value: any;
-};
 const Autocomplete = ({
   options,
   defaultSelected,
@@ -42,7 +43,7 @@ const Autocomplete = ({
     } else {
       setFilteredItems(options);
     }
-  }, [query]);
+  }, [options, query]);
 
   useEffect(() => {
     const _option = options.find((item) => item.value === selected);
@@ -50,7 +51,7 @@ const Autocomplete = ({
       if (onChange) onChange(_option);
       setQuery(_option.label);
     }
-  }, [selected]);
+  }, [onChange, options, selected]);
 
   return (
     <div className={`${className}`}>

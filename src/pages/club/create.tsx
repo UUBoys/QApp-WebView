@@ -1,7 +1,10 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { useMutation } from "@apollo/client";
 import { ArrowUpTrayIcon } from "@heroicons/react/24/solid";
+import clsx from "clsx";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 import { Mutation, MutationCreateEstablishmentArgs } from "@/generated/graphql";
@@ -12,15 +15,15 @@ import { CREATE_ESTABLISHMENT_MUTATION } from "@/modules/GRAPHQL/mutations/Creat
 type CreateClubInputs = {
   name: string;
   description: string;
-  profilePicture: string;
-  coverPicture: string;
+  profilePicture: FileList;
+  coverPicture: FileList;
   city: string;
   country: string;
   street: string;
 };
 
 const CreateClub: NextPage = () => {
-  const { register, handleSubmit } = useForm<CreateClubInputs>();
+  const { register, handleSubmit, watch } = useForm<CreateClubInputs>();
   const { push } = useRouter();
   const [mutateCreateEstablishment] = useMutation<Mutation>(
     CREATE_ESTABLISHMENT_MUTATION,
@@ -28,6 +31,9 @@ const CreateClub: NextPage = () => {
       context: { trackStatus: true },
     }
   );
+
+  const watchedProfilePicture = watch("profilePicture");
+  const watchedCoverPicture = watch("coverPicture");
 
   const onSubmit = async (data: CreateClubInputs) => {
     const variables: MutationCreateEstablishmentArgs = {
@@ -47,6 +53,20 @@ const CreateClub: NextPage = () => {
     push(`/club/${res.data.createEstablishment.establishment?.id}`);
   };
 
+  const profilePicturePreview = useMemo(() => {
+    if (watchedProfilePicture && watchedProfilePicture[0]) {
+      return URL.createObjectURL(watchedProfilePicture[0]);
+    }
+    return null;
+  }, [watchedProfilePicture]);
+
+  const coverPicturePreview = useMemo(() => {
+    if (watchedCoverPicture && watchedCoverPicture[0]) {
+      return URL.createObjectURL(watchedCoverPicture[0]);
+    }
+    return null;
+  }, [watchedCoverPicture]);
+
   return (
     <div className="flex min-h-[100vh] flex-col items-center gap-32 py-52 align-top">
       <p className="flex gap-8 text-6xl font-semibold">
@@ -56,17 +76,45 @@ const CreateClub: NextPage = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex  min-w-[60vw] flex-col items-start rounded-lg bg-white text-center  shadow-xl"
       >
-        <div className="flex h-3/5 min-h-[30vh] w-full cursor-pointer flex-col items-center justify-center rounded-t-lg bg-gray-200 text-center text-2xl font-semibold text-gray-500">
+        <label
+          htmlFor="club-cover-picture"
+          style={{ backgroundImage: `url(${coverPicturePreview})` }}
+          className={clsx(
+            "relative flex h-3/5 min-h-[30vh] w-full cursor-pointer flex-col items-center justify-center rounded-t-lg bg-gray-200 bg-cover text-center text-2xl font-semibold text-gray-500"
+          )}
+        >
           <ArrowUpTrayIcon className="h-20 w-20 text-gray-500" />
           Nahrát fotku
-        </div>
+          <input
+            className="hidden"
+            id="club-cover-picture"
+            type="file"
+            multiple={false}
+            {...register("coverPicture")}
+            hidden
+          />
+          {coverPicturePreview && (
+            <div className="absolute inset-0 bg-black/40" />
+          )}
+        </label>
         <div className="w-full pb-20">
-          <div className="relative pl-10">
-            <div className="absolute top-[-4rem] flex h-24 min-h-[8rem] w-24 min-w-[8rem] cursor-pointer flex-col items-center justify-center rounded-full border-[4px] border-white bg-gray-300 text-sm font-semibold text-gray-500">
+          <label htmlFor="club-profile-picture" className="relative pl-10">
+            <div
+              style={{ backgroundImage: `url(${profilePicturePreview})` }}
+              className="absolute top-[-4rem] flex h-24 min-h-[8rem] w-24 min-w-[8rem] cursor-pointer flex-col items-center justify-center rounded-full border-[4px] border-white bg-gray-300 bg-contain text-sm font-semibold text-gray-500"
+            >
               <ArrowUpTrayIcon className="h-10 w-10 text-gray-500" />
               Nahrát fotku
             </div>
-          </div>
+            <input
+              className="hidden"
+              id="club-profile-picture"
+              type="file"
+              multiple={false}
+              {...register("profilePicture")}
+              hidden
+            />
+          </label>
           <div className="mt-16 flex w-full flex-col gap-10">
             <div className="mx-auto flex w-full items-center justify-center">
               <Input

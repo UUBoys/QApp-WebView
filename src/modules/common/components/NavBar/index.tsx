@@ -4,24 +4,23 @@ import {
   XMarkIcon,
   Bars3Icon,
   UserIcon,
-  MusicalNoteIcon,
   ArrowUpIcon,
   ArrowDownIcon,
 } from "@heroicons/react/24/solid";
+import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded";
 import { useUserAdditionalDataStore } from "../../stores/user-aditional-data-store";
+import LanguageSelector from "../LanguageSelector";
 
 import Menu from "@/modules/common/components/Menu";
 import SearchModal from "@/modules/common/components/SearchModal";
-import LanguageSelector from "../LanguageSelector";
-import { useTranslation } from "react-i18next";
 
 const navbarAllowedRoutes = [
   "/",
@@ -131,12 +130,10 @@ const NavBar = () => {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex shrink-0 items-center">
                   <Link
-                    href={"/"}
-                    className={
-                      "text-black text-[25px] font-medium cursor-pointer"
-                    }
+                    href="/"
+                    className="cursor-pointer text-[25px] font-medium text-black"
                   >
-                    <span className={"text-primary"}>Q</span>APP
+                    <span className="text-primary">Q</span>APP
                   </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -176,10 +173,10 @@ const NavBar = () => {
                   )}
                 </div>
                 <div className="flex gap-5">
-                  <div className="flex gap-[10px] px-[20px] items-center  text-center font-bold text-white bg-primary rounded-full cursor-pointer hover:shadow-xl transition-all">
+                  <div className="flex cursor-pointer items-center gap-[10px]  rounded-full bg-primary px-[20px] text-center font-bold text-white transition-all hover:shadow-xl">
                     <Link
                       href="/buyCredits"
-                      className="relative p-1 text-sm flex gap-[10px] items-center"
+                      className="relative flex items-center gap-[10px] p-1 text-sm"
                     >
                       <LocalAtmRoundedIcon
                         className="h-6 w-6 "
@@ -196,7 +193,7 @@ const NavBar = () => {
                   </div>
 
                   <div>
-                    <LanguageSelector className={"max-w-[66px]"} />
+                    <LanguageSelector className="max-w-[66px]" />
                   </div>
                   {session?.user && (
                     <Menu
@@ -221,7 +218,7 @@ const NavBar = () => {
                         },
                       ]}
                     >
-                      <HeadlessMenu.Button className="relative flex rounded-full bg-primary-400  text-sm text-white focus:outline-none focus:ring-2 focus:ring-white p-[10px] ">
+                      <HeadlessMenu.Button className="relative flex rounded-full bg-primary-400  p-[10px] text-sm text-white focus:outline-none focus:ring-2 focus:ring-white ">
                         <UserIcon
                           className="h-[20px] w-[20px] rounded-full"
                           aria-hidden="true"

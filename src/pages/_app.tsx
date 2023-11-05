@@ -11,10 +11,10 @@ import { Toaster } from "sonner";
 
 import i18n from "../i18n";
 
+import HelpButton from "@/modules/common/components/HelpButton";
 import Layout from "@/modules/common/Layout/Layout";
 import "@/modules/common/styles/globals.css";
 import client from "@/modules/lib/apolloClient";
-import HelpButton from "@/modules/common/components/HelpButton";
 
 moment.locale(i18n.language === "en" ? "en-gb" : "cs");
 

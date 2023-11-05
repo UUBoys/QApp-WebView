@@ -1,10 +1,9 @@
 import i18n from "i18next";
+import moment from "moment";
 import { initReactI18next } from "react-i18next";
 
 import { cs } from "./resources.cs";
 import { en } from "./resources.en";
-
-import moment from "moment";
 
 export const availableLanguages: { [key: string]: string } = {
   cs: "cs",

@@ -92,51 +92,51 @@ export type Mutation = {
 
 
 export type MutationCreateEstablishmentArgs = {
-  city?: InputMaybe<Scalars['String']['input']>;
-  country?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  street?: InputMaybe<Scalars['String']['input']>;
+  city: Scalars['String']['input'];
+  country: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  street: Scalars['String']['input'];
 };
 
 
 export type MutationCreateEventArgs = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  end_date?: InputMaybe<Scalars['String']['input']>;
-  establishment_id?: InputMaybe<Scalars['Int']['input']>;
-  maximumCapacity?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  price?: InputMaybe<Scalars['Float']['input']>;
-  start_date?: InputMaybe<Scalars['String']['input']>;
+  description: Scalars['String']['input'];
+  end_date: Scalars['String']['input'];
+  establishment_id: Scalars['Int']['input'];
+  maximumCapacity: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
+  price: Scalars['Float']['input'];
+  start_date: Scalars['String']['input'];
 };
 
 
 export type MutationGoogleOAuthArgs = {
-  idToken?: InputMaybe<Scalars['String']['input']>;
+  idToken: Scalars['String']['input'];
 };
 
 
 export type MutationLoginArgs = {
-  email?: InputMaybe<Scalars['String']['input']>;
-  password?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
 };
 
 
 export type MutationPurchaseTicketArgs = {
-  event_id?: InputMaybe<Scalars['Int']['input']>;
-  user_id?: InputMaybe<Scalars['Int']['input']>;
+  event_id: Scalars['Int']['input'];
+  user_id: Scalars['Int']['input'];
 };
 
 
 export type MutationRegisterArgs = {
-  email?: InputMaybe<Scalars['String']['input']>;
-  password?: InputMaybe<Scalars['String']['input']>;
-  username?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
 
 export type MutationTopupCreditsArgs = {
-  amount?: InputMaybe<Scalars['Int']['input']>;
+  amount: Scalars['Int']['input'];
 };
 
 export type PurchaseTicketResult = {
@@ -148,8 +148,13 @@ export type PurchaseTicketResult = {
 export type Query = {
   __typename?: 'Query';
   getCredit?: Maybe<CreditsBalance>;
-  getEstablishments?: Maybe<GetEstablishmentsResponse>;
+  getEstablishment?: Maybe<GetEstablishmentsResponse>;
   getEvents?: Maybe<GetEventsResponse>;
+};
+
+
+export type QueryGetEstablishmentArgs = {
+  id?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Ticket = {

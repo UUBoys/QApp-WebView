@@ -55,7 +55,7 @@ const statusLink = new ApolloLink((operation, forward) => {
               isError: true,
               isSuccess: false,
             });
-            observer.error(error);
+            if (observer.error) observer.error(error);
           },
           complete: observer.complete.bind(observer),
         });
