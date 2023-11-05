@@ -53,6 +53,17 @@
     }
   },
   "components": {
+    "helpButton": {
+      "header": "Good day",
+      "text": "How can I help you?",
+      "form": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "message": "Message",
+        "button": "Submit"
+      }
+    },
     "navbar": {
       "links": {
         "events": "Events",

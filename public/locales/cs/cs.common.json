@@ -53,6 +53,17 @@
     }
   },
   "components": {
+    "helpButton": {
+      "header": "Dobrý den",
+      "text": "Jak vám můžeme pomoci?",
+      "form": {
+        "name": "Jméno",
+        "email": "Email",
+        "phone": "Telefon",
+        "message": "Zpráva",
+        "button": "Odeslat"
+      }
+    },
     "navbar": {
       "links": {
         "events": "Akce",

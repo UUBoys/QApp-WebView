@@ -11,4 +11,8 @@ const meta: Meta<typeof LanguageSelector> = {
 export default meta;
 type Story = StoryObj<typeof LanguageSelector>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    className: "max-w-[66px]",
+  },
+};
