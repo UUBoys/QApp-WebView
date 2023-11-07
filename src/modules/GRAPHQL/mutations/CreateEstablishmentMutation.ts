@@ -2,26 +2,30 @@ import { gql } from "@apollo/client";
 
 export const CREATE_ESTABLISHMENT_MUTATION = gql`
   mutation Mutation(
-    $country: String!
-    $city: String!
-    $street: String!
-    $description: String!
     $name: String!
+    $description: String!
+    $street: String!
+    $city: String!
+    $country: String!
+    $coverImage: String
+    $profileImage: String
   ) {
     createEstablishment(
-      country: $country
-      city: $city
-      street: $street
-      description: $description
       name: $name
+      description: $description
+      street: $street
+      city: $city
+      country: $country
+      coverImage: $coverImage
+      profileImage: $profileImage
     ) {
       establishment {
-        city
-        country
-        description
         id
         name
+        description
         street
+        city
+        country
       }
       success
     }

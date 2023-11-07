@@ -6,12 +6,15 @@ import qUpLoaderAnimation from "../../../../../public/animations/qup-loader-anim
 import qUpLoaderFailedAnimation from "../../../../../public/animations/qup-loader-fail-animation.json";
 import qUpLoaderSuccessAnimation from "../../../../../public/animations/qup-loader-success-animation.json";
 
+import { LoadingType } from "@/modules/helpers/loader-helpers";
+
 type LoaderProps = {
   children?: React.ReactNode;
   isLoading?: boolean;
   isSuccess?: boolean;
   isError?: boolean;
   isCustom?: boolean;
+  loadingType?: LoadingType;
 };
 
 const Loader: React.FC<LoaderProps> = ({
@@ -20,6 +23,7 @@ const Loader: React.FC<LoaderProps> = ({
   isSuccess,
   isError,
   isCustom,
+  loadingType,
 }) => {
   const [isEnded, setIsEnded] = useState<boolean>(false);
 
@@ -46,7 +50,7 @@ const Loader: React.FC<LoaderProps> = ({
         </div>
       );
     }
-    if (isSuccess) {
+    if (isSuccess && loadingType === LoadingType.WITH_CONFIRM) {
       setTimeout(() => {
         setIsEnded(true);
       }, 2000);
@@ -62,7 +66,7 @@ const Loader: React.FC<LoaderProps> = ({
         </div>
       );
     }
-    if (isError) {
+    if (isError && loadingType === LoadingType.WITH_CONFIRM) {
       setTimeout(() => {
         setIsEnded(true);
       }, 2000);

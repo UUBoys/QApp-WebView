@@ -11,6 +11,7 @@ import { Mutation, MutationCreateEstablishmentArgs } from "@/generated/graphql";
 import Button from "@/modules/common/components/Button";
 import Input from "@/modules/common/components/Input";
 import { CREATE_ESTABLISHMENT_MUTATION } from "@/modules/GRAPHQL/mutations/CreateEstablishmentMutation";
+import { uploadFiles } from "@/modules/lib/uploadThingHelpers";
 
 type CreateClubInputs = {
   name: string;
@@ -36,21 +37,31 @@ const CreateClub: NextPage = () => {
   const watchedCoverPicture = watch("coverPicture");
 
   const onSubmit = async (data: CreateClubInputs) => {
-    const variables: MutationCreateEstablishmentArgs = {
-      city: data.city,
-      country: data.country,
-      description: data.description,
-      name: data.name,
-      street: data.street,
-    };
+    try {
+      const uploadFilesTest = await uploadFiles({
+        files: [data.profilePicture[0], data.coverPicture[0]],
+        endpoint: "imageUploader",
+      });
+      const variables: MutationCreateEstablishmentArgs = {
+        city: data.city,
+        country: data.country,
+        description: data.description,
+        name: data.name,
+        street: data.street,
+        profileImage: uploadFilesTest[0].url,
+        coverImage: uploadFilesTest[1].url,
+      };
 
-    const res = await mutateCreateEstablishment({
-      variables,
-    });
+      const res = await mutateCreateEstablishment({
+        variables,
+      });
 
-    if (!res.data || !res.data.createEstablishment?.success) return;
+      if (!res.data || !res.data.createEstablishment?.success) return;
 
-    push(`/club/${res.data.createEstablishment.establishment?.id}`);
+      push(`/club/${res.data.createEstablishment.establishment?.id}`);
+    } catch (error: any) {
+      console.error(error.message);
+    }
   };
 
   const profilePicturePreview = useMemo(() => {
