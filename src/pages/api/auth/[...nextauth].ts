@@ -90,7 +90,7 @@ export const authOptions: NextAuthOptions = {
         });
         // Adapt this to whatever your mutation needs are for registering a Google user.
         const variables: MutationGoogleOAuthArgs = {
-          idToken: account.id_token,
+          idToken: account.id_token as string,
         };
         const response = await client.mutate<Mutation>({
           mutation: GOOGLE_AUTH_MUTATION,
