@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useQRCode } from "next-qrcode";
 import moment from "moment";
+import { useState } from "react";
 
 export type TicketProps = {
   uuid: string;
