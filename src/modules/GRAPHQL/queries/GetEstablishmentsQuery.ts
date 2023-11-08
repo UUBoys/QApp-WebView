@@ -23,7 +23,6 @@ export const GET_ESTABLISHMENTS = gql`
           maximumCapacity
         }
       }
-      success
     }
   }
 `;

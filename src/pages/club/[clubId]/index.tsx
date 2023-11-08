@@ -1,6 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable sonarjs/no-duplicate-string */
 import { useQuery } from "@apollo/client";
+import { InformationCircleIcon, MapPinIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -27,7 +28,7 @@ const Club: NextPage = () => {
   useEffect(() => {
     if (
       establishmentData &&
-      establishmentData.getEstablishmentById?.success &&
+      establishmentData.getEstablishmentById &&
       establishmentData.getEstablishmentById.establishments &&
       establishmentData.getEstablishmentById.establishments.length === 1
     )
@@ -61,15 +62,31 @@ const Club: NextPage = () => {
             {" "}
             <div className=" text-3xl font-bold">{establishment.name}</div>
             <div className="  font-bold text-gray-500">
-              Počet nadcházejících akcí: <b className="text-primary-500">12</b>
+              Počet nadcházejících akcí:{" "}
+              <b className="text-primary-500">{establishment.events?.length}</b>
             </div>
           </div>
         </div>
         <div className="flex px-20">
           <div className="mt-32 flex min-h-[40vh] w-24 min-w-[16rem] flex-col items-center rounded-lg bg-white p-7 shadow-lg">
             <div className="w-full border-b pb-3 text-lg">Úvodní informace</div>
-            <div className="mt-3 text-sm text-gray-500">
-              {establishment.description}
+            <div className="mt-3 flex items-center justify-between gap-5 text-sm text-gray-500">
+              <div className="w-1/8">
+                {" "}
+                <InformationCircleIcon className="h-8 w-8 text-primary-500" />
+              </div>
+              <div className="w-7/8"> {establishment.description}</div>
+            </div>
+            <div className="mt-3 flex items-center justify-between gap-5 text-left text-sm text-gray-500">
+              <div className="w-1/8">
+                {" "}
+                <MapPinIcon className="h-8 w-8 text-primary-500" />
+              </div>
+              <div className="w-7/8">
+                {" "}
+                {establishment.street}, {establishment.city} <br />{" "}
+                {establishment.country}
+              </div>
             </div>
           </div>
           <div className="mt-32 flex w-full flex-col items-start p-3 pt-0">

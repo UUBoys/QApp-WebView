@@ -51,7 +51,7 @@ const SignUp: React.FC = () => {
     });
 
     setDefaultError("");
-    if (!res.data?.register?.success) {
+    if (!res.data?.register) {
       setDefaultError(res.errors?.[0].message ?? "");
     } else {
       await signIn("credentials", { email, password, redirect: false });

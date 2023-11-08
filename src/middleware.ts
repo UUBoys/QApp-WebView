@@ -9,5 +9,7 @@ export const config = {
     "/feed",
     "/club/create",
     "/club/myClubs",
+    "/clubs",
+    "/club/[id]",
   ],
 };

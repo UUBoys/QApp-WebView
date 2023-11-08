@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_ESTABLISHMENT_BY_ID = gql`
-  query GetEstablishmentById($getEstablishmentByIdId: Int!) {
+  query GetEstablishments($getEstablishmentByIdId: Int!) {
     getEstablishmentById(id: $getEstablishmentByIdId) {
       establishments {
         id
@@ -23,7 +23,6 @@ export const GET_ESTABLISHMENT_BY_ID = gql`
           maximumCapacity
         }
       }
-      success
     }
   }
 `;

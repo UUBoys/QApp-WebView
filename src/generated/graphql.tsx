@@ -16,70 +16,63 @@ export type Scalars = {
 
 export type AuthResult = {
   __typename?: 'AuthResult';
-  success?: Maybe<Scalars['Boolean']['output']>;
-  token?: Maybe<Scalars['String']['output']>;
+  token: Scalars['String']['output'];
 };
 
 export type CreateEstablishmentResult = {
   __typename?: 'CreateEstablishmentResult';
-  establishment?: Maybe<Establishment>;
-  success?: Maybe<Scalars['Boolean']['output']>;
+  establishment: Establishment;
 };
 
 export type CreateEventResult = {
   __typename?: 'CreateEventResult';
-  event?: Maybe<Event>;
-  success?: Maybe<Scalars['Boolean']['output']>;
+  event: Event;
 };
 
 export type CreditsBalance = {
   __typename?: 'CreditsBalance';
-  balance?: Maybe<Scalars['Int']['output']>;
-  success?: Maybe<Scalars['Boolean']['output']>;
+  balance: Scalars['Int']['output'];
 };
 
 export type CreditsTopUp = {
   __typename?: 'CreditsTopUp';
-  newBalance?: Maybe<Scalars['Int']['output']>;
-  oldBalance?: Maybe<Scalars['Int']['output']>;
-  success?: Maybe<Scalars['Boolean']['output']>;
+  newBalance: Scalars['Int']['output'];
+  oldBalance: Scalars['Int']['output'];
 };
 
 export type Establishment = {
   __typename?: 'Establishment';
-  city?: Maybe<Scalars['String']['output']>;
-  country?: Maybe<Scalars['String']['output']>;
+  city: Scalars['String']['output'];
+  country: Scalars['String']['output'];
   coverImage?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
+  description: Scalars['String']['output'];
   events?: Maybe<Array<Maybe<Event>>>;
-  id?: Maybe<Scalars['Int']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
   profileImage?: Maybe<Scalars['String']['output']>;
-  street?: Maybe<Scalars['String']['output']>;
+  street: Scalars['String']['output'];
 };
 
 export type Event = {
   __typename?: 'Event';
   description?: Maybe<Scalars['String']['output']>;
-  end_date?: Maybe<Scalars['String']['output']>;
-  establishment_id?: Maybe<Scalars['Int']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
-  maximumCapacity?: Maybe<Scalars['Int']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  price?: Maybe<Scalars['Float']['output']>;
-  start_date?: Maybe<Scalars['String']['output']>;
+  end_date: Scalars['String']['output'];
+  establishment_id: Scalars['Int']['output'];
+  id: Scalars['String']['output'];
+  maximumCapacity: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  price: Scalars['Float']['output'];
+  start_date: Scalars['String']['output'];
 };
 
 export type GetEstablishmentsResponse = {
   __typename?: 'GetEstablishmentsResponse';
   establishments?: Maybe<Array<Maybe<Establishment>>>;
-  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type GetEventsResponse = {
   __typename?: 'GetEventsResponse';
   events?: Maybe<Array<Maybe<Event>>>;
-  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type Mutation = {
@@ -166,8 +159,7 @@ export type MutationUpdateEstablishmentArgs = {
 
 export type PurchaseTicketResult = {
   __typename?: 'PurchaseTicketResult';
-  success?: Maybe<Scalars['Boolean']['output']>;
-  ticket?: Maybe<Ticket>;
+  ticket: Ticket;
 };
 
 export type Query = {
@@ -210,13 +202,12 @@ export enum SearchType {
 
 export type Ticket = {
   __typename?: 'Ticket';
-  event_id?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
-  user_id?: Maybe<Scalars['Int']['output']>;
+  event_id: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  user_id: Scalars['Int']['output'];
 };
 
 export type UpdateEstablishmentResult = {
   __typename?: 'UpdateEstablishmentResult';
-  establishment?: Maybe<Establishment>;
-  success?: Maybe<Scalars['Boolean']['output']>;
+  establishment: Establishment;
 };

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_ESTABLISHMENTS_FOR_USER = gql`
-  query Establishments {
+  query GetEstablishmentsForUser {
     getEstablishmentsForUser {
       establishments {
         id
@@ -23,7 +23,6 @@ export const GET_ESTABLISHMENTS_FOR_USER = gql`
           maximumCapacity
         }
       }
-      success
     }
   }
 `;

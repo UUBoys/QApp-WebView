@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_ESTABLISHMENT_MUTATION = gql`
-  mutation Mutation(
+  mutation CreateEstablishment(
     $name: String!
     $description: String!
     $street: String!
@@ -26,8 +26,19 @@ export const CREATE_ESTABLISHMENT_MUTATION = gql`
         street
         city
         country
+        coverImage
+        profileImage
+        events {
+          id
+          name
+          description
+          start_date
+          end_date
+          price
+          establishment_id
+          maximumCapacity
+        }
       }
-      success
     }
   }
 `;

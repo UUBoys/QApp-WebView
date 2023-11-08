@@ -1,10 +1,9 @@
 import { gql } from "@apollo/client";
 
 export const TOPUPCREDITSMUTATION = gql`
-  mutation Mutation($amount: Int!) {
+  mutation TopupCredits($amount: Int!) {
     topupCredits(amount: $amount) {
       newBalance
-      success
       oldBalance
     }
   }

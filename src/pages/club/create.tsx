@@ -67,7 +67,7 @@ const CreateClub: NextPage = () => {
         variables,
       });
 
-      if (!res.data || !res.data.createEstablishment?.success) return;
+      if (!res.data || !res.data.createEstablishment) return;
 
       push(`/club/${res.data.createEstablishment.establishment?.id}`);
     } catch (error: any) {

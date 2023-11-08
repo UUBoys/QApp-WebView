@@ -58,7 +58,7 @@ const BuyCredits: NextPage = () => {
       amount: volume ?? 0,
     };
     const result = await mutateTopUpCreditsMutation({ variables });
-    if (!result.data?.topupCredits?.success) return;
+    if (!result.data?.topupCredits?.newBalance) return;
     setCredits(result.data?.topupCredits?.newBalance as number);
   };
   return (
