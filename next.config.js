@@ -37,8 +37,8 @@ const nextConfig = {
   },
   output: "standalone",
   env: {
-    PROD_URL: process.env.PROD_URL
-  }
+    PROD_URL: process.env.PROD_URL,
+  },
 };
 
 module.exports = nextConfig;
