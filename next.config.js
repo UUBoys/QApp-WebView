@@ -32,6 +32,9 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   output: "standalone",
+  env: {
+    PROD_URL: process.env.PROD_URL
+  }
 };
 
 module.exports = nextConfig;
