@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import Image from "next/image";
 import { useQRCode } from "next-qrcode";
 import moment from "moment";
@@ -56,10 +57,10 @@ const Ticket = ({
         >
           <div className={"w-[150px] h-[125px] relative"}>
             <Image
-              src={"https://picsum.photos/300/150"}
+              src="https://picsum.photos/300/150"
               fill
-              className={"rounded-l-lg"}
-              alt={"ticket-image"}
+              className="rounded-l-lg"
+              alt="ticket-image"
             />
           </div>
           <div className={"text-gray-70 px-4 py-2 "}>

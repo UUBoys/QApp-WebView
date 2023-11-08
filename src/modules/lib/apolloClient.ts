@@ -9,6 +9,7 @@ import { setContext } from "@apollo/client/link/context";
 import { getSession } from "next-auth/react";
 
 import { useApolloStatusStore } from "../common/stores/apollo-store";
+import { LoadingType } from "../helpers/loader-helpers";
 
 const httpLink = createHttpLink({
   uri: "/api/",
@@ -17,13 +18,16 @@ const httpLink = createHttpLink({
 const statusLink = new ApolloLink((operation, forward) => {
   if (!forward) return null;
 
-  const shouldTrackStatus = operation.getContext().trackStatus;
+  const { withConfirmation, shouldTrackStatus } = operation.getContext();
   if (!shouldTrackStatus) return forward(operation);
 
   useApolloStatusStore.setState({
     isLoading: true,
     isError: false,
     isSuccess: false,
+    loadingType: withConfirmation
+      ? LoadingType.WITH_CONFIRM
+      : LoadingType.WITHOUT_CONFIRM,
   });
 
   return new Observable((observer) => {

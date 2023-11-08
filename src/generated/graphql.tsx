@@ -49,9 +49,11 @@ export type Establishment = {
   __typename?: 'Establishment';
   city?: Maybe<Scalars['String']['output']>;
   country?: Maybe<Scalars['String']['output']>;
+  coverImage?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  profileImage?: Maybe<Scalars['String']['output']>;
   street?: Maybe<Scalars['String']['output']>;
 };
 
@@ -88,14 +90,17 @@ export type Mutation = {
   purchaseTicket?: Maybe<PurchaseTicketResult>;
   register?: Maybe<AuthResult>;
   topupCredits?: Maybe<CreditsTopUp>;
+  updateEstablishment?: Maybe<UpdateEstablishmentResult>;
 };
 
 
 export type MutationCreateEstablishmentArgs = {
   city: Scalars['String']['input'];
   country: Scalars['String']['input'];
+  coverImage?: InputMaybe<Scalars['String']['input']>;
   description: Scalars['String']['input'];
   name: Scalars['String']['input'];
+  profileImage?: InputMaybe<Scalars['String']['input']>;
   street: Scalars['String']['input'];
 };
 
@@ -139,6 +144,18 @@ export type MutationTopupCreditsArgs = {
   amount: Scalars['Int']['input'];
 };
 
+
+export type MutationUpdateEstablishmentArgs = {
+  city?: InputMaybe<Scalars['String']['input']>;
+  country?: InputMaybe<Scalars['String']['input']>;
+  coverImage?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  establishment_id: Scalars['Int']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
+  profileImage?: InputMaybe<Scalars['String']['input']>;
+  street?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type PurchaseTicketResult = {
   __typename?: 'PurchaseTicketResult';
   success?: Maybe<Scalars['Boolean']['output']>;
@@ -149,6 +166,7 @@ export type Query = {
   __typename?: 'Query';
   getCredit?: Maybe<CreditsBalance>;
   getEstablishment?: Maybe<GetEstablishmentsResponse>;
+  getEstablishmentsForUser?: Maybe<GetEstablishmentsResponse>;
   getEvents?: Maybe<GetEventsResponse>;
 };
 
@@ -162,4 +180,10 @@ export type Ticket = {
   event_id?: Maybe<Scalars['Int']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   user_id?: Maybe<Scalars['Int']['output']>;
+};
+
+export type UpdateEstablishmentResult = {
+  __typename?: 'UpdateEstablishmentResult';
+  establishment?: Maybe<Establishment>;
+  success?: Maybe<Scalars['Boolean']['output']>;
 };

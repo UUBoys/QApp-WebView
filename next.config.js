@@ -8,6 +8,10 @@ const nextConfig = {
         destination: "/api/auth/:path*", // this will ensure that /api/auth/* paths remain unchanged
       },
       {
+        source: "/api/uploadthing/:path*",
+        destination: "/api/uploadthing/:path*", // other /api/* paths get rewritten
+      },
+      {
         source: "/api/:path*",
         destination: process.env.API_URL, // other /api/* paths get rewritten
       },
@@ -23,7 +27,7 @@ const nextConfig = {
       "s3.amazonaws.com",
       "img.youtube.com",
       "this-person-does-not-exist.com",
-      "picsum.photos"
+      "picsum.photos",
     ],
   },
   eslint: {

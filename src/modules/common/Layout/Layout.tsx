@@ -26,8 +26,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     isSuccess: set.isSuccess,
   }));
 
-  const { data: queryResult, refetch: refetchCredit } =
-    useQuery<Query>(GET_CREDIT);
+  const { data: queryResult, refetch: refetchCredit } = useQuery<Query>(
+    GET_CREDIT,
+    {
+      context: { trackStatus: true, withConfirmation: false },
+    }
+  );
 
   useEffect(() => {
     if (session?.user) refetchCredit();
