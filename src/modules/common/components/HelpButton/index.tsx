@@ -38,7 +38,7 @@ const HelpButton = () => {
   return (
     <div className="fixed bottom-[20px] right-[20px] z-[30]">
       {isOpen && (
-        <div className="mb-[30px] w-[250px] rounded-lg bg-white shadow-2xl">
+        <div className="mb-[30px] w-[300px] rounded-lg bg-white shadow-2xl">
           <div className="absolute right-[5px] top-[5px]">
             <CloseRoundedIcon
               sx={{ fontSize: "30px" }}
@@ -58,20 +58,20 @@ const HelpButton = () => {
           <div className="flex w-full flex-col gap-[20px] px-[10px] pt-[20px]">
             <Input
               placeholder={t("components.helpButton.form.name")}
-              className="!w-[230px]"
+              className="!w-[270px]"
             />
             <Input
               placeholder={t("components.helpButton.form.email")}
-              className="!w-[230px]"
+              className="!w-[270px]"
             />
             <Input
               placeholder={t("components.helpButton.form.phone")}
-              className="!w-[230px]"
+              className="!w-[270px]"
             />
             <Input
               type="textarea"
               placeholder={t("components.helpButton.form.message")}
-              className="h-[70px] !w-[230px]"
+              className="h-[70px] !w-[270px]"
               rows={4}
             />
             <Button className="my-[10px]">

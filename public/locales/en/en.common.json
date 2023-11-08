@@ -50,6 +50,12 @@
     "feed": {
       "eventsWithTickets": "Events for which you have purchased a ticket",
       "favoriteClubs": "Your favorite clubs"
+    },
+    "settings": {
+      "tabs": {
+        "account": "Account",
+        "payment": "Payments"
+      }
     }
   },
   "components": {

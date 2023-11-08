@@ -28,6 +28,7 @@ const navbarAllowedRoutes = [
   "/buyCredits",
   "/clubs",
   "/profile",
+  "/profile/settings",
   "/feed",
   "/club/create",
   "/club/*",
@@ -208,7 +209,7 @@ const NavBar = () => {
                           label: t(
                             "components.navbar.links.userOptions.settings"
                           ),
-                          onClick: (e) => console.log(e),
+                          onClick: (e) => push("/profile/settings"),
                         },
                         {
                           label: t(

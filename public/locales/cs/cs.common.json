@@ -50,6 +50,12 @@
     "feed": {
       "eventsWithTickets": "Akce na které máte zakoupenou vstupenku",
       "favoriteClubs": "Oblíbené kluby"
+    },
+    "settings": {
+      "tabs": {
+        "account": "Účet",
+        "payment": "Platby"
+      }
     }
   },
   "components": {
