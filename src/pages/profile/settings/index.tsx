@@ -20,13 +20,18 @@ const UserSettings = () => {
   const [selectedTab, setSelectedTab] = useState<TabItemProps>(profileTabs[0]);
   return (
     <div>
-      <div className="mt-[150px] flex items-center justify-center">
+      <div className="mt-[180px] flex items-center justify-center">
         <div className="w-[80%] max-w-[1500px]">
           <Tabs
             tabs={profileTabs}
             defaultSelected={selectedTab}
             onChange={(e: TabItemProps) => setSelectedTab(e)}
           />
+
+          {/* CONTENT */}
+          <div className="mt-[80px] rounded-xl bg-white px-[20px] py-[40px] shadow-2xl">
+            {selectedTab.value === "account" && <div />}
+          </div>
         </div>
       </div>
     </div>
