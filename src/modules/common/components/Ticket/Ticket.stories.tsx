@@ -14,7 +14,6 @@ export const Default: Story = {
   args: {
     uuid: "2020202020",
     eventName: "Halloween Party",
-    eventLocation: "The Club",
     clubName: "Becher's Bar",
     clubImage: "https://picsum.photos/40/40",
     clubUuid: "1234567890",

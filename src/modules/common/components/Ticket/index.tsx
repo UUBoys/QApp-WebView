@@ -2,13 +2,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import moment from "moment";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useQRCode } from "next-qrcode";
 import { useState } from "react";
 
 export type TicketProps = {
   uuid: string;
   eventName: string;
-  eventLocation: string;
   clubName: string;
   clubImage: string;
   clubUuid: string;
@@ -25,6 +25,7 @@ const Ticket = ({
   className = "",
   eventDate,
 }: TicketProps) => {
+  const { push } = useRouter();
   const { Canvas } = useQRCode();
   const [isHover, setIsHover] = useState<boolean>(false);
   return (
@@ -57,7 +58,10 @@ const Ticket = ({
               alt="ticket-image"
             />
           </div>
-          <div className="px-4 py-2 text-gray-700">
+          <div
+            className="px-4 py-2 text-gray-700"
+            onClick={() => push(`club/${clubUuid}`)}
+          >
             <p className="text-[22px] text-gray-700">{eventName}</p>
             <div className="flex items-center gap-[10px] py-[10px]">
               <Image
