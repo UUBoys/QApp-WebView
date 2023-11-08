@@ -31,7 +31,7 @@ const Ticket = ({
   return (
     <div>
       <div
-        className={`flex max-w-sm items-center rounded-lg ${className}`}
+        className={`flex max-w-sm cursor-pointer items-center rounded-lg ${className}`}
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
         onClick={() => setIsHover((prev) => !prev)}
@@ -63,7 +63,7 @@ const Ticket = ({
             onClick={() => push(`club/${clubUuid}`)}
           >
             <p className="text-[22px] text-gray-700">{eventName}</p>
-            <div className="flex items-center gap-[10px] py-[10px]">
+            <div className="flex items-center gap-[10px] rounded-lg p-[10px] hover:bg-gray-300">
               <Image
                 src={clubImage}
                 alt="ticket-club-image"
