@@ -10,6 +10,6 @@ export const config = {
     "/club/create",
     "/club/myClubs",
     "/clubs",
-    "/club/[id]",
+    "/club/:id*",
   ],
 };
