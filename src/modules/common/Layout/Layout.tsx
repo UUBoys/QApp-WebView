@@ -41,25 +41,31 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     }
   );
 
-  useQuery<Query>(GET_ESTABLISHMENTS_FOR_USER, {
-    context: { shouldTrackStatus: true },
-    onCompleted(data) {
-      if (
-        !data.getEstablishmentsForUser?.establishments ||
-        data.getEstablishmentsForUser?.establishments?.length <= 0
-      )
-        return;
-      if (data.getEstablishmentsForUser !== null)
-        setUserOwnedClubs([
-          ...((data.getEstablishmentsForUser as GetEstablishmentsResponse)
-            .establishments as IClub[]),
-        ]);
-    },
-  });
+  const { refetch: refetchClubs } = useQuery<Query>(
+    GET_ESTABLISHMENTS_FOR_USER,
+    {
+      context: { shouldTrackStatus: true },
+      onCompleted(data) {
+        if (
+          !data.getEstablishmentsForUser?.establishments ||
+          data.getEstablishmentsForUser?.establishments?.length <= 0
+        )
+          return;
+        if (data.getEstablishmentsForUser !== null)
+          setUserOwnedClubs([
+            ...((data.getEstablishmentsForUser as GetEstablishmentsResponse)
+              .establishments as IClub[]),
+          ]);
+      },
+    }
+  );
 
   useEffect(() => {
-    if (session?.user) refetchCredit();
-  }, [refetchCredit, session?.user]);
+    if (session?.user) {
+      refetchCredit();
+      refetchClubs();
+    }
+  }, [refetchClubs, refetchCredit, session?.user]);
 
   useEffect(() => {
     if (queryResult?.getCredit?.balance)

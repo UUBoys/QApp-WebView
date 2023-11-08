@@ -25,7 +25,12 @@ const ClubCard = ({
   return (
     <div
       style={{
-        backgroundImage: `url(${coverImage})`,
+        backgroundImage: `url(${
+          coverImage !== ""
+            ? coverImage
+            : "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/412dcb7c-3831-4329-b94a-8551655acb08/d4zylmk-5e12b1c0-e2cb-434c-bc0c-a57c487b3a63.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzQxMmRjYjdjLTM4MzEtNDMyOS1iOTRhLTg1NTE2NTVhY2IwOFwvZDR6eWxtay01ZTEyYjFjMC1lMmNiLTQzNGMtYmMwYy1hNTdjNDg3YjNhNjMuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.bNC4E9m461k7pEDmSmEij8MVdfpnyeptIh3xvl1xECM" ??
+              "https://images.unsplash.com/photo-1578836537282-3171d77f8632?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/412dcb7c-3831-4329-b94a-8551655acb08/d4zylmk-5e12b1c0-e2cb-434c-bc0c-a57c487b3a63.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzQxMmRjYjdjLTM4MzEtNDMyOS1iOTRhLTg1NTE2NTVhY2IwOFwvZDR6eWxtay01ZTEyYjFjMC1lMmNiLTQzNGMtYmMwYy1hNTdjNDg3YjNhNjMuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.bNC4E9m461k7pEDmSmEij8MVdfpnyeptIh3xvl1xECM"
+        })`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -34,7 +39,7 @@ const ClubCard = ({
       onClick={() => {
         push(`/club/${id}`);
       }}
-      className="mx-auto flex  w-2/3 cursor-pointer flex-row  flex-wrap rounded-lg bg-gray-600 p-3 antialiased shadow-lg transition-all hover:shadow-xl"
+      className="mx-auto flex  w-2/3 cursor-pointer flex-row  flex-wrap rounded-lg bg-gray-700 p-3 antialiased shadow-lg transition-all hover:shadow-xl"
     >
       <div className="w-full md:w-1/3">
         <Image
@@ -42,7 +47,12 @@ const ClubCard = ({
           height={200}
           alt="image"
           className="rounded-full antialiased shadow-lg"
-          src={profileImage}
+          src={
+            profileImage !== ""
+              ? profileImage
+              : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" ??
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+          }
         />
       </div>
       <div className="flex w-full flex-row flex-wrap px-3 md:w-2/3">

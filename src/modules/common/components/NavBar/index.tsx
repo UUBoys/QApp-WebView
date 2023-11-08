@@ -32,6 +32,7 @@ const navbarAllowedRoutes = [
   "/feed",
   "/club/create",
   "/club/*",
+  "/clubs",
 ];
 
 let previousKreditCount = 0;
