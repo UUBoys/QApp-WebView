@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
           mutation: LOGIN_MUTATION,
           variables,
           context: {
-            trackStatus: false,
+            shouldTrackStatus: false,
           },
         });
 
@@ -96,7 +96,7 @@ export const authOptions: NextAuthOptions = {
           mutation: GOOGLE_AUTH_MUTATION,
           variables,
           context: {
-            trackStatus: false,
+            shouldTrackStatus: false,
           },
         });
 

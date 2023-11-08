@@ -207,9 +207,15 @@ const NavBar = () => {
                         },
                         {
                           label: t(
+                            "components.navbar.links.userOptions.myClubs"
+                          ),
+                          onClick: () => push("/club/myClubs"),
+                        },
+                        {
+                          label: t(
                             "components.navbar.links.userOptions.settings"
                           ),
-                          onClick: (e) => push("/profile/settings"),
+                          onClick: () => push("/profile/settings"),
                         },
                         {
                           label: t(

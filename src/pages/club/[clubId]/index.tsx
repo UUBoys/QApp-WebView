@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 import { Establishment, Query } from "@/generated/graphql";
 import EventsList from "@/modules/common/components/EventList";
-import { GET_ESTABLISHMENT } from "@/modules/GRAPHQL/queries/GetEstablishmentQuery";
+import { GET_ESTABLISHMENT_BY_ID } from "@/modules/GRAPHQL/queries/GetEstablishmentQuery";
 
 const Club: NextPage = () => {
   const { clubId } = useRouter().query;
@@ -16,23 +16,24 @@ const Club: NextPage = () => {
     Establishment | null | undefined
   >(null);
 
-  const { data: establishmentData } = useQuery<Query>(GET_ESTABLISHMENT, {
+  const { data: establishmentData } = useQuery<Query>(GET_ESTABLISHMENT_BY_ID, {
     fetchPolicy: "cache-and-network",
     variables: {
-      getEstablishmentId: parseFloat((clubId as string) ?? ""),
+      getEstablishmentByIdId: parseFloat((clubId as string) ?? ""),
     },
-    context: { trackStatus: true },
+    context: { shouldTrackStatus: true },
   });
 
   useEffect(() => {
-    console.log(establishmentData);
     if (
       establishmentData &&
-      establishmentData.getEstablishment?.success &&
-      establishmentData.getEstablishment.establishments &&
-      establishmentData.getEstablishment.establishments.length === 1
+      establishmentData.getEstablishmentById?.success &&
+      establishmentData.getEstablishmentById.establishments &&
+      establishmentData.getEstablishmentById.establishments.length === 1
     )
-      setEstablishment(establishmentData.getEstablishment.establishments[0]);
+      setEstablishment(
+        establishmentData.getEstablishmentById.establishments[0]
+      );
   }, [establishmentData]);
 
   if (!establishment) return null;

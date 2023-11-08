@@ -78,6 +78,7 @@
         "clubs": "Kluby",
         "userOptions": {
           "account": "Účet",
+          "myClubs": "Moje kluby",
           "settings": "Nastavení",
           "logout": "Odhlásit se"
         }

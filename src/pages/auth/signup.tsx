@@ -24,7 +24,7 @@ const SignUp: React.FC = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [mutateRegisterAsync] = useMutation<Mutation>(REGISTER_MUTATION, {
-    context: { trackStatus: true },
+    context: { shouldTrackStatus: true, withConfirmation: true },
   });
 
   const [defaultError, setDefaultError] = useState<string>("");

@@ -51,6 +51,7 @@ export type Establishment = {
   country?: Maybe<Scalars['String']['output']>;
   coverImage?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  events?: Maybe<Array<Maybe<Event>>>;
   id?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   profileImage?: Maybe<Scalars['String']['output']>;
@@ -89,6 +90,7 @@ export type Mutation = {
   login?: Maybe<AuthResult>;
   purchaseTicket?: Maybe<PurchaseTicketResult>;
   register?: Maybe<AuthResult>;
+  search?: Maybe<SearchResultResponse>;
   topupCredits?: Maybe<CreditsTopUp>;
   updateEstablishment?: Maybe<UpdateEstablishmentResult>;
 };
@@ -140,6 +142,12 @@ export type MutationRegisterArgs = {
 };
 
 
+export type MutationSearchArgs = {
+  query: Scalars['String']['input'];
+  type: SearchType;
+};
+
+
 export type MutationTopupCreditsArgs = {
   amount: Scalars['Int']['input'];
 };
@@ -165,19 +173,44 @@ export type PurchaseTicketResult = {
 export type Query = {
   __typename?: 'Query';
   getCredit?: Maybe<CreditsBalance>;
-  getEstablishment?: Maybe<GetEstablishmentsResponse>;
+  getEstablishmentById?: Maybe<GetEstablishmentsResponse>;
+  getEstablishments?: Maybe<GetEstablishmentsResponse>;
   getEstablishmentsForUser?: Maybe<GetEstablishmentsResponse>;
   getEvents?: Maybe<GetEventsResponse>;
 };
 
 
-export type QueryGetEstablishmentArgs = {
-  id?: InputMaybe<Scalars['Int']['input']>;
+export type QueryGetEstablishmentByIdArgs = {
+  id: Scalars['Int']['input'];
 };
+
+export type SearchResult = {
+  __typename?: 'SearchResult';
+  result?: Maybe<SearchResultUnion>;
+  searchType?: Maybe<SearchResultType>;
+};
+
+export type SearchResultResponse = {
+  __typename?: 'SearchResultResponse';
+  results?: Maybe<Array<Maybe<SearchResult>>>;
+};
+
+export enum SearchResultType {
+  Establishment = 'ESTABLISHMENT',
+  Event = 'EVENT'
+}
+
+export type SearchResultUnion = Establishment | Event;
+
+export enum SearchType {
+  All = 'ALL',
+  Establishment = 'ESTABLISHMENT',
+  Event = 'EVENT'
+}
 
 export type Ticket = {
   __typename?: 'Ticket';
-  event_id?: Maybe<Scalars['Int']['output']>;
+  event_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   user_id?: Maybe<Scalars['Int']['output']>;
 };

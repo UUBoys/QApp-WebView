@@ -46,7 +46,7 @@ const BuyCredits: NextPage = () => {
   const [mutateTopUpCreditsMutation] = useMutation<Mutation>(
     TOPUPCREDITSMUTATION,
     {
-      context: { trackStatus: true },
+      context: { shouldTrackStatus: true, withConfirmation: true },
     }
   );
   const { credits, setCredits } = useUserAdditionalDataStore((set) => ({
@@ -55,7 +55,7 @@ const BuyCredits: NextPage = () => {
   }));
   const onBuy = async (volume?: number) => {
     const variables: MutationTopupCreditsArgs = {
-      amount: volume,
+      amount: volume ?? 0,
     };
     const result = await mutateTopUpCreditsMutation({ variables });
     if (!result.data?.topupCredits?.success) return;

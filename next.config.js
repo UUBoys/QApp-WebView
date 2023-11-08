@@ -28,6 +28,8 @@ const nextConfig = {
       "img.youtube.com",
       "this-person-does-not-exist.com",
       "picsum.photos",
+      "cdn.pixabay.com",
+      "utfs.io",
     ],
   },
   eslint: {

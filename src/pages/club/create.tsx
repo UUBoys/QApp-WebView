@@ -10,7 +10,9 @@ import { useForm } from "react-hook-form";
 import { Mutation, MutationCreateEstablishmentArgs } from "@/generated/graphql";
 import Button from "@/modules/common/components/Button";
 import Input from "@/modules/common/components/Input";
+import { useApolloStatusStore } from "@/modules/common/stores/apollo-store";
 import { CREATE_ESTABLISHMENT_MUTATION } from "@/modules/GRAPHQL/mutations/CreateEstablishmentMutation";
+import { LoadingType } from "@/modules/helpers/loader-helpers";
 import { uploadFiles } from "@/modules/lib/uploadThingHelpers";
 
 type CreateClubInputs = {
@@ -26,10 +28,13 @@ type CreateClubInputs = {
 const CreateClub: NextPage = () => {
   const { register, handleSubmit, watch } = useForm<CreateClubInputs>();
   const { push } = useRouter();
+  const { setStatus } = useApolloStatusStore((set) => ({
+    setStatus: set.setStatus,
+  }));
   const [mutateCreateEstablishment] = useMutation<Mutation>(
     CREATE_ESTABLISHMENT_MUTATION,
     {
-      context: { trackStatus: true },
+      context: { shouldTrackStatus: true, withConfirmation: true },
     }
   );
 
@@ -37,6 +42,12 @@ const CreateClub: NextPage = () => {
   const watchedCoverPicture = watch("coverPicture");
 
   const onSubmit = async (data: CreateClubInputs) => {
+    setStatus({
+      isError: false,
+      isLoading: true,
+      isSuccess: false,
+      loadingType: LoadingType.WITH_CONFIRM,
+    });
     try {
       const uploadFilesTest = await uploadFiles({
         files: [data.profilePicture[0], data.coverPicture[0]],
@@ -61,6 +72,11 @@ const CreateClub: NextPage = () => {
       push(`/club/${res.data.createEstablishment.establishment?.id}`);
     } catch (error: any) {
       console.error(error.message);
+      setStatus({
+        isError: false,
+        isLoading: false,
+        isSuccess: false,
+      });
     }
   };
 

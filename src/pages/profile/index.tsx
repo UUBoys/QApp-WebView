@@ -2,23 +2,24 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import React from "react";
 
+import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
+
 const Profile = () => {
   const { data: session } = useSession();
-
+  const { userOwnedClubs } = useUserAdditionalDataStore((set) => ({
+    userOwnedClubs: set.userOwnedClubs,
+  }));
   return (
     <div className=" flex h-screen w-full flex-col items-center justify-center bg-white p-6 pt-16 text-black">
       <div className="mt-28 w-[90%] rounded-xl bg-white p-8  shadow-[0px_7px_29px_0px_rgba(0,0,0,0.1)] sm:w-4/5 lg:w-3/5">
         <div className="grid grid-cols-1 md:grid-cols-3">
           <div className="order-last mt-20 grid grid-cols-2 text-center md:order-first md:mt-0">
             <div>
-              {/* TO DO: Video count */}
-              <p className="text-xl font-bold text-gray-700">fsa</p>
-              <p className="text-gray-400">Videos</p>
-            </div>
-            <div>
               {/* TO DO: Like count */}
-              <p className="text-xl font-bold text-gray-700">fsa</p>
-              <p className="text-gray-400">Videos liked</p>
+              <p className="text-xl font-bold text-gray-700">
+                {userOwnedClubs.length}
+              </p>
+              <p className="text-gray-400">Počet vlastněných klubů</p>
             </div>
           </div>
           <div className="relative">
@@ -45,11 +46,6 @@ const Profile = () => {
             >
               edit profile
             </Link>
-            <div>
-              {/* TO DO: Like count */}
-              <p className="text-xl font-bold text-gray-700">fsa</p>
-              <p className="text-gray-400">Videos viewed</p>
-            </div>
           </div>
         </div>
         <div className="mt-20 border-b pb-12 text-center">
