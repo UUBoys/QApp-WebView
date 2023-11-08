@@ -37,14 +37,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { data: queryResult, refetch: refetchCredit } = useQuery<Query>(
     GET_CREDIT,
     {
-      context: { shouldTrackStatus: true, withConfirmation: false },
+      context: { shouldTrackStatus: false, withConfirmation: false },
     }
   );
 
   const { refetch: refetchClubs } = useQuery<Query>(
     GET_ESTABLISHMENTS_FOR_USER,
     {
-      context: { shouldTrackStatus: true },
+      context: { shouldTrackStatus: false },
       onCompleted(data) {
         if (
           !data.getEstablishmentsForUser?.establishments ||
