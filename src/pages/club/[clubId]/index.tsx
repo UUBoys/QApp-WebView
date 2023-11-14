@@ -1,21 +1,38 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable sonarjs/no-duplicate-string */
 import { useQuery } from "@apollo/client";
-import { InformationCircleIcon, MapPinIcon } from "@heroicons/react/24/solid";
+import {
+  CheckIcon,
+  InformationCircleIcon,
+  MapPinIcon,
+  PencilIcon,
+  PlusIcon,
+} from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { Establishment, Query } from "@/generated/graphql";
 import EventsList from "@/modules/common/components/EventList";
+import Input from "@/modules/common/components/Input";
+import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
 import { GET_ESTABLISHMENT_BY_ID } from "@/modules/GRAPHQL/queries/GetEstablishmentQuery";
 
 const Club: NextPage = () => {
   const { clubId } = useRouter().query;
+  const [elementEditID, setElementEditID] = useState<string>("");
   const [establishment, setEstablishment] = useState<
     Establishment | null | undefined
   >(null);
+  const { userOwnedClubs } = useUserAdditionalDataStore((set) => ({
+    userOwnedClubs: set.userOwnedClubs,
+  }));
+
+  const isUserOwner = userOwnedClubs?.some(
+    (club) => club.id === parseFloat((clubId as string) ?? "")
+  );
 
   const { data: establishmentData } = useQuery<Query>(GET_ESTABLISHMENT_BY_ID, {
     fetchPolicy: "cache-and-network",
@@ -60,7 +77,43 @@ const Club: NextPage = () => {
           />
           <div className="ml-[20rem] pt-[2rem]">
             {" "}
-            <div className=" text-3xl font-bold">{establishment.name}</div>
+            <div className="flex items-center">
+              {isUserOwner && elementEditID === "name" ? (
+                <Input
+                  ref={(input: any) =>
+                    elementEditID === "name" && input?.focus()
+                  }
+                  inputProps={{
+                    onBlur: () => {
+                      // edit
+                      // Mutate edit with updated data
+                      // setElementEditID after 2 seconds because of loading and success animation
+                      setElementEditID("");
+                    },
+                  }}
+                  isSuccess={false} /* edit mutation success */
+                  isLoading={false} /* edit mutation loading */
+                  defaultValue={establishment.name}
+                />
+              ) : (
+                <div className=" text-3xl font-bold">{establishment.name}</div>
+              )}
+              {isUserOwner && (
+                <button
+                  onClick={() =>
+                    elementEditID === ""
+                      ? setElementEditID("name")
+                      : setElementEditID("")
+                  }
+                >
+                  {elementEditID === "name" ? (
+                    <CheckIcon className="ml-3 h-7 w-7 text-primary-500" />
+                  ) : (
+                    <PencilIcon className="ml-3 h-6 w-6 text-primary-500" />
+                  )}
+                </button>
+              )}
+            </div>
             <div className="  font-bold text-gray-500">
               Počet nadcházejících akcí:{" "}
               <b className="text-primary-500">{establishment.events?.length}</b>
@@ -89,7 +142,14 @@ const Club: NextPage = () => {
               </div>
             </div>
           </div>
-          <div className="mt-32 flex w-full flex-col items-start p-3 pt-0">
+          <div className="mt-32 flex w-full flex-col items-start gap-10 p-3 pt-0">
+            {" "}
+            <Link
+              href="/club/create"
+              className="mx-auto flex min-h-[100px] w-full cursor-pointer flex-col flex-wrap items-center justify-center rounded-lg bg-primary-200  p-3 font-bold antialiased shadow-lg transition-all hover:bg-primary-400 hover:shadow-xl"
+            >
+              Vytvořit akci <PlusIcon className="h-8 w-8" />
+            </Link>
             <div className="scroll-hidden  w-full overflow-y-auto rounded-lg bg-white p-7 py-[20px]">
               {" "}
               <div className="w-full border-b pb-3 text-lg">
