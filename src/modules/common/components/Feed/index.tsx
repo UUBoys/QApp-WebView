@@ -197,9 +197,9 @@ const mockEvetList: Event[] = [
 const Feed = () => {
   const { t } = useTranslation();
   return (
-    <div className="text-gray-300">
-      <div className="grid w-full grid-cols-3 pt-[50px]">
-        <div className="col-span-1">
+    <div className="relative  max-h-[calc(100vh-50px)] text-gray-300 ">
+      <div className="grid  max-h-[calc(100vh-50px)] w-full grid-cols-1 pt-[50px]  lg:grid-cols-3">
+        <div className="col-span-1 hidden max-h-[calc(100vh-150px)] lg:block">
           <div className="mt-[100px] flex flex-col items-end px-[10px]">
             <Navigation links={leftMenuMockLinks} className="w-[200px]" />
             <div className="my-[20px] h-[2px] w-[200px] rounded-full bg-gray-300" />
@@ -211,19 +211,19 @@ const Feed = () => {
             <Navigation links={favoriteClubsMockLinks} className="w-[200px]" />
           </div>
         </div>
-        <div className="scroll-hidden  col-span-1 max-h-screen overflow-y-auto pt-[50px]">
-          <div className="flex flex-col gap-[50px] pt-[50px]">
+        <div className="scroll-hidden col-span-1 max-h-[calc(100vh-50px)] overflow-y-auto pt-[50px]">
+          <div className="flex flex-col gap-[50px] px-[10px] py-[50px] lg:px-0 ">
             {mockData.map((event) => (
               <EventPost event={event.event} club={event.club} />
             ))}
           </div>
         </div>
-        <div className="col-span-1 w-full">
+        <div className="col-span-1 hidden max-h-[calc(100vh-150px)] w-full lg:block">
           <div className="mt-[100px] flex flex-col items-start p-3">
             <h1 className="w-[500px] text-center text-[20px]  text-gray-700">
               {t("pages.feed.eventsWithTickets")}
             </h1>
-            <div className="scroll-hidden mt-[20px] max-h-[400px] overflow-y-auto rounded-2xl bg-white py-[20px]">
+            <div className="scroll-hidden mt-[20px] overflow-y-auto rounded-2xl bg-transparent pb-[100px] pt-[20px]">
               <EventsList
                 events={mockEvetList}
                 className="!mx-0 !mt-[10px] !w-[500px] rounded-2xl py-[0px]"

@@ -20,13 +20,13 @@ const Home: NextPage = () => {
         <div className="flex flex-col gap-[20px] md:flex-row">
           <Link
             href="/auth/signin"
-            className="w-fit rounded-full bg-primary-500 px-6 py-3 text-gray-800 hover:bg-primary-600"
+            className="w-fit rounded-full bg-primary-500 px-6 py-3 font-semibold  text-white hover:bg-primary-600"
           >
             {t("pages.homepage.button")}
           </Link>
           <Link
             href="/club/create"
-            className="w-fit rounded-full bg-primary-500 px-6 py-3 text-gray-800 hover:bg-primary-600"
+            className="w-fit rounded-full bg-primary-500 px-6 py-3 font-semibold text-white hover:bg-primary-600"
           >
             {t("pages.homepage.registerClub")}
           </Link>

@@ -16,9 +16,15 @@ type MenuProps = {
   className?: string;
   items: MenuItemProps[];
   children: React.ReactNode;
+  menuClassName?: string;
 };
 
-const Menu: React.FC<MenuProps> = ({ items, children, className }) => {
+const Menu: React.FC<MenuProps> = ({
+  items,
+  children,
+  className,
+  menuClassName = "",
+}) => {
   const { push } = useRouter();
 
   const handleClick = (e: MenuItemProps) => {
@@ -46,7 +52,9 @@ const Menu: React.FC<MenuProps> = ({ items, children, className }) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <HeadlessMenu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg   focus:outline-none">
+        <HeadlessMenu.Items
+          className={`absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 focus:outline-none ${menuClassName} shadow-2xl`}
+        >
           <div className="p-1 ">
             {items.map((item, index) => {
               if (item.render) {

@@ -15,6 +15,7 @@ import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import MoneyRoundedIcon from "@mui/icons-material/MoneyRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import ViewDayRoundedIcon from "@mui/icons-material/ViewDayRounded";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -112,6 +113,12 @@ const NavBar = () => {
       current: pathname === "/clubs",
       ico: <Groups2RoundedIcon sx={{ fontSize: "20px" }} />,
     },
+    {
+      name: t("components.navbar.links.feed"),
+      href: "/feed",
+      current: pathname === "/feed",
+      ico: <ViewDayRoundedIcon sx={{ fontSize: "20px" }} />,
+    },
   ];
 
   return (
@@ -149,12 +156,42 @@ const NavBar = () => {
         {isMenuOpen && (
           <div className="flex flex-col ">
             <div className="flex justify-between border-b border-b-gray-200">
-              <Link className="flex flex-col p-[10px]" href="/profile">
+              {session?.user && (
+                <Menu
+                  menuClassName="left-[20px]"
+                  items={[
+                    {
+                      label: t("components.navbar.links.userOptions.account"),
+                      onClick: () => push("/profile"),
+                    },
+                    {
+                      label: t("components.navbar.links.userOptions.myClubs"),
+                      onClick: () => push("/club/myClubs"),
+                    },
+                    {
+                      label: t("components.navbar.links.userOptions.settings"),
+                      onClick: () => push("/profile/settings"),
+                    },
+                    {
+                      label: t("components.navbar.links.userOptions.logout"),
+                      onClick: () => signOut(),
+                    },
+                  ]}
+                >
+                  <HeadlessMenu.Button className="flex flex-col gap-[3px] pb-[10px]">
+                    <p className="text-[14px] font-semibold text-gray-500">
+                      Testovaci ucet
+                    </p>
+                    <p className="text-[12px] text-gray-400">test@test.com</p>
+                  </HeadlessMenu.Button>
+                </Menu>
+              )}
+              {/* <Link className="flex flex-col p-[10px]" href="/profile">
                 <p className="text-[14px] font-semibold text-gray-500">
                   Testovaci ucet
                 </p>
                 <p className="text-[12px] text-gray-400">test@test.com</p>
-              </Link>
+              </Link> */}
               <LanguageSelector className="mr-[10px] max-w-[66px]" />
             </div>
             <div className="my-[10px] flex flex-col gap-[10px] px-[10px]">

@@ -30,7 +30,7 @@ const ExpandableItem: React.FC<ExpandableItemProps> = ({
   isOpen,
 }) => {
   return (
-    <div className="relative mt-2 w-full overflow-hidden rounded-xl border border-gray-200 transition-all hover:border-transparent hover:bg-gray-100 hover:shadow-2xl">
+    <div className="relative mt-2 w-full overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:border-transparent hover:bg-gray-100 hover:shadow-2xl">
       {/* Background image that's visible only when expanded */}
 
       <Transition
