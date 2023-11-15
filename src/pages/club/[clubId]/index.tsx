@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { Establishment, Query } from "@/generated/graphql";
+import ClubControls from "@/modules/common/components/ClubControls";
 import EventsList from "@/modules/common/components/EventList";
 import Input from "@/modules/common/components/Input";
 import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
@@ -58,6 +59,7 @@ const Club: NextPage = () => {
 
   return (
     <div className="flex min-h-[100vh] flex-col items-start text-center shadow-xl">
+      {isUserOwner && <ClubControls />}
       <div
         style={{ backgroundImage: `url(${establishment.coverImage})` }}
         className={clsx(

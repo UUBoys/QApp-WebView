@@ -96,7 +96,7 @@ const CreateClub: NextPage = () => {
 
   return (
     <div className="flex min-h-[100vh] flex-col items-center gap-32 py-52 align-top">
-      <p className="flex gap-8 text-6xl font-semibold">
+      <p className="flex gap-8 text-6xl font-semibold text-gray-500">
         Vytvořit <div className="text-primary-500">klub</div>
       </p>
       <form
@@ -124,7 +124,7 @@ const CreateClub: NextPage = () => {
             <div className="absolute inset-0 bg-black/40" />
           )}
         </label>
-        <div className="w-full pb-20">
+        <div className="ml-[10px] w-full pb-20">
           <label htmlFor="club-profile-picture" className="relative pl-10">
             <div
               style={{ backgroundImage: `url(${profilePicturePreview})` }}

@@ -53,7 +53,7 @@ const HelpButton = () => {
           </div>
           <Autocomplete
             options={helpOptions}
-            className="mt-[-20px] !h-[30px] w-full px-[15px]"
+            className="relative z-[20] mt-[-20px] !h-[30px] w-full px-[15px]"
           />
           <div className="flex w-full flex-col gap-[20px] px-[10px] pt-[20px]">
             <Input

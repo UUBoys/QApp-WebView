@@ -15,7 +15,8 @@
     "homepage": {
       "header": "Events at your fingertips",
       "description": "Don't miss any events in your area with our QApp",
-      "button": "Start now"
+      "button": "Start now",
+      "registerClub": "Register club"
     },
     "auth": {
       "form": {
