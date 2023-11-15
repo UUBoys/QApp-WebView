@@ -196,7 +196,7 @@ const NavBar = () => {
             </div>
             <div className="my-[10px] flex flex-col gap-[10px] px-[10px]">
               {navigation.map((item) => (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   className={clsx(
@@ -209,7 +209,7 @@ const NavBar = () => {
                 >
                   {item.ico}
                   {item.name}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -252,7 +252,7 @@ const NavBar = () => {
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
                       {navigation.map((item) => (
-                        <a
+                        <Link
                           key={item.name}
                           href={item.href}
                           className={clsx(
@@ -264,7 +264,7 @@ const NavBar = () => {
                           aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
