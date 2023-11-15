@@ -45,7 +45,7 @@ const CalendarDayGrid: React.FC<CalendarDayGridProps> = ({
   selectedDate,
 }) => {
   const renderDays = () => {
-    let days = [];
+    let days: Date[] = [];
     let interval;
 
     switch (selectedView) {

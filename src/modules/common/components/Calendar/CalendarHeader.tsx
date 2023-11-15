@@ -12,6 +12,9 @@ import React from "react";
 
 import { CalendarViewType } from "types/clendar-types";
 
+const activeButtonClass = "bg-gray-800";
+const inactiveButtonClass = "bg-gray-500";
+
 interface CalendarHeaderProps {
   selectedDate: Date;
   onSelectedDateChange: (newDate: Date) => void;
@@ -80,7 +83,9 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
       <div>
         <button
           className={`mr-2 ${
-            selectedCalendarViewType === "day" ? "bg-gray-800" : "bg-gray-500"
+            selectedCalendarViewType === "day"
+              ? activeButtonClass
+              : inactiveButtonClass
           }`}
           onClick={() => onSelectedCalendarViewTypeChange("day")}
         >
@@ -88,7 +93,9 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         </button>
         <button
           className={`mr-2 ${
-            selectedCalendarViewType === "week" ? "bg-gray-800" : "bg-gray-500"
+            selectedCalendarViewType === "week"
+              ? activeButtonClass
+              : inactiveButtonClass
           }`}
           onClick={() => onSelectedCalendarViewTypeChange("week")}
         >
@@ -96,7 +103,9 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         </button>
         <button
           className={`${
-            selectedCalendarViewType === "month" ? "bg-gray-800" : "bg-gray-500"
+            selectedCalendarViewType === "month"
+              ? activeButtonClass
+              : inactiveButtonClass
           }`}
           onClick={() => onSelectedCalendarViewTypeChange("month")}
         >
@@ -116,7 +125,7 @@ export const CalendarColumnHeader: React.FC<CalendarColumnHeaderProps> = ({
   selectedView,
   selectedDate,
 }) => {
-  let formatString;
+  let formatString = "";
   let colSpan;
 
   if (selectedView === "day") {
@@ -134,7 +143,10 @@ export const CalendarColumnHeader: React.FC<CalendarColumnHeaderProps> = ({
   const cells =
     selectedView === "week" || selectedView === "month"
       ? Array.from({ length: colSpan }).map((_, i) => (
-          <div key={i} className="bg-gray-100 p-2 text-center">
+          <div
+            key={`dwa${i.toString()}`}
+            className="bg-gray-100 p-2 text-center"
+          >
             {format(
               addDays(startOfWeek(selectedDate, { weekStartsOn: 1 }), i),
               formatString
