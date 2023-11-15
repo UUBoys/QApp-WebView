@@ -33,7 +33,6 @@ const mockCalendarData: CalendarContent = [
       content: <div>Lékařská prohlídka</div>,
     },
   },
-  // ... další události ...
 ];
 
 export default meta;

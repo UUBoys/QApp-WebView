@@ -6,6 +6,7 @@ import {
   addMonths,
   subMonths,
   format,
+  startOfWeek,
 } from "date-fns";
 import React from "react";
 
@@ -115,14 +116,46 @@ export const CalendarColumnHeader: React.FC<CalendarColumnHeaderProps> = ({
   selectedView,
   selectedDate,
 }) => {
-  const formatString = selectedView === "week" ? "EEEE, d. MMMM" : "EEEE";
+  let formatString;
+  let colSpan;
+
+  if (selectedView === "day") {
+    formatString = "EEEE, d. MMMM";
+    colSpan = 1; // pouze jeden sloupec pro zobrazení dne
+  } else if (selectedView === "week") {
+    formatString = "EEEE, d. MMMM";
+    colSpan = 7; // sedm sloupců pro zobrazení týdne
+  } else {
+    formatString = "EEEE";
+    colSpan = 7; // sedm sloupců pro zobrazení týdne
+  }
+
+  // Generuje buňky pouze pokud je to týden, jinak jedna buňka s celým dnem
+  const cells =
+    selectedView === "week" || selectedView === "month"
+      ? Array.from({ length: colSpan }).map((_, i) => (
+          <div key={i} className="bg-gray-100 p-2 text-center">
+            {format(
+              addDays(startOfWeek(selectedDate, { weekStartsOn: 1 }), i),
+              formatString
+            )}
+          </div>
+        ))
+      : [
+          <div key="single" className="bg-gray-100 p-2 text-center">
+            {format(selectedDate, formatString)}
+          </div>,
+        ];
+
   return (
-    <div className="grid grid-cols-7 border-b border-gray-600 text-black">
-      {Array.from({ length: 7 }).map((_, i) => (
-        <div key={i} className="bg-gray-100 p-2 text-center">
-          {format(selectedDate, formatString)}
-        </div>
-      ))}
+    <div
+      className={`grid ${
+        selectedView === "week" || selectedView === "month"
+          ? "grid-cols-7"
+          : "grid-cols-1"
+      } border-b border-gray-600 text-black`}
+    >
+      {cells}
     </div>
   );
 };

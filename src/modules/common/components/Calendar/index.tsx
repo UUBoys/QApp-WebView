@@ -67,7 +67,6 @@ const CalendarDayGrid: React.FC<CalendarDayGridProps> = ({
         days = eachDayOfInterval(interval);
         break;
       default:
-      // Další případné zobrazení
     }
 
     return days.map((day) => {
