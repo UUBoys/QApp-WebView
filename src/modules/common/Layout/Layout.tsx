@@ -10,6 +10,7 @@ import { useUserAdditionalDataStore } from "../stores/user-aditional-data-store"
 import { GetEstablishmentsResponse, Query } from "@/generated/graphql";
 import { GET_CREDIT } from "@/modules/GRAPHQL/queries/GetCreditQuery";
 import { GET_ESTABLISHMENTS_FOR_USER } from "@/modules/GRAPHQL/queries/GetEstablishmentForUser";
+import { LoadingType } from "@/modules/helpers/loader-helpers";
 import { IClub } from "@/modules/utils/schemas/club";
 
 interface LayoutProps {
@@ -25,14 +26,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     })
   );
 
-  const { isLoading, isError, isSuccess, loadingType } = useApolloStatusStore(
-    (set) => ({
+  const { isLoading, isError, isSuccess, isWithConfirmation } =
+    useApolloStatusStore((set) => ({
       isLoading: set.isLoading,
       isError: set.isError,
       isSuccess: set.isSuccess,
-      loadingType: set.loadingType,
-    })
-  );
+      isWithConfirmation: set.isWithConfirmation,
+      requestQueue: set.requestQueue,
+    }));
 
   const { data: queryResult, refetch: refetchCredit } = useQuery<Query>(
     GET_CREDIT,
@@ -80,7 +81,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         isError={isError}
         isLoading={isLoading}
         isSuccess={isSuccess}
-        loadingType={loadingType}
+        loadingType={
+          isWithConfirmation
+            ? LoadingType.WITH_CONFIRM
+            : LoadingType.WITHOUT_CONFIRM
+        }
       />
       <div className="grow">{children}</div>
     </div>

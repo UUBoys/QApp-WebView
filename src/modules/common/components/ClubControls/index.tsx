@@ -1,42 +1,34 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import ChatBubbleRoundedIcon from "@mui/icons-material/ChatBubbleRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import EventNoteRoundedIcon from "@mui/icons-material/EventNoteRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import InsertPhotoRoundedIcon from "@mui/icons-material/InsertPhotoRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
 
-import Button from "../Button";
+// import { AutocompleteItemProps } from "@/modules/common/components/Autocomplete";
 
-import Autocomplete, {
-  AutocompleteItemProps,
-} from "@/modules/common/components/Autocomplete";
-import Input from "@/modules/common/components/Input";
-
-const helpOptions: AutocompleteItemProps[] = [
-  {
-    label: "Nelze koupit kredity",
-    value: "asdasda",
-  },
-  {
-    label: "Vratime se mi kredity pri vraceni vstupenky",
-    value: "asdasdasd",
-  },
-  {
-    label: "test",
-    value: "test",
-  },
-  {
-    label: "ttttest",
-    value: "ttttest",
-  },
-];
+// const helpOptions: AutocompleteItemProps[] = [
+// {
+//   label: "Nelze koupit kredity",
+//   value: "asdasda",
+// },
+// {
+//   label: "Vratime se mi kredity pri vraceni vstupenky",
+//   value: "asdasdasd",
+// },
+// {
+//   label: "test",
+//   value: "test",
+// },
+// {
+//   label: "ttttest",
+//   value: "ttttest",
+// },
+// ];
 
 const ClubControls = () => {
-  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (

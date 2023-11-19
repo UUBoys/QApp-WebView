@@ -7,29 +7,28 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 
-import { Mutation, MutationCreateEstablishmentArgs } from "@/generated/graphql";
+import { Mutation, MutationCreateEventArgs } from "@/generated/graphql";
 import Button from "@/modules/common/components/Button";
 import Input from "@/modules/common/components/Input";
 import { useApolloStatusStore } from "@/modules/common/stores/apollo-store";
-import { CREATE_ESTABLISHMENT_MUTATION } from "@/modules/GRAPHQL/mutations/CreateEstablishmentMutation";
+import { CREATE_EVENT_MUTATION } from "@/modules/GRAPHQL/mutations/CreateEventMutation";
 import { uuid } from "@/modules/helpers/general";
 import { LoadingType } from "@/modules/helpers/loader-helpers";
-import { uploadFiles } from "@/modules/lib/uploadThingHelpers";
 
-type CreateClubInputs = {
+type CreateEventInputs = {
   name: string;
   description: string;
-  profilePicture: FileList;
   coverPicture: FileList;
-  city: string;
-  country: string;
-  street: string;
+  startDate: string;
+  endDate: string;
+  price: number;
+  maximumCapacity: number;
 };
 
-const CreateClub: NextPage = () => {
-  const { register, handleSubmit, watch } = useForm<CreateClubInputs>();
+const CreateEvent: NextPage = () => {
+  const { register, handleSubmit, watch, reset } = useForm<CreateEventInputs>();
+  const { clubId } = useRouter().query;
   const { push } = useRouter();
-
   const { addRequest, removeRequest, checkFinalStatus } = useApolloStatusStore(
     (set) => ({
       addRequest: set.addRequest,
@@ -37,54 +36,40 @@ const CreateClub: NextPage = () => {
       checkFinalStatus: set.checkFinalStatus,
     })
   );
-  const [mutateCreateEstablishment] = useMutation<Mutation>(
-    CREATE_ESTABLISHMENT_MUTATION,
-    {
-      context: { shouldTrackStatus: true, withConfirmation: true },
-    }
-  );
+  const [mutateCreateEvent] = useMutation<Mutation>(CREATE_EVENT_MUTATION, {
+    context: { shouldTrackStatus: true, withConfirmation: true },
+  });
 
-  const watchedProfilePicture = watch("profilePicture");
   const watchedCoverPicture = watch("coverPicture");
 
-  const onSubmit = async (data: CreateClubInputs) => {
+  const onSubmit = async (data: CreateEventInputs) => {
     const id = uuid();
     addRequest({ id, type: LoadingType.WITHOUT_CONFIRM });
-    try {
-      const uploadFilesTest = await uploadFiles({
-        files: [data.profilePicture[0], data.coverPicture[0]],
-        endpoint: "imageUploader",
-      });
-      const variables: MutationCreateEstablishmentArgs = {
-        city: data.city,
-        country: data.country,
-        description: data.description,
-        name: data.name,
-        street: data.street,
-        profileImage: uploadFilesTest[0].url,
-        coverImage: uploadFilesTest[1].url,
-      };
 
-      const res = await mutateCreateEstablishment({
+    try {
+      const variables: MutationCreateEventArgs = {
+        description: data.description,
+        end_date: data.endDate,
+        establishment_id: parseFloat((clubId as string) ?? ""),
+        maximumCapacity: parseFloat(data.maximumCapacity as unknown as string),
+        name: data.name,
+        price: parseFloat(data.price as unknown as string),
+        start_date: data.startDate,
+      };
+      const res = await mutateCreateEvent({
         variables,
       });
-
-      if (!res.data || !res.data.createEstablishment) return;
-
-      push(`/club/${res.data.createEstablishment.establishment?.id}`);
+      if (!res.data || !res.data.createEvent)
+        throw new Error("Event was not created");
+      if (res.data?.createEvent?.event?.id)
+        push(`/event/${res.data?.createEvent?.event?.id}`);
+      reset();
     } catch (error: any) {
       console.error(error.message);
     }
     removeRequest(id);
     checkFinalStatus();
   };
-
-  const profilePicturePreview = useMemo(() => {
-    if (watchedProfilePicture && watchedProfilePicture[0]) {
-      return URL.createObjectURL(watchedProfilePicture[0]);
-    }
-    return null;
-  }, [watchedProfilePicture]);
 
   const coverPicturePreview = useMemo(() => {
     if (watchedCoverPicture && watchedCoverPicture[0]) {
@@ -96,7 +81,7 @@ const CreateClub: NextPage = () => {
   return (
     <div className="flex min-h-[100vh] flex-col items-center gap-32 py-52 align-top">
       <p className="flex gap-8 text-6xl font-semibold text-gray-500">
-        Vytvořit <div className="text-primary-500">klub</div>
+        Vytvořit <div className="text-primary-500">akci</div>
       </p>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -124,29 +109,12 @@ const CreateClub: NextPage = () => {
           )}
         </label>
         <div className="ml-[10px] w-full pb-20">
-          <label htmlFor="club-profile-picture" className="relative pl-10">
-            <div
-              style={{ backgroundImage: `url(${profilePicturePreview})` }}
-              className="absolute top-[-4rem] flex h-24 min-h-[8rem] w-24 min-w-[8rem] cursor-pointer flex-col items-center justify-center rounded-full border-[4px] border-white bg-gray-300 bg-contain text-sm font-semibold text-gray-500"
-            >
-              <ArrowUpTrayIcon className="h-10 w-10 text-gray-500" />
-              Nahrát fotku
-            </div>
-            <input
-              className="hidden"
-              id="club-profile-picture"
-              type="file"
-              multiple={false}
-              {...register("profilePicture")}
-              hidden
-            />
-          </label>
           <div className="mt-16 flex w-full flex-col gap-10">
             <div className="mx-auto flex w-full items-center justify-center">
               <Input
                 containerClasses="!w-3/5"
                 className="bg-gray-100"
-                placeholder="Název klubu"
+                placeholder="Název akce"
                 type="text"
                 hookFormRegisterReturn={{ ...register("name") }}
               />
@@ -155,7 +123,7 @@ const CreateClub: NextPage = () => {
               <Input
                 containerClasses="!w-3/5"
                 className="bg-gray-100"
-                placeholder="Popis klubu"
+                placeholder="Popis akce"
                 type="textarea"
                 rows={5}
                 hookFormRegisterReturn={{ ...register("description") }}
@@ -165,9 +133,9 @@ const CreateClub: NextPage = () => {
               <Input
                 containerClasses="!w-3/5"
                 className="bg-gray-100"
-                placeholder="Ulice"
-                type="text"
-                hookFormRegisterReturn={{ ...register("street") }}
+                placeholder="Maximální kapacita"
+                type="number"
+                hookFormRegisterReturn={{ ...register("maximumCapacity") }}
               />
             </div>
             <div className="mx-auto flex w-3/5  flex-col  text-start ">
@@ -175,17 +143,17 @@ const CreateClub: NextPage = () => {
                 <Input
                   containerClasses="!w-3/5"
                   className="bg-gray-100"
-                  placeholder="Město"
-                  type="text"
-                  hookFormRegisterReturn={{ ...register("city") }}
+                  placeholder="Začátek"
+                  type="datetime-local"
+                  hookFormRegisterReturn={{ ...register("startDate") }}
                 />
-
+                -
                 <Input
                   containerClasses="!w-3/5"
                   className="bg-gray-100"
-                  placeholder="Země"
-                  type="text"
-                  hookFormRegisterReturn={{ ...register("country") }}
+                  placeholder="Konec"
+                  type="time"
+                  hookFormRegisterReturn={{ ...register("endDate") }}
                 />
               </div>
             </div>
@@ -202,4 +170,4 @@ const CreateClub: NextPage = () => {
   );
 };
 
-export default CreateClub;
+export default CreateEvent;

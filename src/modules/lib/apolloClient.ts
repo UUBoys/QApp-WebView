@@ -9,6 +9,7 @@ import { setContext } from "@apollo/client/link/context";
 import { getSession } from "next-auth/react";
 
 import { useApolloStatusStore } from "../common/stores/apollo-store";
+import { uuid } from "../helpers/general";
 import { LoadingType } from "../helpers/loader-helpers";
 
 const httpLink = createHttpLink({
@@ -21,11 +22,11 @@ const statusLink = new ApolloLink((operation, forward) => {
   const { withConfirmation, shouldTrackStatus } = operation.getContext();
   if (!shouldTrackStatus) return forward(operation);
 
-  useApolloStatusStore.setState({
-    isLoading: true,
-    isError: false,
-    isSuccess: false,
-    loadingType: withConfirmation
+  const requestId = uuid();
+
+  useApolloStatusStore.getState().addRequest({
+    id: requestId,
+    type: withConfirmation
       ? LoadingType.WITH_CONFIRM
       : LoadingType.WITHOUT_CONFIRM,
   });
@@ -38,38 +39,39 @@ const statusLink = new ApolloLink((operation, forward) => {
         handle = forward(operation).subscribe({
           next: (result) => {
             if (result.errors) {
-              useApolloStatusStore.setState({
-                isLoading: false,
+              useApolloStatusStore.getState().updateRequest(requestId, {
                 isError: true,
-                isSuccess: false,
               });
+              useApolloStatusStore.getState().removeRequest(requestId);
+              useApolloStatusStore.getState().checkFinalStatus();
               observer.error(result.errors);
             } else {
-              useApolloStatusStore.setState({
-                isLoading: false,
+              useApolloStatusStore.getState().updateRequest(requestId, {
                 isError: false,
-                isSuccess: true,
               });
+              useApolloStatusStore.getState().removeRequest(requestId);
+              useApolloStatusStore.getState().checkFinalStatus();
               observer.next(result);
             }
           },
           error: (error) => {
-            useApolloStatusStore.setState({
-              isLoading: false,
+            useApolloStatusStore.getState().updateRequest(requestId, {
               isError: true,
-              isSuccess: false,
             });
+            useApolloStatusStore.getState().removeRequest(requestId);
+            useApolloStatusStore.getState().checkFinalStatus();
             if (observer.error) observer.error(error);
           },
           complete: observer.complete.bind(observer),
         });
       })
       .catch((error) => {
-        useApolloStatusStore.setState({
-          isLoading: false,
+        useApolloStatusStore.getState().updateRequest(requestId, {
           isError: true,
-          isSuccess: false,
         });
+        useApolloStatusStore.getState().removeRequest(requestId);
+        useApolloStatusStore.getState().checkFinalStatus();
+
         observer.error(error);
       });
 

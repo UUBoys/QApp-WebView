@@ -15,7 +15,8 @@ interface InputProps {
     | "number"
     | "textarea"
     | "date"
-    | "time";
+    | "time"
+    | "datetime-local";
   value?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
@@ -131,6 +132,11 @@ export const Input: React.FC<InputProps> = ({
                   loop={false}
                 />
               </div>
+            )}
+            {(type === "date" ||
+              type === "datetime-local" ||
+              type === "time") && (
+              <div className="text-gray-400">{placeholder}</div>
             )}
             <input
               type={type}

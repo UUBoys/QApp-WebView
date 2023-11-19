@@ -147,7 +147,7 @@ const Club: NextPage = () => {
           <div className="mt-32 flex w-full flex-col items-start gap-10 p-3 pt-0">
             {" "}
             <Link
-              href="/club/create"
+              href={`/club/${establishment.id}/createEvent`}
               className="mx-auto flex min-h-[100px] w-full cursor-pointer flex-col flex-wrap items-center justify-center rounded-lg bg-primary-200  p-3 font-bold antialiased shadow-lg transition-all hover:bg-primary-400 hover:shadow-xl"
             >
               Vytvořit akci <PlusIcon className="h-8 w-8" />
