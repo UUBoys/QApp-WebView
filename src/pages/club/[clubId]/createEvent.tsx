@@ -14,6 +14,7 @@ import { useApolloStatusStore } from "@/modules/common/stores/apollo-store";
 import { CREATE_EVENT_MUTATION } from "@/modules/GRAPHQL/mutations/CreateEventMutation";
 import { uuid } from "@/modules/helpers/general";
 import { LoadingType } from "@/modules/helpers/loader-helpers";
+import { uploadFiles } from "@/modules/lib/uploadThingHelpers";
 
 type CreateEventInputs = {
   name: string;
@@ -47,6 +48,10 @@ const CreateEvent: NextPage = () => {
     addRequest({ id, type: LoadingType.WITHOUT_CONFIRM });
 
     try {
+      const uploadFilesTest = await uploadFiles({
+        files: [data.coverPicture[0], data.coverPicture[0]],
+        endpoint: "imageUploader",
+      });
       const variables: MutationCreateEventArgs = {
         description: data.description,
         end_date: data.endDate,
@@ -55,15 +60,23 @@ const CreateEvent: NextPage = () => {
         name: data.name,
         price: parseFloat(data.price as unknown as string),
         start_date: data.startDate,
+        image: uploadFilesTest[0].url,
       };
+
+      console.log(variables);
       const res = await mutateCreateEvent({
         variables,
       });
+
+      console.log(res);
       if (!res.data || !res.data.createEvent)
         throw new Error("Event was not created");
-      if (res.data?.createEvent?.event?.id)
-        push(`/event/${res.data?.createEvent?.event?.id}`);
-      reset();
+      setTimeout(() => {
+        if (res.data?.createEvent?.event?.id) {
+          push(`/events/${res.data?.createEvent?.event?.id}`);
+          reset();
+        }
+      }, 2000);
     } catch (error: any) {
       console.error(error.message);
     }
@@ -138,6 +151,15 @@ const CreateEvent: NextPage = () => {
                 hookFormRegisterReturn={{ ...register("maximumCapacity") }}
               />
             </div>
+            <div className="mx-auto flex w-full  items-center justify-center">
+              <Input
+                containerClasses="!w-3/5"
+                className="bg-gray-100"
+                placeholder="Cena"
+                type="number"
+                hookFormRegisterReturn={{ ...register("price") }}
+              />
+            </div>
             <div className="mx-auto flex w-3/5  flex-col  text-start ">
               <div className="flex w-full flex-row items-center justify-center gap-3">
                 <Input
@@ -152,7 +174,7 @@ const CreateEvent: NextPage = () => {
                   containerClasses="!w-3/5"
                   className="bg-gray-100"
                   placeholder="Konec"
-                  type="time"
+                  type="datetime-local"
                   hookFormRegisterReturn={{ ...register("endDate") }}
                 />
               </div>

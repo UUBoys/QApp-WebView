@@ -81,6 +81,8 @@ export type Event = {
   establishment_id: Scalars['Int']['output'];
   /** This is the id of the event */
   id: Scalars['String']['output'];
+  /** Image of the event */
+  image?: Maybe<Scalars['String']['output']>;
   /** Maximum capacity of the event */
   maximumCapacity: Scalars['Int']['output'];
   /** This is the name of the event */
@@ -137,6 +139,7 @@ export type MutationCreateEventArgs = {
   description: Scalars['String']['input'];
   end_date: Scalars['String']['input'];
   establishment_id: Scalars['Int']['input'];
+  image?: InputMaybe<Scalars['String']['input']>;
   maximumCapacity: Scalars['Int']['input'];
   name: Scalars['String']['input'];
   price: Scalars['Float']['input'];

@@ -69,9 +69,10 @@ const CreateClub: NextPage = () => {
         variables,
       });
 
-      if (!res.data || !res.data.createEstablishment) return;
-
-      push(`/club/${res.data.createEstablishment.establishment?.id}`);
+      setTimeout(() => {
+        if (!res.data || !res.data.createEstablishment) return;
+        push(`/club/${res.data.createEstablishment.establishment?.id}`);
+      }, 2000);
     } catch (error: any) {
       console.error(error.message);
     }
