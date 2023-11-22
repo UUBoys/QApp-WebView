@@ -40,6 +40,7 @@ const navbarAllowedRoutes = [
   "/club/create",
   "/club/*",
   "/clubs",
+  "/events/*",
 ];
 
 let previousKreditCount = 0;
@@ -91,7 +92,7 @@ const NavBar = () => {
   const navigation = [
     {
       name: t("components.navbar.links.events"),
-      href: "/",
+      href: "/events",
       current: pathname === "/" || pathname === "/events",
       ico: <LocalActivityRoundedIcon sx={{ fontSize: "20px" }} />,
     },

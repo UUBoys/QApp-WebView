@@ -1,9 +1,8 @@
 import { useQuery } from "@apollo/client";
-import { PlusIcon } from "@heroicons/react/24/solid";
 import { NextPage } from "next";
-import Link from "next/link";
 
 import { Query } from "@/generated/graphql";
+import EventsList, { Event } from "@/modules/common/components/EventList";
 import { GET_EVENTS } from "@/modules/GRAPHQL/queries/GetEventsQuery";
 
 /* ----------------------------------------- MUSÍ SE DODĚLAT -------------------------------------------------*/
@@ -16,20 +15,16 @@ const Events: NextPage = () => {
       console.log(data);
     },
   });
-  console.log(eventsData);
+
   return (
     <div className="flex min-h-[100vh] w-full flex-col items-center justify-center gap-20 p-20 pt-52">
       <p className="flex gap-8 text-6xl font-semibold">
-        <div className="text-primary-500">event</div>
+        Všechny<div className="text-primary-500">{" akce"}</div>
       </p>
       <div className="flex min-h-[600px] w-full flex-col justify-center gap-6 rounded-xl bg-white py-20 shadow-xl">
-        <Link
-          href="/club/create"
-          className="mx-auto flex min-h-[100px] w-2/3 cursor-pointer flex-col flex-wrap items-center justify-center rounded-lg bg-primary-200  p-3 font-bold antialiased shadow-lg transition-all hover:bg-primary-400 hover:shadow-xl"
-        >
-          Event
-          <PlusIcon className="h-8 w-8" />
-        </Link>
+        <EventsList
+          events={(eventsData?.getEvents?.events as unknown as Event[]) ?? []}
+        />
       </div>
     </div>
   );

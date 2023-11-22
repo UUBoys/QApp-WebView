@@ -159,7 +159,7 @@ export type MutationLoginArgs = {
 
 
 export type MutationPurchaseTicketArgs = {
-  event_id: Scalars['Int']['input'];
+  event_id: Scalars['String']['input'];
   user_id: Scalars['Int']['input'];
 };
 
@@ -210,6 +210,8 @@ export type Query = {
   getEstablishments?: Maybe<GetEstablishmentsResponse>;
   /** Get all establishments for a specific user (requires authentication) */
   getEstablishmentsForUser?: Maybe<GetEstablishmentsResponse>;
+  /** Get event by id */
+  getEventById?: Maybe<GetEventsResponse>;
   /** Get all events */
   getEvents?: Maybe<GetEventsResponse>;
 };
@@ -217,6 +219,11 @@ export type Query = {
 
 export type QueryGetEstablishmentByIdArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type QueryGetEventByIdArgs = {
+  id: Scalars['String']['input'];
 };
 
 /** Search result - contains the type of the result and the result itself */

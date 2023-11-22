@@ -1,39 +1,54 @@
 import { useQuery } from "@apollo/client";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import clsx from "clsx";
 import { NextPage } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { Query } from "@/generated/graphql";
-import { GET_EVENTS } from "@/modules/GRAPHQL/queries/GetEventsQuery";
+import { Event } from "@/modules/common/components/EventList";
+import { GET_EVENT_BY_ID } from "@/modules/GRAPHQL/queries/GetEventByIdQuery";
 
 /* ----------------------------------------- MUSÍ SE DODĚLAT -------------------------------------------------*/
 
 const Event: NextPage = () => {
   const { eventId } = useRouter().query;
-  const { data: eventsData } = useQuery<Query>(GET_EVENTS, {
+  const { data: eventData } = useQuery<Query>(GET_EVENT_BY_ID, {
     fetchPolicy: "cache-and-network",
     context: { shouldTrackStatus: true },
+    variables: { getEventByIdId: eventId },
     onCompleted(data) {
       console.log(data);
     },
   });
 
-  console.log(eventId, eventsData?.getEvents?.events);
+  if (!eventData?.getEventById?.events) return null;
+  const event = (eventData?.getEventById?.events as any)[0] as Event;
 
+  console.log(event);
+  if (!event) return null;
   return (
-    <div className="flex min-h-[100vh] w-full flex-col items-center justify-center gap-20 p-20 pt-52">
-      <p className="flex gap-8 text-6xl font-semibold">
-        Moje <div className="text-primary-500">event</div>
-      </p>
-      <div className="flex min-h-[600px] w-full flex-col justify-center gap-6 rounded-xl bg-white py-20 shadow-xl">
-        <Link
-          href="/club/create"
-          className="mx-auto flex min-h-[100px] w-2/3 cursor-pointer flex-col flex-wrap items-center justify-center rounded-lg bg-primary-200  p-3 font-bold antialiased shadow-lg transition-all hover:bg-primary-400 hover:shadow-xl"
-        >
-          Event
-          <PlusIcon className="h-8 w-8" />
-        </Link>
+    <div className="flex min-h-[100vh] flex-col items-start text-center shadow-xl">
+      <div
+        style={{ backgroundImage: `url(${event.image ?? ""})` }}
+        className={clsx(
+          "relative flex h-3/5 max-h-[400px] min-h-[50vh] w-full flex-col items-center justify-center bg-gray-200 bg-cover bg-center bg-no-repeat text-center text-2xl font-semibold text-gray-500"
+        )}
+      >
+        {/* Overlay with black filter */}
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+      <div className="min-h-[100vh] w-full pb-20">
+        <div className="relative pl-20 text-start">
+          <div className="ml-[20rem] pt-[2rem]">
+            {" "}
+            <div className="flex items-center">
+              <div className=" text-3xl font-bold">{event.name}</div>
+            </div>
+            <div className="  font-bold text-gray-500">
+              Počet nadcházejících akcí: <b className="text-primary-500">fsa</b>
+            </div>
+          </div>
+        </div>
+        <div className="flex px-20" />
       </div>
     </div>
   );

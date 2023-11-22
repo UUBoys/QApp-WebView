@@ -11,5 +11,7 @@ export const config = {
     "/club/myClubs",
     "/clubs",
     "/club/:id*",
+    "/events/",
+    "/events/:id*",
   ],
 };

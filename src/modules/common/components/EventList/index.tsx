@@ -5,12 +5,15 @@ import React, { useState } from "react";
 import ExpandableItem from "@/modules/common/components/ExpandableItem";
 
 export type Event = {
-  title: string;
-  date: string;
-  address: string;
-  content: string;
-  imageSrc: string;
-  price: string;
+  id: string;
+  name: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+  price: number;
+  establishment_id: number;
+  maximumCapacity: number;
+  image?: string;
 };
 
 type EventsListProps = {
@@ -19,6 +22,7 @@ type EventsListProps = {
 };
 
 const EventsList: React.FC<EventsListProps> = ({ events, className }) => {
+  console.log(events);
   const [openedIndex, setOpenedIndex] = useState<number | null>(null);
 
   const handleItemClick = (index: number) => {
@@ -32,7 +36,7 @@ const EventsList: React.FC<EventsListProps> = ({ events, className }) => {
   return (
     <div
       className={clsx(
-        "mx-auto mt-10 flex  max-w-full flex-col gap-[20px] p-4 transition-all ",
+        "mx-auto mt-10 flex w-full  max-w-full flex-col gap-[20px] p-4 transition-all ",
         className
       )}
     >

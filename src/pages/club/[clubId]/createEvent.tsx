@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 
-import { Mutation, MutationCreateEventArgs } from "@/generated/graphql";
+import { Mutation } from "@/generated/graphql";
 import Button from "@/modules/common/components/Button";
 import Input from "@/modules/common/components/Input";
 import { useApolloStatusStore } from "@/modules/common/stores/apollo-store";
@@ -52,23 +52,21 @@ const CreateEvent: NextPage = () => {
         files: [data.coverPicture[0], data.coverPicture[0]],
         endpoint: "imageUploader",
       });
-      const variables: MutationCreateEventArgs = {
+      const variables = {
         description: data.description,
-        end_date: data.endDate,
-        establishment_id: parseFloat((clubId as string) ?? ""),
+        endDate: new Date(data.endDate).toISOString(),
+        establishmentId: parseFloat((clubId as string) ?? ""),
         maximumCapacity: parseFloat(data.maximumCapacity as unknown as string),
         name: data.name,
-        price: parseFloat(data.price as unknown as string),
-        start_date: data.startDate,
+        price: parseFloat(data.price as any),
+        startDate: new Date(data.startDate).toISOString(),
         image: uploadFilesTest[0].url,
       };
 
-      console.log(variables);
       const res = await mutateCreateEvent({
         variables,
       });
 
-      console.log(res);
       if (!res.data || !res.data.createEvent)
         throw new Error("Event was not created");
       setTimeout(() => {
