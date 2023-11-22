@@ -17,34 +17,40 @@ export const Default: Story = {
   args: {
     events: [
       {
-        address: "Kolbenova 123/456, Praha 9, 400 08",
-        content:
-          "Bechers bar akce číslo 1! Přijďte si užít skvělou atmosféru a výborné drinky!",
-        title: "Bechers bar",
-        date: "12. 5. 2021",
-        imageSrc:
-          "https://media.istockphoto.com/id/501387734/cs/fotografie/tan%C4%8D%C3%ADc%C3%AD-p%C5%99%C3%A1tel%C3%A9.jpg?s=612x612&w=0&k=20&c=WyInUbbqdQuoj8efMtDrnJbnghE5JyvkGqC09T5gMRY=",
-        price: "150 Kč",
+        description: "Popis akce bla bla",
+        end_date: "2023-11-25T02:38:00.000Z",
+        establishment_id: 7,
+        image:
+          "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
+        maximumCapacity: 150,
+        name: "Halloween v Becheru",
+        price: 100,
+        id: "1",
+        start_date: "2023-11-24T20:44:00.000Z",
       },
       {
-        address: "Kolbenova 123/456, Praha 9, 400 08",
-        content:
-          "Bechers bar akce číslo 1! Přijďte si užít skvělou atmosféru a výborné drinky!",
-        title: "Bechers bar",
-        date: "12. 5. 2021",
-        imageSrc:
-          "https://media.istockphoto.com/id/501387734/cs/fotografie/tan%C4%8D%C3%ADc%C3%AD-p%C5%99%C3%A1tel%C3%A9.jpg?s=612x612&w=0&k=20&c=WyInUbbqdQuoj8efMtDrnJbnghE5JyvkGqC09T5gMRY=",
-        price: "150 Kč",
+        description: "Popis akce bla bla",
+        end_date: "2023-11-25T02:38:00.000Z",
+        establishment_id: 7,
+        image:
+          "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
+        maximumCapacity: 150,
+        id: "1",
+        name: "Halloween v Becheru",
+        price: 100,
+        start_date: "2023-11-24T20:44:00.000Z",
       },
       {
-        address: "Kolbenova 123/456, Praha 9, 400 08",
-        content:
-          "Bechers bar akce číslo 1! Přijďte si užít skvělou atmosféru a výborné drinky!",
-        title: "Bechers bar",
-        date: "12. 5. 2021",
-        imageSrc:
-          "https://media.istockphoto.com/id/501387734/cs/fotografie/tan%C4%8D%C3%ADc%C3%AD-p%C5%99%C3%A1tel%C3%A9.jpg?s=612x612&w=0&k=20&c=WyInUbbqdQuoj8efMtDrnJbnghE5JyvkGqC09T5gMRY=",
-        price: "150 Kč",
+        description: "Popis akce bla bla",
+        end_date: "2023-11-25T02:38:00.000Z",
+        establishment_id: 7,
+        image:
+          "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
+        maximumCapacity: 150,
+        name: "Halloween v Becheru",
+        id: "1",
+        price: 100,
+        start_date: "2023-11-24T20:44:00.000Z",
       },
     ],
   },
