@@ -5,6 +5,7 @@ import { LoadingType } from "@/modules/helpers/loader-helpers";
 type RequestStatus = {
   id: string;
   type: LoadingType;
+  requestName?: string;
   isError?: boolean;
 };
 

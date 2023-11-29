@@ -32,7 +32,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       isError: set.isError,
       isSuccess: set.isSuccess,
       isWithConfirmation: set.isWithConfirmation,
-      requestQueue: set.requestQueue,
     }));
 
   const { data: queryResult, refetch: refetchCredit } = useQuery<Query>(

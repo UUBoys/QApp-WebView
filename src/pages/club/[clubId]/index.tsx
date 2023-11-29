@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 
 import { Establishment, Query } from "@/generated/graphql";
 import ClubControls from "@/modules/common/components/ClubControls";
-import EventsList from "@/modules/common/components/EventList";
+import EventsList, { Event } from "@/modules/common/components/EventList";
 import Input from "@/modules/common/components/Input";
 import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
 import { GET_ESTABLISHMENT_BY_ID } from "@/modules/GRAPHQL/queries/GetEstablishmentQuery";
@@ -158,7 +158,7 @@ const Club: NextPage = () => {
                 Nadcházející akce
               </div>
               <EventsList
-                events={[]}
+                events={(establishment.events as unknown as Event[]) ?? []}
                 className="!mx-0 !mt-[10px]  w-full rounded-2xl py-[0px]"
               />
             </div>

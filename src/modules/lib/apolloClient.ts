@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import {
   ApolloClient,
   ApolloLink,
@@ -24,8 +25,21 @@ const statusLink = new ApolloLink((operation, forward) => {
 
   const requestId = uuid();
 
+  if (
+    useApolloStatusStore
+      .getState()
+      .requestQueue.find((req) => req.requestName === operation.operationName)
+  ) {
+    const duplicateRequest = useApolloStatusStore
+      .getState()
+      .requestQueue.find((req) => req.requestName === operation.operationName);
+    if (duplicateRequest)
+      useApolloStatusStore.getState().removeRequest(duplicateRequest.id);
+  }
+
   useApolloStatusStore.getState().addRequest({
     id: requestId,
+    requestName: operation.operationName,
     type: withConfirmation
       ? LoadingType.WITH_CONFIRM
       : LoadingType.WITHOUT_CONFIRM,

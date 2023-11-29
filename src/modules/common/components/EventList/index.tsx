@@ -22,7 +22,6 @@ type EventsListProps = {
 };
 
 const EventsList: React.FC<EventsListProps> = ({ events, className }) => {
-  console.log(events);
   const [openedIndex, setOpenedIndex] = useState<number | null>(null);
 
   const handleItemClick = (index: number) => {

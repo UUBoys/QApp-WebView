@@ -11,9 +11,6 @@ const Events: NextPage = () => {
   const { data: eventsData } = useQuery<Query>(GET_EVENTS, {
     fetchPolicy: "cache-and-network",
     context: { shouldTrackStatus: true },
-    onCompleted(data) {
-      console.log(data);
-    },
   });
 
   return (

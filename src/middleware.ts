@@ -13,5 +13,6 @@ export const config = {
     "/club/:id*",
     "/events/",
     "/events/:id*",
+    "/profile/:path*",
   ],
 };
