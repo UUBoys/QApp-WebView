@@ -157,6 +157,7 @@ const Club: NextPage = () => {
               <div className="w-full border-b pb-3 text-lg">
                 Nadcházející akce
               </div>
+              {console.log(establishment.events)}
               <EventsList
                 events={(establishment.events as unknown as Event[]) ?? []}
                 className="!mx-0 !mt-[10px]  w-full rounded-2xl py-[0px]"

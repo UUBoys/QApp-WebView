@@ -21,6 +21,7 @@ export const GET_ESTABLISHMENT_BY_ID = gql`
           price
           establishment_id
           maximumCapacity
+          image
         }
       }
     }

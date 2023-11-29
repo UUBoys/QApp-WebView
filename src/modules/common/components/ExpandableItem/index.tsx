@@ -131,7 +131,7 @@ const ExpandableItem: React.FC<ExpandableItemProps> = ({
             href={`/events/${id}`}
             className="flex h-10 w-36 items-center justify-center rounded-xl bg-primary-400 px-2 py-1 text-center text-sm font-semibold text-white transition-all  hover:bg-primary-500 focus-visible:outline-primary-600"
           >
-            Zakoupit
+            Otevřít
           </Link>
         </div>
       </Transition>
