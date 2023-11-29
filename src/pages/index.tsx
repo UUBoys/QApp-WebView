@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
