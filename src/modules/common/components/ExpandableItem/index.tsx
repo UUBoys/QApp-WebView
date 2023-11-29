@@ -12,7 +12,7 @@ import React from "react";
 type ExpandableItemProps = {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   start_date: string;
   end_date: string;
   price: number;

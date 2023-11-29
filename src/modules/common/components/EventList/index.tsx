@@ -3,6 +3,7 @@ import clsx from "clsx";
 import React, { useState } from "react";
 
 import ExpandableItem from "@/modules/common/components/ExpandableItem";
+import { IEvent } from "@/modules/utils/schemas/event";
 
 export type Event = {
   id: string;
@@ -17,7 +18,7 @@ export type Event = {
 };
 
 type EventsListProps = {
-  events: Event[];
+  events: IEvent[];
   className?: string;
 };
 
