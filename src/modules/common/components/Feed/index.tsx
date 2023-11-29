@@ -5,8 +5,6 @@ import WindowRoundedIcon from "@mui/icons-material/WindowRounded";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { useClubs } from "../../hooks/useEstablishmentsHook";
-
 import EventsList, { Event } from "@/modules/common/components/EventList";
 import EventPost, {
   EventPostProps,
@@ -14,6 +12,7 @@ import EventPost, {
 import Navigation, {
   NavigationLinkProps,
 } from "@/modules/common/components/Navigation";
+import { useClubs } from "@/modules/common/hooks/useEstablishmentsHook";
 
 const mockData: EventPostProps[] = [
   {
