@@ -1,29 +1,10 @@
-import { useQuery } from "@apollo/client";
 import { NextPage } from "next";
-import { useState } from "react";
 
-import { GetEstablishmentsResponse, Query } from "@/generated/graphql";
 import ClubCard from "@/modules/common/components/ClubCard";
-import { GET_ESTABLISHMENTS } from "@/modules/GRAPHQL/queries/GetEstablishmentsQuery";
-import { IClub } from "@/modules/utils/schemas/club";
+import { useClubs } from "@/modules/common/hooks/useEstablishmentshook";
 
 const Clubs: NextPage = () => {
-  const [clubs, setClubs] = useState<IClub[]>([]);
-  useQuery<Query>(GET_ESTABLISHMENTS, {
-    context: { shouldTrackStatus: true, withConfirmation: false },
-    onCompleted(data) {
-      if (
-        !data.getEstablishments?.establishments ||
-        data.getEstablishments?.establishments?.length <= 0
-      )
-        return;
-      if (data.getEstablishments !== null)
-        setClubs([
-          ...((data.getEstablishments as GetEstablishmentsResponse)
-            .establishments as IClub[]),
-        ]);
-    },
-  });
+  const { clubs } = useClubs();
 
   return (
     <div className="flex min-h-[100vh] w-full flex-col items-center justify-center gap-20 p-20 pt-52">
