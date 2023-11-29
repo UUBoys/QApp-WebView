@@ -16,7 +16,21 @@
       "header": "Events at your fingertips",
       "description": "Don't miss any events in your area with our QApp",
       "button": "Start now",
-      "registerClub": "Register club"
+      "registerClub": "Register club",
+      "blocks": {
+        "allInOne": {
+          "title": "All in one",
+          "description": "All your tickets in one place, no need to print them"
+        },
+        "noQueue": {
+          "title": "No queue",
+          "description": "No more waiting in line, just scan your ticket and go"
+        },
+        "nearToYou": {
+          "title": "Near to you",
+          "description": "Find events near you, no matter where you are"
+        }
+      }
     },
     "auth": {
       "form": {
