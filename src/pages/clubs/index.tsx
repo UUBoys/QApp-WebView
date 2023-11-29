@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 
 import ClubCard from "@/modules/common/components/ClubCard";
-import { useClubs } from "@/modules/common/hooks/useEstablishmentshook";
+import { useClubs } from "@/modules/common/hooks/useEstablishmentsHook";
 
 const Clubs: NextPage = () => {
   const { clubs } = useClubs();

@@ -3,51 +3,21 @@
 
 "use client";
 
-import { useQuery } from "@apollo/client";
 import clsx from "clsx";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
 
-import { Establishment, Query } from "@/generated/graphql";
 import Button from "@/modules/common/components/Button";
-import { Event } from "@/modules/common/components/EventList";
-import { GET_ESTABLISHMENT_BY_ID } from "@/modules/GRAPHQL/queries/GetEstablishmentQuery";
-import { GET_EVENT_BY_ID } from "@/modules/GRAPHQL/queries/GetEventByIdQuery";
-
-/* ----------------------------------------- MUSÍ SE DODĚLAT -------------------------------------------------*/
+import { useEstablishmentById } from "@/modules/common/hooks/useEstablishmentByIdHook";
+import { useEventById } from "@/modules/common/hooks/useEventByIdHook";
 
 const Event: NextPage = () => {
   const { eventId } = useRouter().query;
-  const [event, setEvent] = useState<Event | null | undefined>(null);
   const { push } = useRouter();
-  const [establishment, setEstablishment] = useState<
-    Establishment | null | undefined
-  >(null);
-  useQuery<Query>(GET_EVENT_BY_ID, {
-    fetchPolicy: "cache-and-network",
-    context: { shouldTrackStatus: false },
-    variables: { getEventByIdId: eventId },
-    onCompleted(data) {
-      if (!data.getEventById?.events) return;
-      setEvent(data.getEventById.events[0] as unknown as Event);
-    },
-  });
 
-  useQuery<Query>(GET_ESTABLISHMENT_BY_ID, {
-    fetchPolicy: "cache-and-network",
-    variables: {
-      getEstablishmentByIdId: event?.establishment_id ?? 0,
-    },
-    defaultOptions: {},
-    context: { shouldTrackStatus: true },
-    onCompleted(data) {
-      if (!data.getEstablishmentById?.establishments) return;
-      setEstablishment(
-        data.getEstablishmentById.establishments[0] as unknown as Establishment
-      );
-    },
-  });
+  const { event } = useEventById(eventId as string);
+
+  const { establishment } = useEstablishmentById(event?.establishment_id ?? "");
 
   if (!event) return null;
   return (
@@ -97,23 +67,37 @@ const Event: NextPage = () => {
                 {event.name}
               </div>
             </div>
-            <div className="text-sm font-bold text-gray-400">
+            <div className="w-full text-center text-sm font-bold text-gray-400">
               {event?.description ?? ""}
             </div>
-            <div className="text-sm font-bold text-gray-500">
-              {establishment?.city ?? ""}, {establishment?.street ?? ""}{" "}
+            <div className="w-full text-center text-sm font-bold text-gray-500">
+              {" "}
+              {establishment?.city ?? ""}, {establishment?.country},{" "}
+              {establishment?.street ?? ""}{" "}
             </div>
-            <div className="mt-20 flex w-full justify-center text-5xl font-bold text-gray-800">
+            <div className="mt-5 flex w-full justify-center text-5xl font-bold text-gray-800">
               <p className="text-primary-400"> {event?.price ?? ""}</p>.00
               Kreditů
             </div>
-            <div className="mt-20 flex w-full justify-center gap-2 text-2xl font-semibold text-gray-700">
+            <div className="mt-5 flex w-full justify-center gap-2 text-2xl font-semibold text-gray-700">
               Kapacita{" "}
               <p className="text-primary-400">
                 {" "}
                 {event?.maximumCapacity ?? ""}
               </p>
               lidí
+            </div>
+            <div className="mt-5 flex w-full justify-center gap-2 text-sm font-semibold text-gray-700">
+              Od{" "}
+              <p className="text-primary-400">
+                {" "}
+                {new Date(event?.start_date ?? "").toLocaleString()}
+              </p>{" "}
+              do{" "}
+              <p className="text-primary-400">
+                {" "}
+                {new Date(event?.end_date ?? "").toLocaleString()}
+              </p>
             </div>
             <div className="mt-20 flex w-full justify-center text-5xl font-bold text-gray-800">
               <Button className="h-full min-h-[50px] w-full rounded-lg px-4 text-xl">
@@ -128,5 +112,3 @@ const Event: NextPage = () => {
 };
 
 export default Event;
-
-/* ----------------------------------------- MUSÍ SE DODĚLAT -------------------------------------------------*/

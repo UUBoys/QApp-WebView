@@ -1,6 +1,4 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-/* eslint-disable sonarjs/no-duplicate-string */
-import { useQuery } from "@apollo/client";
 import {
   CheckIcon,
   InformationCircleIcon,
@@ -12,21 +10,18 @@ import clsx from "clsx";
 import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { Establishment, Query } from "@/generated/graphql";
 import ClubControls from "@/modules/common/components/ClubControls";
 import EventsList, { Event } from "@/modules/common/components/EventList";
 import Input from "@/modules/common/components/Input";
+import { useEstablishmentById } from "@/modules/common/hooks/useEstablishmentByIdHook";
 import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
-import { GET_ESTABLISHMENT_BY_ID } from "@/modules/GRAPHQL/queries/GetEstablishmentQuery";
 
 const Club: NextPage = () => {
   const { clubId } = useRouter().query;
   const [elementEditID, setElementEditID] = useState<string>("");
-  const [establishment, setEstablishment] = useState<
-    Establishment | null | undefined
-  >(null);
+
   const { userOwnedClubs } = useUserAdditionalDataStore((set) => ({
     userOwnedClubs: set.userOwnedClubs,
   }));
@@ -35,26 +30,8 @@ const Club: NextPage = () => {
     (club) => club.id === parseFloat((clubId as string) ?? "")
   );
 
-  const { data: establishmentData } = useQuery<Query>(GET_ESTABLISHMENT_BY_ID, {
-    fetchPolicy: "cache-and-network",
-    variables: {
-      getEstablishmentByIdId: parseFloat((clubId as string) ?? ""),
-    },
-    context: { shouldTrackStatus: true },
-  });
-
-  useEffect(() => {
-    if (
-      establishmentData &&
-      establishmentData.getEstablishmentById &&
-      establishmentData.getEstablishmentById.establishments &&
-      establishmentData.getEstablishmentById.establishments.length === 1
-    )
-      setEstablishment(
-        establishmentData.getEstablishmentById.establishments[0]
-      );
-  }, [establishmentData]);
-
+  const { establishment } = useEstablishmentById(clubId as string);
+  console.log(establishment);
   if (!establishment) return null;
 
   return (
@@ -93,8 +70,8 @@ const Club: NextPage = () => {
                       setElementEditID("");
                     },
                   }}
-                  isSuccess={false} /* edit mutation success */
-                  isLoading={false} /* edit mutation loading */
+                  isSuccess={false}
+                  isLoading={false}
                   defaultValue={establishment.name}
                 />
               ) : (
