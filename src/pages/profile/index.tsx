@@ -5,17 +5,11 @@ import React from "react";
 
 import Navigation from "@/modules/common/components/Navigation";
 import { useClubs } from "@/modules/common/hooks/useEstablishmentsHook";
-import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
 
 const Profile = () => {
   const { data: session } = useSession();
   const { clubs } = useClubs();
   const { push } = useRouter();
-  const { userOwnedClubs } = useUserAdditionalDataStore((set) => ({
-    userOwnedClubs: set.userOwnedClubs,
-  }));
-
-  console.log(userOwnedClubs);
   return (
     <div className="mt-[200px] flex items-center justify-center">
       <div className="flex min-h-[500px] w-[100%] min-w-[300px] max-w-[700px] flex-col gap-[20px] md:flex-row">
