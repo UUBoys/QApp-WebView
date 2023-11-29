@@ -25,6 +25,7 @@ export const Default: Story = {
       city: "Teplice",
       country: "Czech Republic",
       street: "Kašparova 1844/12",
+      events: [],
     },
   },
 };
