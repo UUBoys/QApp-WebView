@@ -1,57 +1,58 @@
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import React from "react";
 
+import Navigation from "@/modules/common/components/Navigation";
+import { useClubs } from "@/modules/common/hooks/useEstablishmentshook";
 import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
 
 const Profile = () => {
   const { data: session } = useSession();
+  const { clubs } = useClubs();
+  const { push } = useRouter();
   const { userOwnedClubs } = useUserAdditionalDataStore((set) => ({
     userOwnedClubs: set.userOwnedClubs,
   }));
   return (
-    <div className=" flex h-screen w-full flex-col items-center justify-center bg-white p-6 pt-16 text-black">
-      <div className="mt-28 w-[90%] rounded-xl bg-white p-8  shadow-[0px_7px_29px_0px_rgba(0,0,0,0.1)] sm:w-4/5 lg:w-3/5">
-        <div className="grid grid-cols-1 md:grid-cols-3">
-          <div className="order-last mt-20 grid grid-cols-2 text-center md:order-first md:mt-0">
-            <div>
-              {/* TO DO: Like count */}
-              <p className="text-xl font-bold text-gray-700">
-                {userOwnedClubs.length}
-              </p>
-              <p className="text-gray-400">Počet vlastněných klubů</p>
-            </div>
+    <div className="mt-[200px] flex items-center justify-center">
+      <div className="flex min-h-[500px] w-[100%] min-w-[300px] max-w-[700px] flex-col gap-[20px] md:flex-row">
+        <div className="flex flex-1 flex-col justify-between rounded-xl bg-white p-[20px] shadow-2xl">
+          <div className="relative mx-auto mb-[20px] flex h-[200px] w-[200px]">
+            <Image
+              src="https://i.redd.it/geyjjtzxk7741.jpg"
+              alt="Picture of the author"
+              layout="fill"
+              className="rounded-full shadow-2xl transition-all duration-300 ease-in-out hover:scale-[1.1]"
+            />
           </div>
-          <div className="relative">
-            <div className="absolute inset-x-0 top-0 mx-auto -mt-24 flex h-48 w-48 items-center justify-center rounded-full bg-indigo-100 text-indigo-500 shadow-2xl">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-24 w-24"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className="mt-32 flex justify-between space-x-8 text-center md:mt-0 md:justify-center">
-            {/* TO DO: Subscribe */}
-            <Link
-              className="hover:primary-red-500 rounded border-2 border-primary-500 bg-primary-500 px-4 py-3 font-medium uppercase text-white shadow transition hover:-translate-y-0.5 hover:shadow-lg"
-              href="/profile/edit"
-            >
-              edit profile
-            </Link>
+          <div className="flex flex-col gap-[10px]">
+            <p className="text-[24px] font-bold text-gray-800">
+              {session?.user?.username}
+            </p>
+            <p className="text-[18px] font-medium text-gray-700">
+              {session?.user?.email}
+            </p>
           </div>
         </div>
-        <div className="mt-20 border-b pb-12 text-center">
-          <h1 className="text-4xl font-medium text-gray-700">
-            {session?.user?.username}
-          </h1>
+        <div className="flex flex-1 flex-col gap-[20px]">
+          <div className="h-full rounded-xl bg-white p-[20px] shadow-2xl">
+            <p className="text-gray-700">My tickets</p>
+          </div>
+          <div className="h-full rounded-xl bg-white p-[20px] shadow-2xl">
+            <p className="text-gray-700">Favorite clubs</p>
+            <Navigation
+              links={clubs.slice(0, 5).map((club) => {
+                return {
+                  label: club.name,
+                  image: club.profileImage,
+                  onClick: () => push(`/club/${club.id}`),
+                };
+              })}
+              className="my-[20px] w-full"
+            />
+          </div>
         </div>
       </div>
     </div>

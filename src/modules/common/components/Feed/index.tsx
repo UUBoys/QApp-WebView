@@ -5,6 +5,8 @@ import WindowRoundedIcon from "@mui/icons-material/WindowRounded";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import { useClubs } from "../../hooks/useEstablishmentshook";
+
 import EventsList, { Event } from "@/modules/common/components/EventList";
 import EventPost, {
   EventPostProps,
@@ -132,25 +134,6 @@ const leftMenuMockLinks: NavigationLinkProps[] = [
   },
 ];
 
-const favoriteClubsMockLinks: NavigationLinkProps[] = [
-  {
-    label: "Beche'rs bar",
-    image: "https://picsum.photos/40/40",
-  },
-  {
-    label: "Beche'rs bar",
-    image: "https://picsum.photos/40/40",
-  },
-  {
-    label: "Beche'rs bar",
-    image: "https://picsum.photos/40/40",
-  },
-  {
-    label: "Beche'rs bar",
-    image: "https://picsum.photos/40/40",
-  },
-];
-
 const mockEvetList: Event[] = [
   {
     description: "Popis akce bla bla",
@@ -200,6 +183,7 @@ const mockEvetList: Event[] = [
 
 const Feed = () => {
   const { t } = useTranslation();
+  const { clubs } = useClubs();
   return (
     <div className="relative  max-h-[calc(100vh-50px)] text-gray-300 ">
       <div className="grid  max-h-[calc(100vh-50px)] w-full grid-cols-1 pt-[50px]  lg:grid-cols-3">
@@ -212,7 +196,15 @@ const Feed = () => {
                 {t("pages.feed.favoriteClubs")}
               </p>
             </div> */}
-            <Navigation links={favoriteClubsMockLinks} className="w-[200px]" />
+            <Navigation
+              links={clubs.map((club) => {
+                return {
+                  label: club.name,
+                  image: club.profileImage,
+                };
+              })}
+              className="w-[200px]"
+            />
           </div>
         </div>
         <div className="scroll-hidden col-span-1 max-h-[calc(100vh-50px)] overflow-y-auto pt-[50px]">

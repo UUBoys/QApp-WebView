@@ -29,6 +29,8 @@ const nextConfig = {
       "this-person-does-not-exist.com",
       "picsum.photos",
       "cdn.pixabay.com",
+      "www.port-teplice.cz",
+      "i.redd.it",
       "utfs.io",
     ],
   },
