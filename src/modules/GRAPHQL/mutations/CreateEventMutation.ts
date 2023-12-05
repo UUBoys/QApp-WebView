@@ -9,7 +9,6 @@ export const CREATE_EVENT_MUTATION = gql`
     $price: Float!
     $establishmentId: Int!
     $maximumCapacity: Int!
-    $image: String
   ) {
     createEvent(
       name: $name
@@ -19,7 +18,6 @@ export const CREATE_EVENT_MUTATION = gql`
       price: $price
       establishment_id: $establishmentId
       maximumCapacity: $maximumCapacity
-      image: $image
     ) {
       event {
         id

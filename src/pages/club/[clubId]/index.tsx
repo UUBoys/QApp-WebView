@@ -15,7 +15,7 @@ import { useState } from "react";
 import ClubControls from "@/modules/common/components/ClubControls";
 import EventsList, { Event } from "@/modules/common/components/EventList";
 import Input from "@/modules/common/components/Input";
-import { useEstablishmentById } from "@/modules/common/hooks/useEstablishmentByIdHook";
+import { useEstablishmentById } from "@/modules/common/hooks/QueryHooks/useEstablishmentByIdHook";
 import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
 
 const Club: NextPage = () => {

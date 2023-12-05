@@ -31,7 +31,7 @@ export const useEstablishmentById = (
       }
       setEstablishment(data.getEstablishmentById?.establishments[0] as IClub);
     },
-    skip: !clubId, // Skip the query if clubId is not provided
+    skip: !clubId,
   });
 
   return {

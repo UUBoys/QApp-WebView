@@ -1,7 +1,9 @@
+"use client";
+
 import { NextPage } from "next";
 
 import EventsList from "@/modules/common/components/EventList";
-import { useEvents } from "@/modules/common/hooks/useEventsHook";
+import { useEvents } from "@/modules/common/hooks/QueryHooks/useEventsHook";
 
 /* ----------------------------------------- MUSÍ SE DODĚLAT -------------------------------------------------*/
 

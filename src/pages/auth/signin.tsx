@@ -1,3 +1,5 @@
+"use client";
+
 import GoogleIcon from "@mui/icons-material/Google";
 import Lottie from "lottie-react";
 import Link from "next/link";

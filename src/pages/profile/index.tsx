@@ -1,10 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import React from "react";
 
 import Navigation from "@/modules/common/components/Navigation";
-import { useClubs } from "@/modules/common/hooks/useEstablishmentshook";
+import { useClubs } from "@/modules/common/hooks/QueryHooks/useEstablishmentshook";
 
 const Profile = () => {
   const { data: session } = useSession();

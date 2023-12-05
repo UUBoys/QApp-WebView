@@ -1,3 +1,5 @@
+"use client";
+
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { NextPage } from "next";
 import Link from "next/link";

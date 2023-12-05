@@ -109,6 +109,8 @@ export type Mutation = {
   createEstablishment?: Maybe<CreateEstablishmentResult>;
   /** Create new event (requires authentication) */
   createEvent?: Maybe<CreateEventResult>;
+  /** Get all tickets for an event */
+  getTicketsForEvent?: Maybe<Array<Maybe<Ticket>>>;
   /** Login with Google OAuth (requires Google ID Token) */
   googleOAuth?: Maybe<AuthResult>;
   login?: Maybe<AuthResult>;
@@ -144,6 +146,11 @@ export type MutationCreateEventArgs = {
   name: Scalars['String']['input'];
   price: Scalars['Float']['input'];
   start_date: Scalars['String']['input'];
+};
+
+
+export type MutationGetTicketsForEventArgs = {
+  event_id: Scalars['String']['input'];
 };
 
 
@@ -214,6 +221,10 @@ export type Query = {
   getEventById?: Maybe<GetEventsResponse>;
   /** Get all events */
   getEvents?: Maybe<GetEventsResponse>;
+  /** Get all available tickets */
+  getTickets?: Maybe<Array<Maybe<Ticket>>>;
+  /** Get all tickets for a user (requires authentication) */
+  getTicketsForUser?: Maybe<Array<Maybe<Ticket>>>;
 };
 
 
@@ -257,12 +268,14 @@ export enum SearchType {
 /** Ticket type */
 export type Ticket = {
   __typename?: 'Ticket';
+  amount?: Maybe<Scalars['Int']['output']>;
   /** Event ID which the ticket belongs to */
   event_id: Scalars['String']['output'];
   /** This is the id of the ticket */
-  id: Scalars['String']['output'];
-  /** Which user the ticket belongs to */
-  user_id: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  /** Ticket name */
+  name?: Maybe<Scalars['String']['output']>;
+  user_id?: Maybe<Scalars['Int']['output']>;
 };
 
 export type UpdateEstablishmentResult = {

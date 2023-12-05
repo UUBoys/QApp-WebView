@@ -5,7 +5,7 @@ import WindowRoundedIcon from "@mui/icons-material/WindowRounded";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { useClubs } from "../../hooks/useEstablishmentshook";
+import { useClubs } from "../../hooks/QueryHooks/useEstablishmentshook";
 
 import EventsList, { Event } from "@/modules/common/components/EventList";
 import EventPost, {

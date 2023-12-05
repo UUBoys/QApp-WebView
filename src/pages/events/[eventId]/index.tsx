@@ -8,8 +8,9 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 import Button from "@/modules/common/components/Button";
-import { useEstablishmentById } from "@/modules/common/hooks/useEstablishmentByIdHook";
-import { useEventById } from "@/modules/common/hooks/useEventByIdHook";
+import { useTicketsForEvent } from "@/modules/common/hooks/MutationHooks/useGetTicketsForEvent";
+import { useEstablishmentById } from "@/modules/common/hooks/QueryHooks/useEstablishmentByIdHook";
+import { useEventById } from "@/modules/common/hooks/QueryHooks/useEventByIdHook";
 
 const Event: NextPage = () => {
   const { eventId } = useRouter().query;
@@ -17,6 +18,8 @@ const Event: NextPage = () => {
 
   const { event } = useEventById(eventId as string);
 
+  const { ticket } = useTicketsForEvent(eventId as string);
+  console.log(ticket);
   const { establishment } = useEstablishmentById(event?.establishment_id ?? "");
 
   if (!event) return null;
