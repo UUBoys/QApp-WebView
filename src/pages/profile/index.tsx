@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import React from "react";
 
 import Navigation from "@/modules/common/components/Navigation";
-import { useClubs } from "@/modules/common/hooks/useEstablishmentsHook";
+import { useClubs } from "@/modules/common/hooks/useEstablishmentshook";
 
 const Profile = () => {
   const { data: session } = useSession();
