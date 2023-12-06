@@ -8,7 +8,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 
 import Button from "@/modules/common/components/Button";
-import { useTicketsForEvent } from "@/modules/common/hooks/MutationHooks/useGetTicketsForEvent";
+import { usePurchaseTicketMutation } from "@/modules/common/hooks/MutationHooks/usePurchaseTicketMutation";
 import { useEstablishmentById } from "@/modules/common/hooks/QueryHooks/useEstablishmentByIdHook";
 import { useEventById } from "@/modules/common/hooks/QueryHooks/useEventByIdHook";
 
@@ -17,10 +17,15 @@ const Event: NextPage = () => {
   const { push } = useRouter();
 
   const { event } = useEventById(eventId as string);
-
-  const { ticket } = useTicketsForEvent(eventId as string);
-  console.log(ticket);
   const { establishment } = useEstablishmentById(event?.establishment_id ?? "");
+  const { purchasedTicket, purchaseTicketAsync } = usePurchaseTicketMutation();
+  console.log(event?.tickets);
+  console.log(purchasedTicket);
+  const purchaseTicket = async () => {
+    if (!event || !event?.tickets) return;
+    const ticket = event?.tickets[0];
+    purchaseTicketAsync(ticket.ticket_id);
+  };
 
   if (!event) return null;
   return (
@@ -103,7 +108,10 @@ const Event: NextPage = () => {
               </p>
             </div>
             <div className="mt-20 flex w-full justify-center text-5xl font-bold text-gray-800">
-              <Button className="h-full min-h-[50px] w-full rounded-lg px-4 text-xl">
+              <Button
+                onClick={purchaseTicket}
+                className="h-full min-h-[50px] w-full rounded-lg px-4 text-xl"
+              >
                 Zakoupit
               </Button>
             </div>

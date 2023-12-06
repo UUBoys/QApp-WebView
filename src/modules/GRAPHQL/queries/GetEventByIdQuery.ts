@@ -13,6 +13,13 @@ export const GET_EVENT_BY_ID = gql`
         establishment_id
         maximumCapacity
         image
+        tickets {
+          ticket_id
+          event_id
+          ticket_name
+          price
+          available_quantity
+        }
       }
     }
   }

@@ -11,7 +11,7 @@ interface UseEstablishmentByIdHook {
 }
 
 export const useEstablishmentById = (
-  clubId: string | number
+  clubId?: string | number
 ): UseEstablishmentByIdHook => {
   const [establishment, setEstablishment] = useState<IClub | null>(null);
 
@@ -19,7 +19,7 @@ export const useEstablishmentById = (
     fetchPolicy: "cache-and-network",
     variables: {
       getEstablishmentByIdId:
-        typeof clubId === "number" ? clubId : parseFloat(clubId),
+        typeof clubId === "number" ? clubId : parseFloat(clubId ?? ""),
     },
     context: { shouldTrackStatus: true },
     onCompleted(data) {

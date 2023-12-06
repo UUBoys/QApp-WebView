@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import Loader from "../components/Loader";
 import NavBar from "../components/NavBar";
-import { useTicketsForUser } from "../hooks/QueryHooks/useTicketsForUser";
+import { useTicketsForUser } from "../hooks/QueryHooks/useTicketsForUserHook";
 import { useApolloStatusStore } from "../stores/apollo-store";
 import { useUserAdditionalDataStore } from "../stores/user-aditional-data-store";
 

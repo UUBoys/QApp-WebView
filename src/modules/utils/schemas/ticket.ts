@@ -1,12 +1,10 @@
 import { z } from "zod";
 
-import { eventSchema } from "./event";
-
 export const ticketSchema = z.object({
-  id: z.number(),
-  event: eventSchema,
+  ticket_id: z.number(),
+  event_id: z.string(),
   name: z.string().optional(),
-  user_id: z.string().optional(),
+  user_id: z.number().optional(),
   amount: z.number().optional(),
 });
 

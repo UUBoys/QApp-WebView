@@ -1,5 +1,7 @@
 import * as z from "zod";
 
+import { ticketSchema } from "./ticket";
+
 export const eventSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -9,6 +11,7 @@ export const eventSchema = z.object({
   start_date: z.string(),
   end_date: z.string(),
   description: z.string().optional(),
+  tickets: z.array(ticketSchema).optional(),
   establishment_id: z.number(),
 });
 

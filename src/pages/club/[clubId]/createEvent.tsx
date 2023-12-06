@@ -49,7 +49,7 @@ const CreateEvent: NextPage = () => {
 
     try {
       const uploadFilesTest = await uploadFiles({
-        files: [data.coverPicture[0], data.coverPicture[0]],
+        files: [data.coverPicture[0]],
         endpoint: "imageUploader",
       });
       const variables = {

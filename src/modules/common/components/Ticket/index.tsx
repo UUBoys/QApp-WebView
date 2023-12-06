@@ -8,6 +8,7 @@ import { useQRCode } from "next-qrcode";
 import { useState } from "react";
 
 import { useEstablishmentById } from "../../hooks/QueryHooks/useEstablishmentByIdHook";
+import { useEventById } from "../../hooks/QueryHooks/useEventByIdHook";
 
 import { ITicket } from "@/modules/utils/schemas/ticket";
 
@@ -17,18 +18,14 @@ export type TicketProps = {
 };
 
 const Ticket = ({
-  ticket: {
-    event: { start_date, establishment_id, id: clubId },
-    id,
-    name,
-  },
+  ticket: { event_id, ticket_id, name },
   className,
 }: TicketProps) => {
   const { push } = useRouter();
   const { Canvas } = useQRCode();
   const [isHover, setIsHover] = useState<boolean>(false);
-
-  const { establishment } = useEstablishmentById(establishment_id);
+  const { event } = useEventById(event_id);
+  const { establishment } = useEstablishmentById(event?.establishment_id);
 
   if (!establishment) return null;
 
@@ -43,7 +40,7 @@ const Ticket = ({
         {isHover && (
           <div className="relative h-[110px] w-[110px] rounded-2xl bg-white shadow-2xl">
             <Canvas
-              text={`${process.env.PROD_URL}/tickets/${id}`}
+              text={`${process.env.PROD_URL}/tickets/${ticket_id}`}
               options={{
                 errorCorrectionLevel: "M",
                 scale: 4,
@@ -64,7 +61,7 @@ const Ticket = ({
           </div>
           <div
             className="px-4 py-2 text-gray-700"
-            onClick={() => push(`club/${clubId}`)}
+            onClick={() => push(`club/${establishment.id}`)}
           >
             <p className="text-[22px] text-gray-700">{name}</p>
             <div className="flex items-center gap-[10px] rounded-lg p-[10px] hover:bg-gray-300">
@@ -78,7 +75,7 @@ const Ticket = ({
               <p className="text-gray-500">{establishment?.name}</p>
             </div>
             <p className="text-gray-500">
-              {moment(start_date).format("DD-MM-YYYY")}
+              {moment(event?.start_date).format("DD-MM-YYYY")}
             </p>
           </div>
         </div>
