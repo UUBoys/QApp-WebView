@@ -207,8 +207,8 @@ const Feed = () => {
             />
           </div>
         </div>
-        <div className="scroll-hidden col-span-1 max-h-[calc(100vh-50px)] overflow-y-auto pt-[50px]">
-          <div className="flex flex-col gap-[50px] px-[10px] py-[50px] lg:px-0 ">
+        <div className="scroll-hidden col-span-1 max-h-[calc(100vh-50px)] overflow-y-auto px-20 pt-[50px]">
+          <div className=" flex flex-col gap-[50px] px-[20px] py-[50px] lg:px-0 ">
             {mockData.map((event) => (
               <EventPost event={event.event} club={event.club} />
             ))}

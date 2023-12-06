@@ -12,6 +12,7 @@ interface IUseTicketsForUserHook {
 
 export const useTicketsForUser = (): IUseTicketsForUserHook => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
+
   const { refetch } = useQuery<Query>(GET_TICKETS_FOR_USER, {
     context: { shouldTrackStatus: true, withConfirmation: false },
     onCompleted(data) {

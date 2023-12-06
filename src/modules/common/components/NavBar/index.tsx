@@ -41,6 +41,7 @@ const navbarAllowedRoutes = [
   "/club/*",
   "/clubs",
   "/events/*",
+  "/tickets/*",
 ];
 
 let previousKreditCount = 0;
@@ -93,13 +94,13 @@ const NavBar = () => {
     {
       name: t("components.navbar.links.events"),
       href: "/events",
-      current: pathname === "/" || pathname === "/events",
+      current: pathname === "/events",
       ico: <LocalActivityRoundedIcon sx={{ fontSize: "20px" }} />,
     },
     {
       name: t("components.navbar.links.myTickets"),
-      href: "/tickets",
-      current: pathname === "/tickets",
+      href: "/tickets/myTickets",
+      current: pathname === "/tickets/myTickets",
       ico: <AodRoundedIcon sx={{ fontSize: "20px" }} />,
     },
     {

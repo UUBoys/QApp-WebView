@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import Loader from "../components/Loader";
 import NavBar from "../components/NavBar";
+import { useTicketsForUser } from "../hooks/QueryHooks/useTicketsForUser";
 import { useApolloStatusStore } from "../stores/apollo-store";
 import { useUserAdditionalDataStore } from "../stores/user-aditional-data-store";
 
@@ -19,12 +20,13 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { data: session } = useSession();
-  const { setCredits, setUserOwnedClubs } = useUserAdditionalDataStore(
-    (set) => ({
+  const { tickets, refetchTickets } = useTicketsForUser();
+  const { setCredits, setUserOwnedClubs, setUserOwnedTickets } =
+    useUserAdditionalDataStore((set) => ({
       setCredits: set.setCredits,
       setUserOwnedClubs: set.setUserOwnedClubs,
-    })
-  );
+      setUserOwnedTickets: set.setUserOwnedTickets,
+    }));
 
   const { isLoading, isError, isSuccess, isWithConfirmation } =
     useApolloStatusStore((set) => ({
@@ -40,7 +42,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       context: { shouldTrackStatus: true, withConfirmation: false },
     }
   );
-
   const { refetch: refetchClubs } = useQuery<Query>(
     GET_ESTABLISHMENTS_FOR_USER,
     {
@@ -61,11 +62,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   );
 
   useEffect(() => {
+    if (tickets) setUserOwnedTickets([...tickets]);
+  }, [setUserOwnedTickets, tickets]);
+
+  useEffect(() => {
     if (session?.user) {
       refetchCredit();
       refetchClubs();
+      refetchTickets();
     }
-  }, [refetchClubs, refetchCredit, session?.user]);
+  }, [refetchClubs, refetchCredit, refetchTickets, session?.user]);
 
   useEffect(() => {
     if (queryResult?.getCredit?.balance)
