@@ -55,7 +55,7 @@ const CreateEvent: NextPage = () => {
       const variables = {
         description: data.description,
         endDate: new Date(data.endDate).toISOString(),
-        establishmentId: parseFloat((clubId as string) ?? ""),
+        establishmentId: (clubId as string) ?? "",
         maximumCapacity: parseFloat(data.maximumCapacity as unknown as string),
         name: data.name,
         price: parseFloat(data.price as any),

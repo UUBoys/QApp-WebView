@@ -12,7 +12,7 @@ export const eventSchema = z.object({
   end_date: z.string(),
   description: z.string().optional(),
   tickets: z.array(ticketSchema).optional(),
-  establishment_id: z.number(),
+  establishment_id: z.string(),
 });
 
 export type IEvent = z.infer<typeof eventSchema>;

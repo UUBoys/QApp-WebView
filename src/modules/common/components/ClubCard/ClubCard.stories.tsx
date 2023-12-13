@@ -14,7 +14,7 @@ type Story = StoryObj<typeof ClubCard>;
 export const Default: Story = {
   args: {
     club: {
-      id: 8,
+      id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
       profileImage:
         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
       coverImage:

@@ -61,7 +61,7 @@ export type Establishment = {
   /** These are events, that belong to the establishment */
   events?: Maybe<Array<Maybe<Event>>>;
   /** This is the id of the establishment */
-  id: Scalars['Int']['output'];
+  id: Scalars['String']['output'];
   /** This is the name of the establishment */
   name: Scalars['String']['output'];
   /** This is the profile image of the establishment */
@@ -78,7 +78,7 @@ export type Event = {
   /** This is the end date of the event */
   end_date: Scalars['String']['output'];
   /** ID of establishment that event belongs to */
-  establishment_id: Scalars['Int']['output'];
+  establishment_id: Scalars['String']['output'];
   /** This is the id of the event */
   id: Scalars['String']['output'];
   /** Image of the event */
@@ -101,7 +101,7 @@ export type EventAvailableTickets = {
   available_quantity: Scalars['Int']['output'];
   event_id: Scalars['String']['output'];
   price: Scalars['Float']['output'];
-  ticket_id: Scalars['Int']['output'];
+  ticket_id: Scalars['String']['output'];
   ticket_name: Scalars['String']['output'];
 };
 
@@ -121,6 +121,8 @@ export type Mutation = {
   createEstablishment?: Maybe<CreateEstablishmentResult>;
   /** Create new event (requires authentication) */
   createEvent?: Maybe<CreateEventResult>;
+  /** Delete event (requires authentication) */
+  deleteEvent?: Maybe<RemoveEventResult>;
   /** Login with Google OAuth (requires Google ID Token) */
   googleOAuth?: Maybe<AuthResult>;
   login?: Maybe<AuthResult>;
@@ -131,6 +133,8 @@ export type Mutation = {
   topupCredits?: Maybe<CreditsTopUp>;
   /** Update an existing establishment (requires authentication) */
   updateEstablishment?: Maybe<UpdateEstablishmentResult>;
+  /** Update event (requires authentication) */
+  updateEvent?: Maybe<UpdateEventResult>;
 };
 
 
@@ -146,14 +150,20 @@ export type MutationCreateEstablishmentArgs = {
 
 
 export type MutationCreateEventArgs = {
+  default_ticket_name?: InputMaybe<Scalars['String']['input']>;
   description: Scalars['String']['input'];
   end_date: Scalars['String']['input'];
-  establishment_id: Scalars['Int']['input'];
+  establishment_id: Scalars['String']['input'];
   image?: InputMaybe<Scalars['String']['input']>;
   maximumCapacity: Scalars['Int']['input'];
   name: Scalars['String']['input'];
   price: Scalars['Float']['input'];
   start_date: Scalars['String']['input'];
+};
+
+
+export type MutationDeleteEventArgs = {
+  event_id: Scalars['String']['input'];
 };
 
 
@@ -170,7 +180,7 @@ export type MutationLoginArgs = {
 
 export type MutationPurchaseTicketArgs = {
   event_id: Scalars['String']['input'];
-  user_id: Scalars['Int']['input'];
+  ticket_id: Scalars['String']['input'];
 };
 
 
@@ -191,10 +201,22 @@ export type MutationUpdateEstablishmentArgs = {
   country?: InputMaybe<Scalars['String']['input']>;
   coverImage?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  establishment_id: Scalars['Int']['input'];
+  establishment_id: Scalars['String']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
   profileImage?: InputMaybe<Scalars['String']['input']>;
   street?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationUpdateEventArgs = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  end_date?: InputMaybe<Scalars['String']['input']>;
+  event_id: Scalars['String']['input'];
+  image?: InputMaybe<Scalars['String']['input']>;
+  maximumCapacity?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['Float']['input']>;
+  start_date?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** This is the result of a ticket purchase */
@@ -202,8 +224,8 @@ export type PurchaseTicketResult = {
   __typename?: 'PurchaseTicketResult';
   event_id: Scalars['String']['output'];
   new_balance: Scalars['Int']['output'];
-  ticket_id: Scalars['Int']['output'];
-  user_id: Scalars['Int']['output'];
+  ticket_id: Scalars['String']['output'];
+  user_id: Scalars['String']['output'];
 };
 
 export type Query = {
@@ -232,7 +254,7 @@ export type Query = {
 
 
 export type QueryGetEstablishmentByIdArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['String']['input'];
 };
 
 
@@ -249,6 +271,11 @@ export type QueryGetTicketsForEventArgs = {
 export type QuerySearchArgs = {
   query: Scalars['String']['input'];
   type: SearchType;
+};
+
+export type RemoveEventResult = {
+  __typename?: 'RemoveEventResult';
+  event: Event;
 };
 
 /** Search result - contains the type of the result and the result itself */
@@ -284,13 +311,18 @@ export type UpdateEstablishmentResult = {
   establishment: Establishment;
 };
 
+export type UpdateEventResult = {
+  __typename?: 'UpdateEventResult';
+  event: Event;
+};
+
 /** User ticket type */
 export type UserTicket = {
   __typename?: 'UserTicket';
   bought_quantity: Scalars['Int']['output'];
   event_id: Scalars['String']['output'];
   price: Scalars['Float']['output'];
-  ticket_id: Scalars['Int']['output'];
+  ticket_id: Scalars['String']['output'];
   ticket_name: Scalars['String']['output'];
-  user_id: Scalars['Int']['output'];
+  user_id: Scalars['String']['output'];
 };

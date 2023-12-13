@@ -16,7 +16,7 @@ type ExpandableItemProps = {
   start_date: string;
   end_date: string;
   price: number;
-  establishment_id: number;
+  establishment_id: string;
   maximumCapacity: number;
   image?: string;
   isOpen: boolean;

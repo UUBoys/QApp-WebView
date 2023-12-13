@@ -2,7 +2,7 @@ import React from "react";
 
 interface ButtonProps {
   size?: "sm" | "md" | "lg";
-  color?: "primary" | "secondary" | "danger" | "success" | "warning";
+  color?: "primary" | "secondary" | "danger" | "success" | "warning" | "gray";
   onClick?: () => void;
   disabled?: boolean;
   isLoading?: boolean;
@@ -36,6 +36,7 @@ const Button: React.FC<ButtonProps> = ({
       "bg-secondary-600 hover:bg-secondary-500 focus-visible:outline-secondary-600",
     danger: "bg-red-600 hover:bg-red-500 focus-visible:outline-red-600",
     success: "bg-green-600 hover:bg-green-500 focus-visible:outline-green-600",
+    gray: "bg-gray-400 hover:bg-gray-500 focus-visible:outline-gray-600",
     warning:
       "bg-yellow-600 hover:bg-yellow-500 focus-visible:outline-yellow-600",
   };

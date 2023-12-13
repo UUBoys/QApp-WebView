@@ -5,18 +5,6 @@ import React, { useState } from "react";
 import ExpandableItem from "@/modules/common/components/ExpandableItem";
 import { IEvent } from "@/modules/utils/schemas/event";
 
-export type Event = {
-  id: string;
-  name: string;
-  description: string;
-  start_date: string;
-  end_date: string;
-  price: number;
-  establishment_id: number;
-  maximumCapacity: number;
-  image?: string;
-};
-
 type EventsListProps = {
   events: IEvent[];
   className?: string;

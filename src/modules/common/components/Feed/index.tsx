@@ -7,13 +7,14 @@ import { useTranslation } from "react-i18next";
 
 import { useClubs } from "../../hooks/QueryHooks/useEstablishmentshook";
 
-import EventsList, { Event } from "@/modules/common/components/EventList";
+import EventsList from "@/modules/common/components/EventList";
 import EventPost, {
   EventPostProps,
 } from "@/modules/common/components/EventPost";
 import Navigation, {
   NavigationLinkProps,
 } from "@/modules/common/components/Navigation";
+import { IEvent } from "@/modules/utils/schemas/event";
 
 const mockData: EventPostProps[] = [
   {
@@ -134,11 +135,11 @@ const leftMenuMockLinks: NavigationLinkProps[] = [
   },
 ];
 
-const mockEvetList: Event[] = [
+const mockEvetList: IEvent[] = [
   {
     description: "Popis akce bla bla",
     end_date: "2023-11-25T02:38:00.000Z",
-    establishment_id: 7,
+    establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
     image: "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
     maximumCapacity: 150,
     name: "Halloween v Becheru",
@@ -149,7 +150,7 @@ const mockEvetList: Event[] = [
   {
     description: "Popis akce bla bla",
     end_date: "2023-11-25T02:38:00.000Z",
-    establishment_id: 7,
+    establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
     id: "5121e86a-9e8b-4432-8b53-44361e24850d",
     image: "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
     maximumCapacity: 150,
@@ -161,7 +162,7 @@ const mockEvetList: Event[] = [
     description: "Popis akce bla bla",
     id: "5121e86a-9e8b-4432-8b53-44361e24850d",
     end_date: "2023-11-25T02:38:00.000Z",
-    establishment_id: 7,
+    establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
     image: "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
     maximumCapacity: 150,
     name: "Halloween v Becheru",
@@ -171,7 +172,7 @@ const mockEvetList: Event[] = [
   {
     description: "Popis akce bla bla",
     end_date: "2023-11-25T02:38:00.000Z",
-    establishment_id: 7,
+    establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
     image: "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
     maximumCapacity: 150,
     name: "Halloween v Becheru",

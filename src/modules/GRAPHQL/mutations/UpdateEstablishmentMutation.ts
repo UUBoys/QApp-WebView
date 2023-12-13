@@ -1,16 +1,18 @@
 import { gql } from "@apollo/client";
 
-export const CREATE_ESTABLISHMENT_MUTATION = gql`
-  mutation CreateEstablishment(
-    $name: String!
-    $description: String!
-    $street: String!
-    $city: String!
-    $country: String!
+export const UPDATE_ESTABLISHMENT_MUTATION = gql`
+  mutation UpdateEstablishment(
+    $establishmentId: String!
+    $name: String
+    $description: String
+    $street: String
+    $city: String
+    $country: String
     $coverImage: String
     $profileImage: String
   ) {
-    createEstablishment(
+    updateEstablishment(
+      establishment_id: $establishmentId
       name: $name
       description: $description
       street: $street

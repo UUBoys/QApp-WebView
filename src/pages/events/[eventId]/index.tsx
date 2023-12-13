@@ -11,20 +11,23 @@ import Button from "@/modules/common/components/Button";
 import { usePurchaseTicketMutation } from "@/modules/common/hooks/MutationHooks/usePurchaseTicketMutation";
 import { useEstablishmentById } from "@/modules/common/hooks/QueryHooks/useEstablishmentByIdHook";
 import { useEventById } from "@/modules/common/hooks/QueryHooks/useEventByIdHook";
+import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
 
 const Event: NextPage = () => {
   const { eventId } = useRouter().query;
   const { push } = useRouter();
-
+  const { setCredits } = useUserAdditionalDataStore((set) => ({
+    setCredits: set.setCredits,
+  }));
   const { event } = useEventById(eventId as string);
   const { establishment } = useEstablishmentById(event?.establishment_id ?? "");
-  const { purchasedTicket, purchaseTicketAsync } = usePurchaseTicketMutation();
-  console.log(event?.tickets);
-  console.log(purchasedTicket);
+  const { purchaseTicketAsync } = usePurchaseTicketMutation();
+
   const purchaseTicket = async () => {
     if (!event || !event?.tickets) return;
-    const ticket = event?.tickets[0];
-    purchaseTicketAsync(ticket.ticket_id);
+    const res = await purchaseTicketAsync(event.id, event.tickets[0].ticket_id);
+    if (res.errors || !res.data?.purchaseTicket?.new_balance) return;
+    setCredits(res.data?.purchaseTicket?.new_balance ?? 0);
   };
 
   if (!event) return null;

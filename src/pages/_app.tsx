@@ -14,6 +14,7 @@ import { Toaster } from "sonner";
 import i18n from "../i18n";
 
 import HelpButton from "@/modules/common/components/HelpButton";
+import Modal from "@/modules/common/components/Modal";
 import Layout from "@/modules/common/Layout/Layout";
 import "@/modules/common/styles/globals.css";
 import client from "@/modules/lib/apolloClient";
@@ -34,6 +35,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <ApolloProvider client={client}>
         <QueryClientProvider client={queryClient}>
           <I18nextProvider i18n={i18n}>
+            <Modal />
             <Toaster visibleToasts={6} position="bottom-left" richColors />
             <Layout>
               <HelpButton />

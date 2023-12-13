@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_ESTABLISHMENT_BY_ID = gql`
-  query GetEstablishments($getEstablishmentByIdId: Int!) {
+  query GetEstablishmentById($getEstablishmentByIdId: String!) {
     getEstablishmentById(id: $getEstablishmentByIdId) {
       establishments {
         id

@@ -13,10 +13,10 @@ type Story = StoryObj<typeof Ticket>;
 export const Default: Story = {
   args: {
     ticket: {
-      ticket_id: 1,
+      ticket_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
       amount: 250,
       name: "Ticket name",
-      user_id: 1,
+      user_id: "tefs",
       event_id: "1",
     },
   },

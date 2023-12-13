@@ -1,6 +1,6 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable tailwindcss/no-custom-classname */
 import {
-  CheckIcon,
   InformationCircleIcon,
   MapPinIcon,
   PencilIcon,
@@ -10,29 +10,108 @@ import clsx from "clsx";
 import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect } from "react";
+import { UploadFileResponse } from "uploadthing/client";
 
 import ClubControls from "@/modules/common/components/ClubControls";
-import EventsList, { Event } from "@/modules/common/components/EventList";
-import Input from "@/modules/common/components/Input";
+import EventsList from "@/modules/common/components/EventList";
+import CreateEstablishmentForm from "@/modules/common/forms/createEstablishmentForm";
+import { useUpdateEstablishment } from "@/modules/common/hooks/MutationHooks/useUpdateEstablishmentMutation";
 import { useEstablishmentById } from "@/modules/common/hooks/QueryHooks/useEstablishmentByIdHook";
+import { useModalStore } from "@/modules/common/stores/modal-store";
 import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
+import { uploadFiles } from "@/modules/lib/uploadThingHelpers";
+import { IClub } from "@/modules/utils/schemas/club";
+import { IEvent } from "@/modules/utils/schemas/event";
 
 const Club: NextPage = () => {
   const { clubId } = useRouter().query;
-  const [elementEditID, setElementEditID] = useState<string>("");
 
   const { userOwnedClubs } = useUserAdditionalDataStore((set) => ({
     userOwnedClubs: set.userOwnedClubs,
   }));
 
+  const { updatedEstablishment, updateEstablishmentAsync } =
+    useUpdateEstablishment();
+
   const isUserOwner = userOwnedClubs?.some(
-    (club) => club.id === parseFloat((clubId as string) ?? "")
+    (club) => club.id === (clubId as string) ?? ""
   );
 
-  const { establishment } = useEstablishmentById(clubId as string);
-  console.log(establishment);
+  const { openModal, closeModal } = useModalStore((s) => ({
+    openModal: s.openModal,
+    closeModal: s.closeModal,
+  }));
+
+  const { establishment, setEstablishment, refetchEstablishment } =
+    useEstablishmentById(clubId as string);
+
+  useEffect(() => {
+    if (!updatedEstablishment) return;
+    setEstablishment(updatedEstablishment as IClub);
+  }, [setEstablishment, updatedEstablishment]);
+
   if (!establishment) return null;
+
+  const onEditEstablishmentOpenModal = () => {
+    openModal({
+      content: (
+        <CreateEstablishmentForm
+          onCancel={() => {
+            closeModal();
+          }}
+          withCancel
+          primaryButtonText="Upravit"
+          establishment={establishment}
+          onSubmit={async (data) => {
+            try {
+              let uploadFileProfileProfilePictureResponse: UploadFileResponse[] =
+                [];
+
+              let uploadFileProfileCoverPictureResponse: UploadFileResponse[] =
+                [];
+              if (typeof data.profilePicture !== "string") {
+                uploadFileProfileProfilePictureResponse = await uploadFiles({
+                  files: [(data.profilePicture as FileList)[0]],
+                  endpoint: "imageUploader",
+                });
+              }
+
+              if (typeof data.coverPicture !== "string") {
+                uploadFileProfileCoverPictureResponse = await uploadFiles({
+                  files: [(data.coverPicture as FileList)[0]],
+                  endpoint: "imageUploader",
+                });
+              }
+              await updateEstablishmentAsync({
+                city: data.city,
+                country: data.country,
+                profileImage:
+                  uploadFileProfileProfilePictureResponse[0]?.url ??
+                  data.profilePicture,
+                coverImage:
+                  uploadFileProfileCoverPictureResponse[0]?.url ??
+                  data.coverPicture,
+                description: data.description as string,
+                name: data.name,
+                id: establishment.id,
+                street: data.street,
+              });
+
+              await refetchEstablishment();
+              closeModal();
+            } catch (error: any) {
+              console.error(error.message);
+            }
+          }}
+        />
+      ),
+      backdrop: "!bg-black/50",
+
+      onConfirm: (data) => updateEstablishmentAsync(data as IClub),
+      isClosable: true,
+    });
+  };
 
   return (
     <div className="flex min-h-[100vh] flex-col items-start text-center shadow-xl">
@@ -57,39 +136,11 @@ const Club: NextPage = () => {
           <div className="ml-[20rem] pt-[2rem]">
             {" "}
             <div className="flex items-center">
-              {isUserOwner && elementEditID === "name" ? (
-                <Input
-                  ref={(input: any) =>
-                    elementEditID === "name" && input?.focus()
-                  }
-                  inputProps={{
-                    onBlur: () => {
-                      // edit
-                      // Mutate edit with updated data
-                      // setElementEditID after 2 seconds because of loading and success animation
-                      setElementEditID("");
-                    },
-                  }}
-                  isSuccess={false}
-                  isLoading={false}
-                  defaultValue={establishment.name}
-                />
-              ) : (
-                <div className=" text-3xl font-bold">{establishment.name}</div>
-              )}
+              <div className=" text-3xl font-bold">{establishment.name}</div>
+
               {isUserOwner && (
-                <button
-                  onClick={() =>
-                    elementEditID === ""
-                      ? setElementEditID("name")
-                      : setElementEditID("")
-                  }
-                >
-                  {elementEditID === "name" ? (
-                    <CheckIcon className="ml-3 h-7 w-7 text-primary-500" />
-                  ) : (
-                    <PencilIcon className="ml-3 h-6 w-6 text-primary-500" />
-                  )}
+                <button onClick={() => onEditEstablishmentOpenModal()}>
+                  <PencilIcon className="ml-3 h-6 w-6 text-primary-500" />
                 </button>
               )}
             </div>
@@ -135,7 +186,7 @@ const Club: NextPage = () => {
                 Nadcházející akce
               </div>
               <EventsList
-                events={(establishment.events as unknown as Event[]) ?? []}
+                events={(establishment.events as unknown as IEvent[]) ?? []}
                 className="!mx-0 !mt-[10px]  w-full rounded-2xl py-[0px]"
               />
             </div>
