@@ -19,7 +19,16 @@ export const useTicketsForUser = (): IUseTicketsForUserHook => {
       if (!data.getTicketsForUser || data.getTicketsForUser?.length <= 0) {
         return;
       }
-      setTickets([...(data.getTicketsForUser as ITicket[])]);
+      const parsedTickets: ITicket[] = [];
+      data.getTicketsForUser.forEach((ticket: ITicket | null) => {
+        for (let i = 0; i < (ticket?.bought_quantity ?? 1); i++) {
+          parsedTickets.push({
+            ...(ticket as ITicket),
+            bought_quantity: 1,
+          });
+        }
+      });
+      setTickets([...parsedTickets]);
     },
   });
 

@@ -219,7 +219,7 @@ const NavBar = () => {
       </div>
       <Disclosure
         as="nav"
-        className="fixed inset-0 z-[1000] mx-auto mt-10 hidden max-h-[70px] w-[80%] max-w-[1500px]  rounded-[20px] bg-white px-4 py-[5px] shadow-xl lg:block"
+        className="fixed inset-0 z-[987] mx-auto mt-10 hidden max-h-[70px] w-[80%] max-w-[1500px]  rounded-[20px] bg-white px-4 py-[5px] shadow-xl lg:block"
       >
         {({ open }) => (
           <>

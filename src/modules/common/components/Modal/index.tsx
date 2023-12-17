@@ -47,7 +47,7 @@ const Modal: React.FunctionComponent = () => {
     <Transition appear show={isOpen} as={React.Fragment}>
       <Dialog
         as="div"
-        className="relative z-[9999]"
+        className="relative z-[988]"
         onClick={() => handleClose()}
         onClose={handleClose}
       >

@@ -48,9 +48,8 @@ const CreateEvent: NextPage = () => {
     addRequest({ id, type: LoadingType.WITHOUT_CONFIRM });
 
     try {
-      const uploadFilesTest = await uploadFiles({
+      const uploadFilesTest = await uploadFiles("imageUploader", {
         files: [data.coverPicture[0]],
-        endpoint: "imageUploader",
       });
       const variables = {
         description: data.description,

@@ -104,3 +104,7 @@ input:focus {
 .scroll-hidden::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
+
+.swiper-3d .swiper-slide-shadow {
+  background: transparent !important;
+}

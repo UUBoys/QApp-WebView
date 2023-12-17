@@ -18,8 +18,11 @@ import EventsList from "@/modules/common/components/EventList";
 import CreateEstablishmentForm from "@/modules/common/forms/createEstablishmentForm";
 import { useUpdateEstablishment } from "@/modules/common/hooks/MutationHooks/useUpdateEstablishmentMutation";
 import { useEstablishmentById } from "@/modules/common/hooks/QueryHooks/useEstablishmentByIdHook";
+import { useApolloStatusStore } from "@/modules/common/stores/apollo-store";
 import { useModalStore } from "@/modules/common/stores/modal-store";
 import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
+import { uuid } from "@/modules/helpers/general";
+import { LoadingType } from "@/modules/helpers/loader-helpers";
 import { uploadFiles } from "@/modules/lib/uploadThingHelpers";
 import { IClub } from "@/modules/utils/schemas/club";
 import { IEvent } from "@/modules/utils/schemas/event";
@@ -43,6 +46,14 @@ const Club: NextPage = () => {
     closeModal: s.closeModal,
   }));
 
+  const { addRequest, removeRequest, checkFinalStatus } = useApolloStatusStore(
+    (set) => ({
+      addRequest: set.addRequest,
+      removeRequest: set.removeRequest,
+      checkFinalStatus: set.checkFinalStatus,
+    })
+  );
+
   const { establishment, setEstablishment, refetchEstablishment } =
     useEstablishmentById(clubId as string);
 
@@ -64,24 +75,40 @@ const Club: NextPage = () => {
           primaryButtonText="Upravit"
           establishment={establishment}
           onSubmit={async (data) => {
+            const id = uuid();
+            addRequest({ id, type: LoadingType.WITHOUT_CONFIRM });
+            console.log(data);
             try {
-              let uploadFileProfileProfilePictureResponse: UploadFileResponse[] =
-                [];
+              let uploadFileProfileProfilePictureResponse: UploadFileResponse<{
+                name: string;
+                size: number;
+                key: string;
+                serverData: null;
+                url: string;
+              } | null>[] = [];
 
-              let uploadFileProfileCoverPictureResponse: UploadFileResponse[] =
-                [];
+              let uploadFileProfileCoverPictureResponse: UploadFileResponse<{
+                name: string;
+                size: number;
+                key: string;
+                serverData: null;
+                url: string;
+              } | null>[] = [];
               if (typeof data.profilePicture !== "string") {
-                uploadFileProfileProfilePictureResponse = await uploadFiles({
-                  files: [(data.profilePicture as FileList)[0]],
-                  endpoint: "imageUploader",
-                });
+                uploadFileProfileProfilePictureResponse = await uploadFiles(
+                  "imageUploader",
+                  {
+                    files: [(data.profilePicture as FileList)[0]],
+                  }
+                );
               }
-
               if (typeof data.coverPicture !== "string") {
-                uploadFileProfileCoverPictureResponse = await uploadFiles({
-                  files: [(data.coverPicture as FileList)[0]],
-                  endpoint: "imageUploader",
-                });
+                uploadFileProfileCoverPictureResponse = await uploadFiles(
+                  "imageUploader",
+                  {
+                    files: [(data.coverPicture as FileList)[0]],
+                  }
+                );
               }
               await updateEstablishmentAsync({
                 city: data.city,
@@ -97,12 +124,14 @@ const Club: NextPage = () => {
                 id: establishment.id,
                 street: data.street,
               });
-
-              await refetchEstablishment();
               closeModal();
+              await refetchEstablishment();
             } catch (error: any) {
               console.error(error.message);
             }
+
+            removeRequest(id);
+            checkFinalStatus();
           }}
         />
       ),

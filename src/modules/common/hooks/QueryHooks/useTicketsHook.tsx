@@ -18,7 +18,8 @@ export const useTickets = (): IUseTicketsHook => {
       if (!data.getTickets || data.getTickets?.length <= 0) {
         return;
       }
-      setTickets([...(data.getTickets as ITicket[])]);
+      // TODO: Fix this
+      setTickets([...(data.getTickets as unknown as ITicket[])]);
     },
   });
 

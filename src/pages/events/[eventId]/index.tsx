@@ -4,13 +4,16 @@
 "use client";
 
 import clsx from "clsx";
+import moment from "moment";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useContext } from "react";
 
 import Button from "@/modules/common/components/Button";
 import { usePurchaseTicketMutation } from "@/modules/common/hooks/MutationHooks/usePurchaseTicketMutation";
 import { useEstablishmentById } from "@/modules/common/hooks/QueryHooks/useEstablishmentByIdHook";
 import { useEventById } from "@/modules/common/hooks/QueryHooks/useEventByIdHook";
+import LayoutContext from "@/modules/common/Layout/LyoutContext";
 import { useUserAdditionalDataStore } from "@/modules/common/stores/user-aditional-data-store";
 
 const Event: NextPage = () => {
@@ -19,6 +22,8 @@ const Event: NextPage = () => {
   const { setCredits } = useUserAdditionalDataStore((set) => ({
     setCredits: set.setCredits,
   }));
+  const { refetchTickets, refetchCredit } = useContext(LayoutContext);
+
   const { event } = useEventById(eventId as string);
   const { establishment } = useEstablishmentById(event?.establishment_id ?? "");
   const { purchaseTicketAsync } = usePurchaseTicketMutation();
@@ -28,6 +33,8 @@ const Event: NextPage = () => {
     const res = await purchaseTicketAsync(event.id, event.tickets[0].ticket_id);
     if (res.errors || !res.data?.purchaseTicket?.new_balance) return;
     setCredits(res.data?.purchaseTicket?.new_balance ?? 0);
+    refetchCredit();
+    refetchTickets();
   };
 
   if (!event) return null;
@@ -102,12 +109,12 @@ const Event: NextPage = () => {
               Od{" "}
               <p className="text-primary-400">
                 {" "}
-                {new Date(event?.start_date ?? "").toLocaleString()}
+                {moment(event?.start_date).format("DD.MMMM, HH:mm")}
               </p>{" "}
               do{" "}
               <p className="text-primary-400">
                 {" "}
-                {new Date(event?.end_date ?? "").toLocaleString()}
+                {moment(event?.end_date).format("DD.MMMM, HH:mm")}
               </p>
             </div>
             <div className="mt-20 flex w-full justify-center text-5xl font-bold text-gray-800">

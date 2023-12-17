@@ -4,12 +4,13 @@ import { ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { useForm } from "react-hook-form";
 
 import { Mutation, MutationCreateEstablishmentArgs } from "@/generated/graphql";
 import Button from "@/modules/common/components/Button";
 import Input from "@/modules/common/components/Input";
+import LayoutContext from "@/modules/common/Layout/LyoutContext";
 import { useApolloStatusStore } from "@/modules/common/stores/apollo-store";
 import { CREATE_ESTABLISHMENT_MUTATION } from "@/modules/GRAPHQL/mutations/CreateEstablishmentMutation";
 import { uuid } from "@/modules/helpers/general";
@@ -37,6 +38,8 @@ const CreateClub: NextPage = () => {
       checkFinalStatus: set.checkFinalStatus,
     })
   );
+
+  const { refetchClubs } = useContext(LayoutContext);
   const [mutateCreateEstablishment] = useMutation<Mutation>(
     CREATE_ESTABLISHMENT_MUTATION,
     {
@@ -51,9 +54,8 @@ const CreateClub: NextPage = () => {
     const id = uuid();
     addRequest({ id, type: LoadingType.WITHOUT_CONFIRM });
     try {
-      const uploadFilesTest = await uploadFiles({
+      const uploadFilesTest = await uploadFiles("imageUploader", {
         files: [data.profilePicture[0], data.coverPicture[0]],
-        endpoint: "imageUploader",
       });
       const variables: MutationCreateEstablishmentArgs = {
         city: data.city,
@@ -78,6 +80,7 @@ const CreateClub: NextPage = () => {
     }
     removeRequest(id);
     checkFinalStatus();
+    refetchClubs();
   };
 
   const profilePicturePreview = useMemo(() => {

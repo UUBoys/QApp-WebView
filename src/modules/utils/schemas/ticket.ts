@@ -3,9 +3,10 @@ import { z } from "zod";
 export const ticketSchema = z.object({
   ticket_id: z.string(),
   event_id: z.string(),
-  name: z.string().optional(),
-  user_id: z.string().optional(),
-  amount: z.number().optional(),
+  ticket_name: z.string(),
+  user_id: z.string(),
+  price: z.number(),
+  bought_quantity: z.number(),
 });
 
 export type ITicket = z.infer<typeof ticketSchema>;

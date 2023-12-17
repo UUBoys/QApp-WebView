@@ -14,5 +14,6 @@ export const config = {
     "/events/",
     "/events/:id*",
     "/profile/:path*",
+    "/tickets/:path*",
   ],
 };

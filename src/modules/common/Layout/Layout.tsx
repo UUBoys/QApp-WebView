@@ -1,12 +1,14 @@
 import { useQuery } from "@apollo/client";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import Loader from "../components/Loader";
 import NavBar from "../components/NavBar";
 import { useTicketsForUser } from "../hooks/QueryHooks/useTicketsForUserHook";
 import { useApolloStatusStore } from "../stores/apollo-store";
 import { useUserAdditionalDataStore } from "../stores/user-aditional-data-store";
+
+import LayoutContext from "./LyoutContext";
 
 import { GetEstablishmentsResponse, Query } from "@/generated/graphql";
 import { GET_CREDIT } from "@/modules/GRAPHQL/queries/GetCreditQuery";
@@ -65,35 +67,52 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     if (tickets) setUserOwnedTickets([...tickets]);
   }, [setUserOwnedTickets, tickets]);
 
+  const refetchAll = useCallback(async () => {
+    refetchCredit();
+    refetchClubs();
+    refetchTickets();
+  }, [refetchCredit, refetchClubs, refetchTickets]);
+
   useEffect(() => {
     if (session?.user) {
-      refetchCredit();
-      refetchClubs();
-      refetchTickets();
+      refetchAll();
     }
-  }, [refetchClubs, refetchCredit, refetchTickets, session?.user]);
+  }, [refetchAll, session?.user]);
 
   useEffect(() => {
     if (queryResult?.getCredit?.balance)
       setCredits(queryResult?.getCredit?.balance as number);
   }, [queryResult, setCredits]);
 
+  const contextValue = useMemo(
+    () => ({
+      refetchAll,
+      refetchCredit,
+      refetchClubs,
+      refetchTickets,
+    }),
+    [refetchAll, refetchCredit, refetchClubs, refetchTickets]
+  );
+
   return (
-    <div className="flex min-h-screen flex-col">
-      <NavBar />
-      <Loader
-        isCustom={false}
-        isError={isError}
-        isLoading={isLoading}
-        isSuccess={isSuccess}
-        loadingType={
-          isWithConfirmation
-            ? LoadingType.WITH_CONFIRM
-            : LoadingType.WITHOUT_CONFIRM
-        }
-      />
-      <div className="grow">{children}</div>
-    </div>
+    <LayoutContext.Provider value={contextValue}>
+      {" "}
+      <div className="z-[1000] flex min-h-screen flex-col">
+        <NavBar />
+        <Loader
+          isCustom={false}
+          isError={isError}
+          isLoading={isLoading}
+          isSuccess={isSuccess}
+          loadingType={
+            isWithConfirmation
+              ? LoadingType.WITH_CONFIRM
+              : LoadingType.WITHOUT_CONFIRM
+          }
+        />
+        <div className="grow">{children}</div>
+      </div>
+    </LayoutContext.Provider>
   );
 };
 
