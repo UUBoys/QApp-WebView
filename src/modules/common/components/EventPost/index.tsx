@@ -3,34 +3,23 @@ import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRigh
 import clsx from "clsx";
 import moment from "moment";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import Button from "@/modules/common/components/Button";
+import { IClub } from "@/modules/utils/schemas/club";
+import { IEvent } from "@/modules/utils/schemas/event";
 
 export type EventPostProps = {
-  event: EventPostEventProps | EventPostEventProps[];
-  club: EventClubProps;
+  event: IEvent | IEvent[];
+  club: IClub;
   className?: string;
-};
-
-type EventClubProps = {
-  name: string;
-  avatar?: string;
-  address: string;
-};
-
-export type EventPostEventProps = {
-  uuid: string;
-  title: string;
-  address: string;
-  date: string;
-  thumbnail?: string;
-  created: string;
 };
 
 const EventPost = ({ event, className, club }: EventPostProps) => {
   const { t } = useTranslation();
+  const { push } = useRouter();
 
   const [slide, setSlide] = useState<number>(0);
 
@@ -66,7 +55,7 @@ const EventPost = ({ event, className, club }: EventPostProps) => {
             <div className="flex items-center gap-[10px]">
               <Image
                 src={
-                  club.avatar ||
+                  club.profileImage ||
                   "https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
                 }
                 alt="user-image"
@@ -79,17 +68,17 @@ const EventPost = ({ event, className, club }: EventPostProps) => {
               </p>
             </div>
             <div className="flex items-center text-gray-300">
-              <p>{moment(event.created).fromNow()}</p>
+              <p>{moment(event.start_date).fromNow()}</p>
             </div>
           </div>
         </div>
         <div className="relative h-[300px] w-full">
           <Image
             src={
-              event?.thumbnail ||
+              event?.image ||
               "https://www.editionhotels.com/wp-content/uploads/2019/07/EDITION_TimesSquare_ParadiseClub_Blue_3.jpg"
             }
-            alt={event.title}
+            alt={event.name}
             layout="fill"
             objectFit="cover"
             className="absolute left-0 top-0"
@@ -97,17 +86,22 @@ const EventPost = ({ event, className, club }: EventPostProps) => {
         </div>
         <div className="flex flex-col justify-center gap-[15px] px-4 py-5 pb-[25px]">
           <p className="cursor-pointer text-[16px] font-medium text-black">
-            {event.title}
+            {event.name}
           </p>
           <div className="flex justify-between ">
             <div className="flex flex-col">
               <p className="text-[14px] text-gray-300">
-                {moment(event.date).format("MMMM Do YYYY, h:mm a")}
+                {moment(event.start_date).format("MMMM Do YYYY, h:mm a")}
               </p>
-              <p className="text-[14px] text-gray-300">{club.address}</p>
+              <p className="text-[14px] text-gray-300">{club.street}</p>
             </div>
             <div className="flex items-center">
-              <Button className="rounded-full px-4">
+              <Button
+                onClick={() => {
+                  push(`/events/${event.id}`);
+                }}
+                className="rounded-full px-4"
+              >
                 {t("components.eventPost.tickets")}
               </Button>
             </div>
@@ -124,7 +118,7 @@ const EventPost = ({ event, className, club }: EventPostProps) => {
           <div className="flex items-center gap-[10px]">
             <Image
               src={
-                club.avatar ||
+                club.profileImage ||
                 "https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"
               }
               alt="user-image"
@@ -145,7 +139,7 @@ const EventPost = ({ event, className, club }: EventPostProps) => {
             </div>
           </div>
           <div className="flex items-center text-gray-300">
-            <p>{moment(event[0].created).fromNow()}</p>
+            <p>{moment(event[0].start_date).fromNow()}</p>
           </div>
         </div>
       </div>
@@ -167,13 +161,13 @@ const EventPost = ({ event, className, club }: EventPostProps) => {
         >
           {event.map((_event) => (
             <div
-              key={_event.uuid}
+              key={_event.id}
               className="snap-alway relative flex h-full min-w-[320px] flex-col rounded-lg border border-gray-300"
             >
               <div className="relative h-[200px] w-full shrink-0">
                 <Image
                   src={
-                    _event.thumbnail ||
+                    _event.image ||
                     "https://www.editionhotels.com/wp-content/uploads/2019/07/EDITION_TimesSquare_ParadiseClub_Blue_3.jpg"
                   }
                   alt="multiple-events-thumbnail"
@@ -184,12 +178,12 @@ const EventPost = ({ event, className, club }: EventPostProps) => {
               </div>
 
               <div className="grow p-3 py-[20px]">
-                <p className="text-[16px] text-black">{_event.title}</p>
+                <p className="text-[16px] text-black">{_event.name}</p>
                 <div className="flex flex-col py-[10px]">
                   <p className="text-[14px] text-gray-300">
-                    {moment(_event.date).format("MMMM Do YYYY, h:mm a")}
+                    {moment(_event.start_date).format("MMMM Do YYYY, h:mm a")}
                   </p>
-                  <p className="text-[14px] text-gray-300">{_event.address}</p>
+                  <p className="text-[14px] text-gray-300">{club.street}</p>
                   <div className="mt-[15px]">
                     <Button className="rounded-full px-4">
                       {t("components.eventPost.tickets")}

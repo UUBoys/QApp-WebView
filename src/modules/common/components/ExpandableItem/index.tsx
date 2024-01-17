@@ -66,7 +66,7 @@ const ExpandableItem: React.FC<ExpandableItemProps> = ({
             <img
               src={image}
               alt="Event"
-              className="mr-2 h-[80px] w-28 select-none  shadow-md"
+              className="mr-2 h-[80px] w-28 select-none object-cover  shadow-md"
             />
           )}
           <div className="flex flex-1 items-center justify-between px-2">

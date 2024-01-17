@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable sonarjs/no-duplicate-string */
 import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
@@ -6,228 +7,110 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { useClubs } from "../../hooks/QueryHooks/useEstablishmentshook";
+import { useEvents } from "../../hooks/QueryHooks/useEventsHook";
+import { useTicketsForUser } from "../../hooks/QueryHooks/useTicketsForUserHook";
 
 import EventsList from "@/modules/common/components/EventList";
-import EventPost, {
-  EventPostProps,
-} from "@/modules/common/components/EventPost";
-import Navigation, {
-  NavigationLinkProps,
-} from "@/modules/common/components/Navigation";
+import EventPost from "@/modules/common/components/EventPost";
+import Navigation from "@/modules/common/components/Navigation";
 import { IEvent } from "@/modules/utils/schemas/event";
 
-const mockData: EventPostProps[] = [
-  {
-    event: {
-      uuid: "001",
-      title: "Rock Koncert",
-      address: "Main Street 1, City",
-      date: "2023-12-01",
-      thumbnail: "https://picsum.photos/200/300",
-      created: "2023-11-01",
-    },
-    club: {
-      name: "Rock Club",
-      avatar: "https://picsum.photos/40/40",
-      address: "Main Street 1, City",
-    },
-  },
-  {
-    event: {
-      uuid: "002",
-      title: "Electro Party",
-      address: "Main Street 2, City",
-      date: "2023-12-02",
-      thumbnail: "https://picsum.photos/200/300",
-      created: "2023-11-02",
-    },
-    club: {
-      name: "Electro Club",
-      avatar: "https://picsum.photos/40/40",
-      address: "Main Street 2, City",
-    },
-  },
-  {
-    event: [
-      {
-        uuid: "0202",
-        title: "Electro Party",
-        address: "Main Street 2, City",
-        date: "2023-12-02",
-        thumbnail: "https://picsum.photos/200/300",
-        created: "2023-11-02",
-      },
-      {
-        uuid: "0102",
-        title: "Electro Party",
-        address: "Main Street 2, City",
-        date: "2023-12-02",
-        thumbnail: "https://picsum.photos/200/300",
-        created: "2023-11-02",
-      },
-      {
-        uuid: "002",
-        title: "Electro Party",
-        address: "Main Street 2, City",
-        date: "2023-12-02",
-        thumbnail: "https://picsum.photos/200/300",
-        created: "2023-11-02",
-      },
-      {
-        uuid: "002",
-        title: "Electro Party",
-        address: "Main Street 2, City",
-        date: "2023-12-02",
-        thumbnail: "https://picsum.photos/200/300",
-        created: "2023-11-02",
-      },
-    ],
-    club: {
-      name: "Electro Club",
-      avatar: "https://picsum.photos/40/40",
-      address: "Main Street 2, City",
-    },
-  },
-  {
-    event: {
-      uuid: "003",
-      title: "Jazz večer",
-      address: "Main Street 3, City",
-      date: "2023-12-03",
-      thumbnail: "https://picsum.photos/200/300",
-      created: "2023-11-03",
-    },
-    club: {
-      name: "Jazz Bar",
-      avatar: "https://picsum.photos/40/40",
-      address: "Main Street 3, City",
-    },
-  },
-  {
-    event: {
-      uuid: "010",
-      title: "Klasická hudba",
-      address: "Main Street 10, City",
-      date: "2023-12-10",
-      thumbnail: "https://picsum.photos/200/300",
-      created: "2023-11-10",
-    },
-    club: {
-      name: "Classic Club",
-      avatar: "https://picsum.photos/40/40",
-      address: "Main Street 10, City",
-    },
-  },
-];
-
-const leftMenuMockLinks: NavigationLinkProps[] = [
-  {
-    label: "Link 1",
-    icon: <HomeRoundedIcon />,
-  },
-  {
-    label: "Link 2",
-    icon: <WindowRoundedIcon />,
-  },
-  {
-    label: "Link 2",
-    icon: <ApartmentRoundedIcon />,
-  },
-];
-
-const mockEvetList: IEvent[] = [
-  {
-    description: "Popis akce bla bla",
-    end_date: "2023-11-25T02:38:00.000Z",
-    establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
-    image: "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
-    maximumCapacity: 150,
-    name: "Halloween v Becheru",
-    price: 100,
-    start_date: "2023-11-24T20:44:00.000Z",
-    id: "5121e86a-9e8b-4432-8b53-44361e24850d",
-  },
-  {
-    description: "Popis akce bla bla",
-    end_date: "2023-11-25T02:38:00.000Z",
-    establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
-    id: "5121e86a-9e8b-4432-8b53-44361e24850d",
-    image: "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
-    maximumCapacity: 150,
-    name: "Halloween v Becheru",
-    price: 100,
-    start_date: "2023-11-24T20:44:00.000Z",
-  },
-  {
-    description: "Popis akce bla bla",
-    id: "5121e86a-9e8b-4432-8b53-44361e24850d",
-    end_date: "2023-11-25T02:38:00.000Z",
-    establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
-    image: "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
-    maximumCapacity: 150,
-    name: "Halloween v Becheru",
-    price: 100,
-    start_date: "2023-11-24T20:44:00.000Z",
-  },
-  {
-    description: "Popis akce bla bla",
-    end_date: "2023-11-25T02:38:00.000Z",
-    establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
-    image: "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
-    maximumCapacity: 150,
-    name: "Halloween v Becheru",
-    price: 100,
-    start_date: "2023-11-24T20:44:00.000Z",
-    id: "5121e86a-9e8b-4432-8b53-44361e24850d",
-  },
-];
+enum E_FastFeedFilter {
+  "ALL",
+  "EVENTS",
+  "CLUBS",
+}
 
 const Feed = () => {
+  const [fastFeedFilter, setFastFeedFilter] = React.useState<E_FastFeedFilter>(
+    E_FastFeedFilter.ALL
+  );
   const { t } = useTranslation();
   const { clubs } = useClubs();
+  const { events } = useEvents();
+  const { tickets } = useTicketsForUser();
+
   return (
-    <div className="relative  max-h-[calc(100vh-50px)] text-gray-300 ">
-      <div className="grid  max-h-[calc(100vh-50px)] w-full grid-cols-1 pt-[50px]  lg:grid-cols-3">
+    <div className="relative max-h-[calc(100vh)] overflow-hidden pb-10 text-gray-300 ">
+      <div className="grid  max-h-[calc(100vh)] w-full grid-cols-1 pb-10 pt-[50px]  lg:grid-cols-3">
         <div className="col-span-1 hidden max-h-[calc(100vh-150px)] lg:block">
           <div className="mt-[100px] flex flex-col items-end px-[10px]">
-            <Navigation links={leftMenuMockLinks} className="w-[200px]" />
+            <Navigation
+              links={[
+                {
+                  label: "Vše",
+                  onClick: () => {
+                    setFastFeedFilter(E_FastFeedFilter.ALL);
+                  },
+                  icon: <HomeRoundedIcon />,
+                },
+                {
+                  label: "Akce",
+                  onClick: () => {
+                    setFastFeedFilter(E_FastFeedFilter.EVENTS);
+                  },
+                  icon: <WindowRoundedIcon />,
+                },
+                {
+                  label: "Cluby",
+                  onClick: () => {
+                    setFastFeedFilter(E_FastFeedFilter.CLUBS);
+                  },
+                  icon: <ApartmentRoundedIcon />,
+                },
+              ]}
+              className="w-[200px]"
+            />
             <div className="my-[20px] h-[2px] w-[200px] rounded-full bg-gray-300" />
-            {/* <div className={"w-[200px]"}>
-              <p className={"text-center text-gray-700 mb-[20px] font-medium"}>
-                {t("pages.feed.favoriteClubs")}
-              </p>
-            </div> */}
             <Navigation
               links={clubs.map((club) => {
                 return {
                   label: club.name,
                   image: club.profileImage,
+                  href: `/club/${club.id}`,
                 };
               })}
               className="w-[200px]"
             />
           </div>
         </div>
-        <div className="scroll-hidden col-span-1 max-h-[calc(100vh-50px)] overflow-y-auto px-20 pt-[50px]">
-          <div className=" flex flex-col gap-[50px] px-[20px] py-[50px] lg:px-0 ">
-            {mockData.map((event) => (
-              <EventPost event={event.event} club={event.club} />
-            ))}
-          </div>
-        </div>
-        <div className="col-span-1 hidden max-h-[calc(100vh-150px)] w-full lg:block">
-          <div className="mt-[100px] flex flex-col items-start p-3">
-            <h1 className="w-[500px] text-center text-[20px]  text-gray-700">
-              {t("pages.feed.eventsWithTickets")}
-            </h1>
-            <div className="scroll-hidden mt-[20px] overflow-y-auto rounded-2xl bg-transparent pb-[100px] pt-[20px]">
-              <EventsList
-                events={mockEvetList}
-                className="!mx-0 !mt-[10px] !w-[500px] rounded-2xl py-[0px]"
-              />
+        {(fastFeedFilter === E_FastFeedFilter.ALL ||
+          fastFeedFilter === E_FastFeedFilter.EVENTS) && (
+          <div className="scroll-hidden col-span-1 max-h-[100vh] w-full overflow-y-auto pt-[50px] lg:px-20">
+            <div className=" flex flex-col gap-[50px]  px-[20px]  pb-[50px] pt-20 lg:px-0 ">
+              {events.map((event) => {
+                const eventClub = clubs.find(
+                  (club) => club.id === event.establishment_id
+                );
+                if (!eventClub) return null;
+                return <EventPost event={event} club={eventClub} />;
+              })}
             </div>
           </div>
-        </div>
+        )}
+
+        {(fastFeedFilter === E_FastFeedFilter.ALL ||
+          fastFeedFilter === E_FastFeedFilter.CLUBS) && (
+          <div className="col-span-1 hidden max-h-[calc(100vh-150px)] w-full lg:block">
+            <div className="mt-[100px] flex flex-col items-start p-3">
+              <h1 className=" text-center text-[20px]  text-gray-700">
+                {t("pages.feed.eventsWithTickets")}
+              </h1>
+              <div className="scroll-hidden mt-[20px] max-h-[calc(100vh)] overflow-y-auto rounded-2xl bg-transparent py-10 pb-[100px] pt-[20px]">
+                <EventsList
+                  events={
+                    (tickets.map((ticket) => {
+                      return events.find(
+                        (event) => event.id === ticket.event_id
+                      );
+                    }) as IEvent[]) ?? ([] as IEvent[])
+                  }
+                  className="!mx-0 !mt-[10px] !w-[500px] rounded-2xl pb-40"
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
