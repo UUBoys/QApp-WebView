@@ -58,7 +58,8 @@ const statusLink = new ApolloLink((operation, forward) => {
               });
               useApolloStatusStore.getState().removeRequest(requestId);
               useApolloStatusStore.getState().checkFinalStatus();
-              observer.error(result.errors);
+              console.error(result.errors);
+              observer.error(result.errors ?? "Internal Server Error");
             } else {
               useApolloStatusStore.getState().updateRequest(requestId, {
                 isError: false,

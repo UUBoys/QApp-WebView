@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
 "use client";
 
 import GoogleIcon from "@mui/icons-material/Google";
@@ -68,7 +71,12 @@ export const SignIn = () => {
         </Loader>
       )}
       <div className="mx-auto flex h-[500px] w-11/12  flex-col rounded-md bg-white  p-10 shadow-2xl sm:w-[400px]">
-        <div className="relative top-[-130px] mx-auto flex h-[170px] w-[170px] items-center justify-center rounded-full border-[10px] border-gray-200 bg-white">
+        <div
+          onClick={() => {
+            router.push("/");
+          }}
+          className="relative top-[-130px] mx-auto flex h-[170px] w-[170px] items-center justify-center rounded-full border-[10px] border-gray-200 bg-white hover:cursor-pointer"
+        >
           <div className="  text-center text-6xl font-bold text-primary-500">
             Q
           </div>

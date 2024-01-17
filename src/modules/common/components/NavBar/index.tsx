@@ -15,7 +15,6 @@ import LocalAtmRoundedIcon from "@mui/icons-material/LocalAtmRounded";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import MoneyRoundedIcon from "@mui/icons-material/MoneyRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import ViewDayRoundedIcon from "@mui/icons-material/ViewDayRounded";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -114,12 +113,6 @@ const NavBar = () => {
       href: "/clubs",
       current: pathname === "/clubs",
       ico: <Groups2RoundedIcon sx={{ fontSize: "20px" }} />,
-    },
-    {
-      name: t("components.navbar.links.feed"),
-      href: "/feed",
-      current: pathname === "/feed",
-      ico: <ViewDayRoundedIcon sx={{ fontSize: "20px" }} />,
     },
   ];
 
@@ -288,24 +281,37 @@ const NavBar = () => {
                     )}
                   </div>
                   <div className="flex gap-5">
-                    <div className="flex cursor-pointer items-center gap-[10px]  rounded-full bg-primary px-[20px] text-center font-bold text-white transition-all hover:shadow-xl">
-                      <Link
-                        href="/buyCredits"
-                        className="relative flex items-center gap-[10px] p-1 text-sm"
-                      >
-                        <LocalAtmRoundedIcon
-                          className="h-6 w-6 "
-                          aria-hidden="true"
-                        />
-                        {credits}
-                      </Link>
-                    </div>
-                    <div className="flex items-center justify-center text-black">
-                      <SearchRoundedIcon
-                        className="h-6 w-6 cursor-pointer"
-                        onClick={() => setIsSearchOpen(true)}
-                      />
-                    </div>
+                    {session?.user ? (
+                      <>
+                        <div className="flex cursor-pointer items-center gap-[10px]  rounded-full bg-primary px-[20px] text-center font-bold text-white transition-all hover:shadow-xl">
+                          <Link
+                            href="/buyCredits"
+                            className="relative flex items-center gap-[10px] p-1 text-sm"
+                          >
+                            <LocalAtmRoundedIcon
+                              className="h-6 w-6 "
+                              aria-hidden="true"
+                            />
+                            {credits}
+                          </Link>
+                        </div>
+                        <div className="flex items-center justify-center text-black">
+                          <SearchRoundedIcon
+                            className="h-6 w-6 cursor-pointer"
+                            onClick={() => setIsSearchOpen(true)}
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <div className="flex cursor-pointer items-center gap-[10px]  rounded-full bg-primary px-[20px] text-center font-bold text-white transition-all hover:shadow-xl">
+                        <Link
+                          href="/auth/signin"
+                          className="relative flex items-center gap-[10px] p-1 text-sm"
+                        >
+                          Přihlásit se
+                        </Link>
+                      </div>
+                    )}
 
                     <div>
                       <LanguageSelector className="max-w-[66px]" />

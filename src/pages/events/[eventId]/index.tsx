@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
@@ -7,7 +8,9 @@ import clsx from "clsx";
 import moment from "moment";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { useContext } from "react";
+import { toast } from "react-toastify";
 
 import Button from "@/modules/common/components/Button";
 import { usePurchaseTicketMutation } from "@/modules/common/hooks/MutationHooks/usePurchaseTicketMutation";
@@ -18,9 +21,11 @@ import { useUserAdditionalDataStore } from "@/modules/common/stores/user-adition
 
 const Event: NextPage = () => {
   const { eventId } = useRouter().query;
+  const { data: session } = useSession();
   const { push } = useRouter();
-  const { setCredits } = useUserAdditionalDataStore((set) => ({
+  const { setCredits, credits } = useUserAdditionalDataStore((set) => ({
     setCredits: set.setCredits,
+    credits: set.credits,
   }));
   const { refetchTickets, refetchCredit } = useContext(LayoutContext);
 
@@ -29,12 +34,49 @@ const Event: NextPage = () => {
   const { purchaseTicketAsync } = usePurchaseTicketMutation();
 
   const purchaseTicket = async () => {
+    if (!session?.user) {
+      push("/auth/signin");
+      toast.warning("První se přihlašte!", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
     if (!event || !event?.tickets) return;
+    if (credits < event.price) {
+      toast.error("💰Nemáte dostatek kreditů!", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
     const res = await purchaseTicketAsync(event.id, event.tickets[0].ticket_id);
     if (res.errors || !res.data?.purchaseTicket?.new_balance) return;
     setCredits(res.data?.purchaseTicket?.new_balance ?? 0);
     refetchCredit();
     refetchTickets();
+    toast.success("🦄 Lístek zakoupen!", {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   };
 
   if (!event) return null;

@@ -8,6 +8,7 @@ import { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { I18nextProvider } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Toaster } from "sonner";
 
@@ -35,6 +36,18 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <ApolloProvider client={client}>
         <QueryClientProvider client={queryClient}>
           <I18nextProvider i18n={i18n}>
+            <ToastContainer
+              position="bottom-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+            />
             <Modal />
             <Toaster visibleToasts={6} position="bottom-left" richColors />
             <Layout>
