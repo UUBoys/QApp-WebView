@@ -14,17 +14,30 @@ type Story = StoryObj<typeof EventPost>;
 export const Default: Story = {
   args: {
     club: {
-      name: "Becher's Bar Praha",
-      avatar:
-        "https://img.freepik.com/premium-vector/bar-logo-lettering-design-vector-template_556845-66.jpg",
-      address: "Kulturni dum Barikadniku",
+      id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
+      profileImage:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+      coverImage:
+        "https://images.unsplash.com/photo-1578836537282-3171d77f8632?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+      description:
+        "Tohle je bechers bar. Nejlepší bar v teplicích,Tohle je bechers bar. Nejlepší bar v teplicích,Tohle je bechers bar. Nejlepší bar v teplicích,Tohle je bechers bar. Nejlepší bar v teplicích",
+      name: "BechersBar",
+      city: "Teplice",
+      country: "Czech Republic",
+      street: "Kašparova 1844/12",
+      events: [],
     },
     event: {
-      uuid: "31413413",
-      address: "Kulturni dum Barikadniku",
-      title: "První událost",
-      date: "2023-11-01T12:00:00Z",
-      created: "2023-11-01T12:00:00Z",
+      description: "Popis akce bla bla",
+      end_date: "2023-11-25T02:38:00.000Z",
+      establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
+      image:
+        "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
+      maximumCapacity: 150,
+      name: "Halloween v Becheru",
+      id: "1",
+      price: 100,
+      start_date: "2023-11-24T20:44:00.000Z",
     },
     className: "w-[500px]",
   },
@@ -33,53 +46,67 @@ export const Default: Story = {
 export const MultipleEvents: Story = {
   args: {
     club: {
-      name: "Becher's Bar Praha",
-      avatar:
-        "https://img.freepik.com/premium-vector/bar-logo-lettering-design-vector-template_556845-66.jpg",
-      address: "Kulturni dum Barikadniku",
+      id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
+      profileImage:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+      coverImage:
+        "https://images.unsplash.com/photo-1578836537282-3171d77f8632?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+      description:
+        "Tohle je bechers bar. Nejlepší bar v teplicích,Tohle je bechers bar. Nejlepší bar v teplicích,Tohle je bechers bar. Nejlepší bar v teplicích,Tohle je bechers bar. Nejlepší bar v teplicích",
+      name: "BechersBar",
+      city: "Teplice",
+      country: "Czech Republic",
+      street: "Kašparova 1844/12",
+      events: [],
     },
     event: [
       {
-        uuid: "1231414214",
-        address: "Kulturni dum Barikadniku",
-        title: "První událost",
-        date: "2023-11-01T12:00:00Z",
-        created: "2023-11-01T12:00:00Z",
+        description: "Popis akce bla bla",
+        end_date: "2023-11-25T02:38:00.000Z",
+        establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
+        image:
+          "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
+        maximumCapacity: 150,
+        name: "Halloween v Becheru",
+        id: "1",
+        price: 100,
+        start_date: "2023-11-24T20:44:00.000Z",
       },
       {
-        uuid: "sad1d1331",
-        address: "Kulturni dum Barikadniku",
-        title: "První událost",
-        date: "2023-11-01T12:00:00Z",
-        created: "2023-11-01T12:00:00Z",
+        description: "Popis akce bla bla",
+        end_date: "2023-11-25T02:38:00.000Z",
+        establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
+        image:
+          "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
+        maximumCapacity: 150,
+        name: "Halloween v Becheru",
+        id: "1",
+        price: 100,
+        start_date: "2023-11-24T20:44:00.000Z",
       },
       {
-        uuid: "5g35g3242",
-        address: "Kulturni dum Barikadniku",
-        title: "První událost",
-        date: "2023-11-01T12:00:00Z",
-        created: "2023-11-01T12:00:00Z",
+        description: "Popis akce bla bla",
+        end_date: "2023-11-25T02:38:00.000Z",
+        establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
+        image:
+          "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
+        maximumCapacity: 150,
+        name: "Halloween v Becheru",
+        id: "1",
+        price: 100,
+        start_date: "2023-11-24T20:44:00.000Z",
       },
       {
-        uuid: "12d12d31a",
-        address: "Kulturni dum Barikadniku",
-        title: "První událost",
-        date: "2023-11-01T12:00:00Z",
-        created: "2023-11-01T12:00:00Z",
-      },
-      {
-        uuid: "234r24g42g24",
-        address: "Kulturni dum Barikadniku",
-        title: "První událost",
-        date: "2023-11-01T12:00:00Z",
-        created: "2023-11-01T12:00:00Z",
-      },
-      {
-        uuid: "aas4aw412412",
-        address: "Kulturni dum Barikadniku",
-        title: "První událost",
-        date: "2023-11-01T12:00:00Z",
-        created: "2023-11-01T12:00:00Z",
+        description: "Popis akce bla bla",
+        end_date: "2023-11-25T02:38:00.000Z",
+        establishment_id: "c6c6d90d-d74a-4fb3-a87d-0f15d864d9e5",
+        image:
+          "https://utfs.io/f/7e862802-7728-43b1-8831-26df6df46ea6-6mtux8.jpg",
+        maximumCapacity: 150,
+        name: "Halloween v Becheru",
+        id: "1",
+        price: 100,
+        start_date: "2023-11-24T20:44:00.000Z",
       },
     ],
     className: "w-[500px]",
