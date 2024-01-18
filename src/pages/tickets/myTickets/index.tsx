@@ -17,7 +17,7 @@ const MyTickets: NextPage = () => {
   }));
 
   return (
-    <div className="flex min-h-[100vh] w-full flex-col items-center justify-center gap-20 p-20 pt-52">
+    <div className="flex min-h-[100vh] w-full flex-col items-center justify-center gap-20 pt-52 lg:p-20">
       <p className="flex  text-6xl font-semibold">
         Moje <div className="text-primary-500">Lístky</div>
       </p>

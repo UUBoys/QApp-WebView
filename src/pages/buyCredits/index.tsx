@@ -74,7 +74,7 @@ const BuyCredits: NextPage = () => {
           <div className="text-3xl sm:text-6xl"> Kreditů</div>
         </div>
       </div>
-      <div className="mx-auto flex w-full flex-col gap-10 border-b border-gray-600 p-20 sm:w-3/5 lg:flex-row">
+      <div className="mx-auto flex w-full flex-col items-center gap-10 border-b border-gray-600 pt-10 sm:w-3/5 lg:flex-row lg:p-20">
         {creditPackages.map((creditPackage) => {
           return (
             <CreditPackage

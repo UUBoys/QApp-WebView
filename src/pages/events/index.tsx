@@ -11,11 +11,11 @@ const Events: NextPage = () => {
   const { events } = useEvents();
 
   return (
-    <div className="flex min-h-[100vh] w-full flex-col items-center justify-center gap-20 p-20 pt-52">
+    <div className="flex min-h-[100vh] w-full flex-col items-center justify-center gap-20 pt-52 lg:p-20">
       <p className="flex gap-8 text-6xl font-semibold">
         Všechny<div className="text-primary-500">{" akce"}</div>
       </p>
-      <div className="flex min-h-[600px] w-full flex-col justify-center gap-6 rounded-xl bg-white py-20 shadow-xl">
+      <div className="flex w-full flex-col justify-center gap-6 rounded-xl bg-white py-10 shadow-xl lg:min-h-[600px] lg:py-20">
         <EventsList events={events} />
       </div>
     </div>

@@ -90,7 +90,7 @@ const Event: NextPage = () => {
       >
         {" "}
         <div className="absolute inset-0 bg-black/40" />
-        <div className="relative flex min-h-[200px] w-full max-w-[600px] justify-center rounded-lg border-2 border-primary-400 bg-white p-10 pt-20 text-start shadow-xl transition-all hover:shadow-2xl">
+        <div className="relative flex min-h-[200px] w-full max-w-[600px] justify-center rounded-lg border-2 border-primary-400 bg-white p-3 pt-20 text-start shadow-xl transition-all hover:shadow-2xl lg:p-10">
           <div className="flex flex-col items-start gap-5 text-center">
             <div
               onClick={() => {
